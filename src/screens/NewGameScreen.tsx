@@ -359,9 +359,7 @@ export function NewGameScreen() {
           <span className="hud-pill">Dia {savedRun.activeRun.day}</span>
           <span className="hud-pill">Aluguel {savedRun.activeRun.rentDue}</span>
           <span className="hud-pill">Moedas {savedRun.activeRun.resources.coins}</span>
-          <span className="hud-pill">Loja {savedRun.meta.collectionCoins}</span>
           <span className="hud-pill">Energia {availableEnergy}</span>
-          <span className="hud-pill">Rend. {dailyCoinYieldLabel}</span>
           <button
             className="hud-button hud-button--action"
             disabled={!canRunGameplay || isResolvingDay}
@@ -384,10 +382,6 @@ export function NewGameScreen() {
           ) : null}
 
           <div className="status-strip">
-            <span className="status-strip__item">Deck {savedRun.activeRun.deckCardIds.length}</span>
-            <span className="status-strip__item">Bordas {frontierSlots.length}</span>
-            <span className="status-strip__item">Tiles {tiles.length}</span>
-            <span className="status-strip__item">Rendimento {dailyCoinYieldLabel}</span>
             <span className="status-strip__item">Run {savedRun.meta.completedRuns + 1}</span>
           </div>
         </div>

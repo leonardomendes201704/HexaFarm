@@ -72,6 +72,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `EPICO-012`: economia de rendimento diario dos tiles
 - `EPICO-013`: feedback visual de coleta no fim do dia
 - `EPICO-014`: imersao de entrada da run
+- `EPICO-015`: reducao de ruido visual do HUD principal
 - `PBI-001`: tela inicial do jogo HexaFarm
 - `PBI-002`: estrutura base de navegacao entre telas
 - `PBI-003`: sistema minimo de save local
@@ -87,6 +88,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-013`: implementar rendimento diario por carta e tile
 - `PBI-014`: animar moedas de rendimento no fim do dia
 - `PBI-015`: entrar em fullscreen ao iniciar novo jogo
+- `PBI-016`: ocultar badges auxiliares do HUD principal
 
 ## Convencao de Nomes
 

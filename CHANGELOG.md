@@ -18,6 +18,57 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-016 de ocultar badges auxiliares do HUD principal
+
+### Resumo
+
+Foi reduzido o ruido visual da tela principal da run, removendo da superficie as badges de `Deck`, `Bordas`, `Tiles`, `Rendimento/dia` e `Loja`.
+
+### Entregas realizadas
+
+- criacao do `EPICO-015` e do backlog completo do `PBI-016`
+- remocao da badge `Loja` do HUD superior
+- remocao da badge de `Rendimento` do HUD superior
+- remocao das badges de `Deck`, `Bordas`, `Tiles` e `Rendimento` do overlay do stage
+- preservacao do restante do HUD principal e do fluxo da run
+- conclusao do `PBI-016` e do `EPICO-015`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-015_REDUCAO_DE_RUIDO_VISUAL_DO_HUD_PRINCIPAL.md`
+- `BACKLOGS/PBIS/PBI-016_OCULTAR_BADGES_AUXILIARES_DO_HUD_PRINCIPAL/DONE-PBI-016_OCULTAR_BADGES_AUXILIARES_DO_HUD_PRINCIPAL.md`
+- `BACKLOGS/PBIS/PBI-016_OCULTAR_BADGES_AUXILIARES_DO_HUD_PRINCIPAL/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-016_OCULTAR_BADGES_AUXILIARES_DO_HUD_PRINCIPAL/TASKS/DONE-*`
+- `src/screens/NewGameScreen.tsx`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-015 - Reducao de Ruido Visual do HUD Principal`
+- `PBI-016 - Ocultar Badges Auxiliares do HUD Principal`
+- `HISTORIA-001 - Reduzir Telemetria Visivel na Superficie Principal`
+
+### Tasks executadas
+
+- `TASK-001 - Remover Badges de Loja e Rendimento do HUD Superior`
+- `TASK-002 - Remover Badges de Deck, Bordas, Tiles e Rendimento do Overlay`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da ausencia dessas badges na superficie principal da run
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- o topo da run nao mostra mais `Loja` nem `Rendimento`
+- o overlay do stage nao mostra mais `Deck`, `Bordas`, `Tiles` nem `Rendimento`
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-016` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-015 de fullscreen ao iniciar novo jogo
 
 ### Resumo
