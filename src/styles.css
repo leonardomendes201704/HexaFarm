@@ -917,6 +917,35 @@ button:disabled {
   overflow: hidden;
 }
 
+@keyframes expansion-card-discard {
+  0% {
+    opacity: 1;
+    transform: translateY(var(--card-vertical-offset, 0))
+      rotate(var(--card-rotation, 0deg))
+      scale(1);
+  }
+
+  42% {
+    opacity: 1;
+    transform: translate(
+        var(--discard-collapse-x, 0px),
+        calc(var(--card-vertical-offset, 0px) - 10px)
+      )
+      rotate(0deg)
+      scale(0.97);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(
+        calc(var(--hand-discard-travel-x, 300px) + var(--discard-travel-adjust, 0px)),
+        calc(var(--card-vertical-offset, 0px) - var(--hand-discard-rise, 18px))
+      )
+      rotate(10deg)
+      scale(0.68);
+  }
+}
+
 .expansion-card {
   --card-shell-border: rgba(196, 154, 92, 0.86);
   --card-shell-fill-top: rgba(255, 248, 236, 0.97);
@@ -949,6 +978,15 @@ button:disabled {
     rotate(var(--card-rotation, 0deg));
 }
 
+.expansion-card.is-discarding,
+.expansion-card.is-discarding:hover:not(:disabled),
+.expansion-card.is-discarding.is-selected {
+  pointer-events: none;
+  z-index: 8;
+  animation: expansion-card-discard 0.64s cubic-bezier(0.24, 0.8, 0.22, 1) forwards;
+  animation-delay: var(--discard-stagger, 0ms);
+}
+
 .expansion-card.is-muted {
   filter: saturate(0.82);
 }
@@ -973,6 +1011,13 @@ button:disabled {
     0 0 0 4px rgba(255, 233, 191, 0.28),
     0 24px 34px rgba(7, 13, 19, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.expansion-card.is-discarding .expansion-card__frame {
+  box-shadow:
+    0 12px 20px rgba(7, 13, 19, 0.18),
+    0 0 0 2px rgba(255, 232, 194, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
 }
 
 .expansion-card__art {
@@ -1715,6 +1760,8 @@ button:disabled {
 }
 
 .game-hand {
+  --hand-discard-rise: 18px;
+  --hand-discard-travel-x: 304px;
   position: fixed;
   inset: auto 50% 24px;
   z-index: 5;
@@ -1968,6 +2015,8 @@ button:disabled {
   }
 
   .game-hand {
+    --hand-discard-rise: 14px;
+    --hand-discard-travel-x: 184px;
     inset: auto 50% 16px;
     width: min(calc(100vw - 24px), 1080px);
     padding: 0;
@@ -2042,6 +2091,10 @@ button:disabled {
   gap: 18px;
 }
 
+.game-hand.is-discarding .game-hand__fan {
+  pointer-events: none;
+}
+
 .card-pile {
   display: grid;
   justify-items: center;
@@ -2100,6 +2153,14 @@ button:disabled {
   font-size: 0.74rem;
   font-weight: 800;
   letter-spacing: 0.05em;
+}
+
+.game-hand.is-discarding .card-pile__stack--discard .card-pile__card--front {
+  transform: translateY(-6px) scale(1.04);
+  box-shadow:
+    0 18px 26px rgba(48, 30, 26, 0.22),
+    0 0 0 3px rgba(255, 227, 167, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
 }
 
 .builder-panel {

@@ -18,6 +18,7 @@ import {
   createDeckStateFromSelection,
   createStarterDeckSelection,
   DECK_SIZE,
+  discardHandOnly,
   discardHandAndRefill,
   getCardComboTargetsLabel,
   getCardLibrary,
@@ -45,6 +46,7 @@ import {
 
 type HudModalId = "help" | "menu" | "status" | null;
 const DAY_RESOLUTION_DURATION_MS = 980;
+const HAND_DISCARD_ANIMATION_DURATION_MS = 640;
 const WEEK_DAY_LABELS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"] as const;
 
 function getCardMetaLine(card: ReturnType<typeof getCardLibrary>[number]) {
@@ -117,12 +119,14 @@ export function NewGameScreen() {
   );
   const [armedCardId, setArmedCardId] = useState<string | null>(null);
   const [activeModal, setActiveModal] = useState<HudModalId>(null);
+  const [isDiscardingHand, setIsDiscardingHand] = useState(false);
   const [isResolvingDay, setIsResolvingDay] = useState(false);
   const [showHighlights, setShowHighlights] = useState(true);
   const [showSurfaceAccents, setShowSurfaceAccents] = useState(true);
   const [showTopPlateau, setShowTopPlateau] = useState(true);
   const [yieldBursts, setYieldBursts] = useState<Array<{ tileId: string; yieldValue: number }>>([]);
   const dayResolutionTimeoutRef = useRef<number | null>(null);
+  const handDiscardTimeoutRef = useRef<number | null>(null);
 
   const collectionCards = useMemo(() => getCardLibrary(), []);
   const ownedCollectionCards = useMemo(
@@ -248,7 +252,7 @@ export function NewGameScreen() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [phase, savedRun, deckState, isResolvingDay]);
+  }, [phase, savedRun, deckState, isDiscardingHand, isResolvingDay]);
 
   const handleAddDeckCard = (cardId: string) => {
     if (phase !== "deckbuilding") {
@@ -374,6 +378,7 @@ export function NewGameScreen() {
     setYieldBursts([]);
     setActiveModal(null);
     setArmedCardId(null);
+    setIsDiscardingHand(false);
     setIsResolvingDay(false);
     setSavedRun(updatedSave);
 
@@ -383,12 +388,28 @@ export function NewGameScreen() {
     }
   };
 
+  const beginYieldResolution = (
+    shouldRefillHand: boolean,
+    nextYieldBursts: Array<{ tileId: string; yieldValue: number }>,
+  ) => {
+    if (nextYieldBursts.length === 0) {
+      finalizeEndDay(shouldRefillHand);
+      return;
+    }
+
+    setYieldBursts(nextYieldBursts);
+    dayResolutionTimeoutRef.current = window.setTimeout(() => {
+      finalizeEndDay(shouldRefillHand);
+    }, DAY_RESOLUTION_DURATION_MS);
+  };
+
   const handleEndDay = () => {
-    if (!canRunGameplay || isResolvingDay) {
+    if (!canRunGameplay || isResolvingDay || isDiscardingHand) {
       return;
     }
 
     const isRunEnding = savedRun.activeRun.day >= PROTOTYPE_RUN_LENGTH_DAYS;
+    const shouldRefillHand = !isRunEnding;
     const nextYieldBursts = savedRun.activeRun.placedTiles
       .filter((tile) => tile.dailyCoinYield !== 0)
       .map((tile) => ({
@@ -401,19 +422,27 @@ export function NewGameScreen() {
       dayResolutionTimeoutRef.current = null;
     }
 
+    if (handDiscardTimeoutRef.current !== null) {
+      window.clearTimeout(handDiscardTimeoutRef.current);
+      handDiscardTimeoutRef.current = null;
+    }
+
     setActiveModal(null);
     setArmedCardId(null);
+    setIsResolvingDay(true);
 
-    if (nextYieldBursts.length === 0) {
-      finalizeEndDay(!isRunEnding);
+    if (deckState.hand.length === 0) {
+      beginYieldResolution(shouldRefillHand, nextYieldBursts);
       return;
     }
 
-    setIsResolvingDay(true);
-    setYieldBursts(nextYieldBursts);
-    dayResolutionTimeoutRef.current = window.setTimeout(() => {
-      finalizeEndDay(!isRunEnding);
-    }, DAY_RESOLUTION_DURATION_MS);
+    setIsDiscardingHand(true);
+    handDiscardTimeoutRef.current = window.setTimeout(() => {
+      setDeckState((currentDeckState) => discardHandOnly(currentDeckState));
+      setIsDiscardingHand(false);
+      handDiscardTimeoutRef.current = null;
+      beginYieldResolution(shouldRefillHand, nextYieldBursts);
+    }, HAND_DISCARD_ANIMATION_DURATION_MS);
   };
 
   const handleBuyCard = (cardId: string) => {
@@ -438,6 +467,10 @@ export function NewGameScreen() {
     return () => {
       if (dayResolutionTimeoutRef.current !== null) {
         window.clearTimeout(dayResolutionTimeoutRef.current);
+      }
+
+      if (handDiscardTimeoutRef.current !== null) {
+        window.clearTimeout(handDiscardTimeoutRef.current);
       }
     };
   }, []);
@@ -551,6 +584,7 @@ export function NewGameScreen() {
           discardCount={deckState.discardPile.length}
           drawCount={deckState.drawPile.length}
           hand={deckState.hand}
+          isDiscarding={isDiscardingHand}
           onSelectCard={handleSelectCard}
           playableCardInstanceIds={playableCardInstanceIds}
         />

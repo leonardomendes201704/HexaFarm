@@ -12,6 +12,7 @@ type ExpansionHandProps = {
   discardCount: number;
   drawCount: number;
   hand: ExpansionCard[];
+  isDiscarding: boolean;
   onSelectCard: (cardId: string) => void;
   playableCardInstanceIds: string[];
 };
@@ -22,6 +23,7 @@ export function ExpansionHand({
   discardCount,
   drawCount,
   hand,
+  isDiscarding,
   onSelectCard,
   playableCardInstanceIds,
 }: ExpansionHandProps) {
@@ -29,7 +31,10 @@ export function ExpansionHand({
   const playableCardIdSet = new Set(playableCardInstanceIds);
 
   return (
-    <section aria-label="Mao de expansao" className="game-hand">
+    <section
+      aria-label="Mao de expansao"
+      className={`game-hand ${isDiscarding ? "is-discarding" : ""}`}
+    >
       <div className="game-hand__layout">
         <div className="card-pile">
           <div className="card-pile__stack">
@@ -47,6 +52,9 @@ export function ExpansionHand({
             const verticalLift = Math.abs(offsetFromCenter) * 12;
             const canAffordCard = availableEnergy >= card.energyCost;
             const canPlayCard = playableCardIdSet.has(card.instanceId) && canAffordCard;
+            const discardCollapseX = Math.round(-offsetFromCenter * 34);
+            const discardTravelAdjust = Math.round(-offsetFromCenter * 22);
+            const discardStaggerMs = Math.round(Math.abs(offsetFromCenter) * 28);
 
             return (
               <button
@@ -54,15 +62,18 @@ export function ExpansionHand({
                   card.cardKind === "crop" ? "expansion-card--crop" : "expansion-card--tile"
                 } ${
                   armedCardId === card.instanceId ? "is-selected" : ""
-                } ${!canAffordCard ? "is-muted" : ""}`}
+                } ${!canAffordCard ? "is-muted" : ""} ${isDiscarding ? "is-discarding" : ""}`}
                 aria-label={`${card.name}. ${card.description}`}
-                disabled={!canPlayCard}
+                disabled={!canPlayCard || isDiscarding}
                 key={card.instanceId}
                 onClick={() => onSelectCard(card.instanceId)}
                 style={
                   {
                     "--card-rotation": `${rotation}deg`,
                     "--card-vertical-offset": `${verticalLift}px`,
+                    "--discard-collapse-x": `${discardCollapseX}px`,
+                    "--discard-stagger": `${discardStaggerMs}ms`,
+                    "--discard-travel-adjust": `${discardTravelAdjust}px`,
                   } as CSSProperties
                 }
                 type="button"

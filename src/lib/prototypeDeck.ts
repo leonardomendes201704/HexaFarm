@@ -373,6 +373,18 @@ export function discardHandAndRefill(deckState: PrototypeDeckState) {
   return drawToHand(afterDiscard);
 }
 
+export function discardHandOnly(deckState: PrototypeDeckState) {
+  if (deckState.hand.length === 0) {
+    return deckState;
+  }
+
+  return {
+    discardPile: [...deckState.discardPile, ...deckState.hand],
+    drawPile: [...deckState.drawPile],
+    hand: [],
+  };
+}
+
 export function getShopOffers(completedRuns: number) {
   return Array.from({ length: 3 }, (_, index) => {
     const libraryIndex = (completedRuns * 2 + index) % CARD_LIBRARY.length;

@@ -18,6 +18,48 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-061 concluido
+
+### Resumo
+
+Foi adicionada uma animacao de descarte no fim do dia, em que as cartas da mao fecham o leque e seguem visualmente para a pilha de descarte antes da resolucao normal do turno.
+
+### Entregas realizadas
+
+- encadeamento de resolucao do fim do dia em duas fases: descarte visual da mao e depois resolucao do rendimento
+- nova animacao das cartas convergindo para o centro e seguindo para a pilha de descarte
+- destaque visual temporario na pilha de descarte durante a animacao
+- manutencao do fluxo atual de refill da mao apenas depois da resolucao do dia
+
+### Arquivos principais criados ou alterados
+
+- `src/components/ExpansionHand.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/lib/prototypeDeck.ts`
+- `src/styles.css`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-061_ANIMAR_DESCARTE_DA_MAO_NO_FIM_DO_DIA/*`
+
+### Vinculos de backlog
+
+- `EPICO-005 - Refinamento da Tela de Jogo e HUD`
+- `PBI-061 - Animar Descarte da Mao no Fim do Dia`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- ao fechar o dia, a mao faz uma transicao visual ate a pilha de descarte antes do refill
+- a run continua resolvendo rendimento e avancando o dia normalmente
+
+### Commit e push
+
+- registrados no encerramento desta entrega
+
+---
+
 ## 2026-02-28 - PBI-060 concluido
 
 ### Resumo
