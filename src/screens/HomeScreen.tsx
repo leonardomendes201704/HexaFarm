@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TitleScreen } from "../components/TitleScreen";
+import { requestGameFullscreen } from "../lib/browserFullscreen";
 import { createNewSave, getSavedRun, type SaveSnapshot, continueSavedRun } from "../lib/save";
 
 export function HomeScreen() {
@@ -11,7 +12,9 @@ export function HomeScreen() {
     setSavedRun(getSavedRun());
   }, []);
 
-  const handleNewGame = () => {
+  const handleNewGame = async () => {
+    await requestGameFullscreen();
+
     const freshSave = createNewSave();
 
     setSavedRun(freshSave);

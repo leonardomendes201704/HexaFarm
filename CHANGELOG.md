@@ -18,6 +18,57 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-015 de fullscreen ao iniciar novo jogo
+
+### Resumo
+
+Foi conectado o clique de `Novo Jogo` a uma tentativa de tela cheia do navegador, para que a entrada da run aconteca em modo mais imersivo.
+
+### Entregas realizadas
+
+- criacao do `EPICO-014` e do backlog completo do `PBI-015`
+- criacao de um helper de fullscreen com fallback seguro
+- tentativa de fullscreen no gesto de clique de `Novo Jogo`
+- preservacao do fluxo de criacao de save e navegacao para a run mesmo quando a API falha
+- conclusao do `PBI-015` e do `EPICO-014`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-014_IMERSAO_DE_ENTRADA_DA_RUN.md`
+- `BACKLOGS/PBIS/PBI-015_ENTRAR_EM_FULLSCREEN_AO_INICIAR_NOVO_JOGO/DONE-PBI-015_ENTRAR_EM_FULLSCREEN_AO_INICIAR_NOVO_JOGO.md`
+- `BACKLOGS/PBIS/PBI-015_ENTRAR_EM_FULLSCREEN_AO_INICIAR_NOVO_JOGO/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-015_ENTRAR_EM_FULLSCREEN_AO_INICIAR_NOVO_JOGO/TASKS/DONE-*`
+- `src/lib/browserFullscreen.ts`
+- `src/screens/HomeScreen.tsx`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-014 - Imersao de Entrada da Run`
+- `PBI-015 - Entrar em Fullscreen ao Iniciar Novo Jogo`
+- `HISTORIA-001 - Acionar Fullscreen no Gatilho de Novo Jogo`
+
+### Tasks executadas
+
+- `TASK-001 - Criar Helper de Fullscreen do Navegador`
+- `TASK-002 - Integrar Fullscreen ao Fluxo de Novo Jogo`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual do clique de `Novo Jogo` com tentativa de fullscreen antes da navegacao
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- `Novo Jogo` agora tenta entrar em tela cheia antes de abrir a run
+- se o navegador negar a tela cheia, a run ainda abre normalmente
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-015` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-014 de animacao de moedas no fim do dia
 
 ### Resumo
