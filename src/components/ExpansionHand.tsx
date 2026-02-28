@@ -33,8 +33,6 @@ export function ExpansionHand({
   return (
     <section aria-label="Mao de expansao" className="game-hand">
       <div className="game-hand__meta">
-        <span className="game-hand__counter">Compra {drawCount}</span>
-        <span className="game-hand__counter">Descarte {discardCount}</span>
         {!hasPlayableCards ? <span className="game-hand__counter">Sem alvo</span> : null}
       </div>
 

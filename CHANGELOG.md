@@ -18,6 +18,42 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-046 de limpeza das badges redundantes da mao
+
+### Resumo
+
+As badges textuais de `Compra` e `Descarte` foram removidas do topo da secao de cartas, deixando a leitura concentrada nas pilhas visuais.
+
+### Entregas realizadas
+
+- criacao do backlog do `PBI-046`
+- remocao das badges `Compra X` e `Descarte X` do topo da mao
+- manutencao dos contadores nas pilhas visuais
+- conclusao do `PBI-046`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-046_REMOVER_BADGES_REDUNDANTES_DE_COMPRA_E_DESCARTE_NA_MAO/DONE-PBI-046_REMOVER_BADGES_REDUNDANTES_DE_COMPRA_E_DESCARTE_NA_MAO.md`
+- `src/components/ExpansionHand.tsx`
+
+### Vinculos de backlog
+
+- `PBI-046 - Remover Badges Redundantes de Compra e Descarte na Mao`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- build deve concluir com sucesso
+- a secao da mao nao deve mais repetir `Compra` e `Descarte` no topo
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - Implementacao do PBI-045 de calendario semanal no HUD e stage fullscreen
 
 ### Resumo

@@ -139,6 +139,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-043`: tornar o bgm global e continuo entre telas
 - `PBI-044`: implementar cartas de cultivo e combo com lote fertil
 - `PBI-045`: adicionar calendario semanal no hud e expandir stage fullscreen
+- `PBI-046`: remover badges redundantes de compra e descarte na mao
 
 ## Convencao de Nomes
 
