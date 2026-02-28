@@ -94,6 +94,41 @@ Foi criado o canvas 3D base dentro do stage, ainda sem assumir as interacoes do 
 
 - esta entrada deve ser fechada com commit e push apos a validacao final desta task
 
+## 2026-02-28 - TASK-003 do PBI-048 concluida
+
+### Resumo
+
+O canvas 3D passou a usar camera ortografica com enquadramento isometrico base.
+
+### Entregas realizadas
+
+- configuracao de `OrthographicCamera` como camera padrao do stage 3D
+- definicao de constantes de posicao, zoom e ponto de `lookAt`
+- estabilizacao do framing inicial para a futura malha hexagonal 3D
+
+### Arquivos principais criados ou alterados
+
+- `src/components/Stage3DCanvas.tsx`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/TASKS/DONE-TASK-003_CONFIGURAR_CAMERA_ORTOGRAFICA_ISOMETRICA.md`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-048 - Migrar Stage Hexagonal para Renderizacao 3D Isometrica Real`
+- `TASK-003 - Configurar Camera Ortografica Isometrica`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- o canvas 3D deve manter leitura isometrica mais limpa e sem distorcao de perspectiva
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta task
+
 ## 2026-02-28 - Planejamento do PBI-048 para migracao do stage para 3D isometrico real
 
 ### Resumo

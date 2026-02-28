@@ -1,4 +1,9 @@
+import { OrthographicCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+
+const STAGE_3D_CAMERA_POSITION: [number, number, number] = [7.5, 7, 7.5];
+const STAGE_3D_CAMERA_LOOK_AT: [number, number, number] = [0, -0.5, 0];
+const STAGE_3D_CAMERA_ZOOM = 92;
 
 function Stage3DBackdrop() {
   return (
@@ -28,6 +33,17 @@ export function Stage3DCanvas() {
         frameloop="demand"
         gl={{ alpha: true, antialias: true }}
       >
+        <OrthographicCamera
+          far={100}
+          makeDefault
+          near={0.1}
+          onUpdate={(camera) => {
+            camera.lookAt(...STAGE_3D_CAMERA_LOOK_AT);
+            camera.updateProjectionMatrix();
+          }}
+          position={STAGE_3D_CAMERA_POSITION}
+          zoom={STAGE_3D_CAMERA_ZOOM}
+        />
         <Stage3DBackdrop />
       </Canvas>
     </div>
