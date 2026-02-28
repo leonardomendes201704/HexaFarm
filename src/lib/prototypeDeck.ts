@@ -4,6 +4,7 @@ export const DECK_SIZE = 24;
 export const HAND_SIZE = 4;
 
 export type CardDefinition = {
+  coinYield: number;
   description: string;
   energyCost: number;
   id: string;
@@ -29,6 +30,7 @@ export type PrototypeDeckState = {
 
 const CARD_LIBRARY: CardDefinition[] = [
   {
+    coinYield: 2,
     description: "Cria um campo basico para expandir sua producao inicial.",
     energyCost: 1,
     id: "card-field-01",
@@ -37,6 +39,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "field",
   },
   {
+    coinYield: 1,
     description: "Adiciona um jardim acolhedor e aumenta a afinidade visual da run.",
     energyCost: 1,
     id: "card-garden-01",
@@ -45,6 +48,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "garden",
   },
   {
+    coinYield: -1,
     description: "Abre um lago raso para apoiar irrigacao e rotas futuras.",
     energyCost: 2,
     id: "card-pond-01",
@@ -53,6 +57,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "pond",
   },
   {
+    coinYield: 1,
     description: "Expande a borda com um bosque leve e utilitario.",
     energyCost: 1,
     id: "card-wild-01",
@@ -61,6 +66,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "wild",
   },
   {
+    coinYield: 3,
     description: "Adiciona mais espaco fertil para cultivar cedo.",
     energyCost: 2,
     id: "card-field-02",
@@ -69,6 +75,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "field",
   },
   {
+    coinYield: 2,
     description: "Transforma a borda em uma area floral mais charmosa.",
     energyCost: 1,
     id: "card-garden-02",
@@ -77,6 +84,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "garden",
   },
   {
+    coinYield: 1,
     description: "Cria um lago mais amplo, caro mas muito eficiente.",
     energyCost: 2,
     id: "card-pond-02",
@@ -85,6 +93,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "pond",
   },
   {
+    coinYield: 2,
     description: "Expansao silvestre rara, util para runs longas.",
     energyCost: 2,
     id: "card-wild-02",
@@ -93,6 +102,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "wild",
   },
   {
+    coinYield: 1,
     description: "Campo barato para acelerar curvas de abertura.",
     energyCost: 1,
     id: "card-field-03",
@@ -101,6 +111,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "field",
   },
   {
+    coinYield: 4,
     description: "Jardim premium, perfeito para runs de valor.",
     energyCost: 2,
     id: "card-garden-03",
@@ -207,6 +218,14 @@ export function getCardDefinition(cardId: string) {
 
 export function getCardLibrary() {
   return [...CARD_LIBRARY];
+}
+
+export function formatCoinYield(coinYield: number) {
+  return `${coinYield >= 0 ? "+" : ""}${coinYield}`;
+}
+
+export function getCoinYieldLabel(coinYield: number) {
+  return `${formatCoinYield(coinYield)}/dia`;
 }
 
 function createCardInstance(cardDefinition: CardDefinition, index: number): ExpansionCard {

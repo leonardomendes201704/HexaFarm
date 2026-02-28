@@ -1,8 +1,9 @@
-import type { PrototypeTileType } from "./hexGrid";
+import { createInitialPrototypeTiles, type ExpansionTileType, type PrototypeTileType } from "./hexGrid";
 import {
   createStarterDeckSelection,
   createStarterOwnedCollection,
   DECK_SIZE,
+  formatCoinYield,
   getCardDefinition,
   getOwnedQuantity,
   sanitizeDeckSelection,
@@ -11,7 +12,7 @@ import {
 
 const SAVE_KEY = "hexafarm.save";
 const LEGACY_SAVE_KEY = "hexafarm.save.stub";
-const CURRENT_SAVE_VERSION = 3;
+const CURRENT_SAVE_VERSION = 4;
 
 export const PROTOTYPE_BASE_ENERGY = 3;
 export const PROTOTYPE_RUN_LENGTH_DAYS = 7;
@@ -48,6 +49,35 @@ type VersionTwoSaveSnapshot = {
   version: number;
 };
 
+type VersionThreeSaveRunState = {
+  biomeName: string;
+  day: number;
+  deckCardIds: string[];
+  lastRentPaid: boolean | null;
+  phase: RunPhase;
+  rentDue: number;
+  runLengthDays: number;
+  seasonLabel: string;
+  tilesPlaced: number;
+  waifuAffinity: number;
+  resources: {
+    coins: number;
+    energy: number;
+    seeds: number;
+  };
+};
+
+type VersionThreeSaveSnapshot = {
+  activeRun: VersionThreeSaveRunState;
+  createdAt: string;
+  lastActionLabel: string;
+  lastOpenedAt: string;
+  meta: SaveMetaState;
+  profileName: string;
+  sessionCount: number;
+  version: number;
+};
+
 export type RunPhase = "deckbuilding" | "running" | "shop";
 
 export type SaveMetaState = {
@@ -57,11 +87,20 @@ export type SaveMetaState = {
   ownedCards: OwnedCardStack[];
 };
 
+export type SavePlacedTileState = {
+  cardId: string;
+  dailyCoinYield: number;
+  q: number;
+  r: number;
+  tileType: ExpansionTileType;
+};
+
 export type SaveRunState = {
   biomeName: string;
   day: number;
   deckCardIds: string[];
   lastRentPaid: boolean | null;
+  placedTiles: SavePlacedTileState[];
   phase: RunPhase;
   rentDue: number;
   runLengthDays: number;
@@ -151,6 +190,25 @@ function isOwnedCardStack(candidateValue: unknown): candidateValue is OwnedCardS
   return typeof typedCandidate.cardId === "string" && typeof typedCandidate.quantity === "number";
 }
 
+function isSavePlacedTileState(candidateValue: unknown): candidateValue is SavePlacedTileState {
+  if (!candidateValue || typeof candidateValue !== "object") {
+    return false;
+  }
+
+  const typedCandidate = candidateValue as Partial<SavePlacedTileState>;
+
+  return (
+    typeof typedCandidate.cardId === "string" &&
+    typeof typedCandidate.dailyCoinYield === "number" &&
+    typeof typedCandidate.q === "number" &&
+    typeof typedCandidate.r === "number" &&
+    (typedCandidate.tileType === "field" ||
+      typedCandidate.tileType === "garden" ||
+      typedCandidate.tileType === "pond" ||
+      typedCandidate.tileType === "wild")
+  );
+}
+
 function isSaveMetaState(candidateValue: unknown): candidateValue is SaveMetaState {
   if (!candidateValue || typeof candidateValue !== "object") {
     return false;
@@ -171,6 +229,53 @@ function isRunPhase(candidateValue: unknown): candidateValue is RunPhase {
   return candidateValue === "deckbuilding" || candidateValue === "running" || candidateValue === "shop";
 }
 
+function isVersionThreeSaveRunState(candidateValue: unknown): candidateValue is VersionThreeSaveRunState {
+  if (!candidateValue || typeof candidateValue !== "object") {
+    return false;
+  }
+
+  const typedCandidate = candidateValue as Partial<VersionThreeSaveRunState>;
+  const typedResources =
+    typedCandidate.resources as Partial<VersionThreeSaveRunState["resources"]> | undefined;
+
+  return (
+    typeof typedCandidate.biomeName === "string" &&
+    typeof typedCandidate.day === "number" &&
+    Array.isArray(typedCandidate.deckCardIds) &&
+    typedCandidate.deckCardIds.every((cardId) => typeof cardId === "string") &&
+    (typedCandidate.lastRentPaid === null || typeof typedCandidate.lastRentPaid === "boolean") &&
+    isRunPhase(typedCandidate.phase) &&
+    typeof typedCandidate.rentDue === "number" &&
+    typeof typedCandidate.runLengthDays === "number" &&
+    typeof typedCandidate.seasonLabel === "string" &&
+    typeof typedCandidate.tilesPlaced === "number" &&
+    typeof typedCandidate.waifuAffinity === "number" &&
+    !!typedResources &&
+    typeof typedResources.coins === "number" &&
+    typeof typedResources.energy === "number" &&
+    typeof typedResources.seeds === "number"
+  );
+}
+
+function isVersionThreeSaveSnapshot(candidateValue: unknown): candidateValue is VersionThreeSaveSnapshot {
+  if (!candidateValue || typeof candidateValue !== "object") {
+    return false;
+  }
+
+  const typedCandidate = candidateValue as Partial<VersionThreeSaveSnapshot>;
+
+  return (
+    typedCandidate.version === 3 &&
+    typeof typedCandidate.createdAt === "string" &&
+    typeof typedCandidate.lastActionLabel === "string" &&
+    typeof typedCandidate.lastOpenedAt === "string" &&
+    typeof typedCandidate.profileName === "string" &&
+    typeof typedCandidate.sessionCount === "number" &&
+    isSaveMetaState(typedCandidate.meta) &&
+    isVersionThreeSaveRunState(typedCandidate.activeRun)
+  );
+}
+
 function isSaveRunState(candidateValue: unknown): candidateValue is SaveRunState {
   if (!candidateValue || typeof candidateValue !== "object") {
     return false;
@@ -185,6 +290,8 @@ function isSaveRunState(candidateValue: unknown): candidateValue is SaveRunState
     Array.isArray(typedCandidate.deckCardIds) &&
     typedCandidate.deckCardIds.every((cardId) => typeof cardId === "string") &&
     (typedCandidate.lastRentPaid === null || typeof typedCandidate.lastRentPaid === "boolean") &&
+    Array.isArray(typedCandidate.placedTiles) &&
+    typedCandidate.placedTiles.every((tile) => isSavePlacedTileState(tile)) &&
     isRunPhase(typedCandidate.phase) &&
     typeof typedCandidate.rentDue === "number" &&
     typeof typedCandidate.runLengthDays === "number" &&
@@ -236,6 +343,7 @@ function createDefaultRunState(
     day: 1,
     deckCardIds: [...deckCardIds],
     lastRentPaid: null,
+    placedTiles: [],
     phase,
     rentDue,
     runLengthDays: PROTOTYPE_RUN_LENGTH_DAYS,
@@ -248,6 +356,61 @@ function createDefaultRunState(
       seeds: 4,
     },
   };
+}
+
+function createPlacedTileState(
+  cardId: string,
+  dailyCoinYield: number,
+  q: number,
+  r: number,
+  tileType: ExpansionTileType,
+): SavePlacedTileState {
+  return {
+    cardId,
+    dailyCoinYield,
+    q,
+    r,
+    tileType,
+  };
+}
+
+function getFallbackCardIdForTileType(tileType: ExpansionTileType) {
+  switch (tileType) {
+    case "field":
+      return "card-field-01";
+    case "garden":
+      return "card-garden-01";
+    case "pond":
+      return "card-pond-01";
+    case "wild":
+      return "card-wild-01";
+    default:
+      return "card-field-01";
+  }
+}
+
+function migratePlacedTilesFromTileCount(tileCount: number) {
+  const migratedTiles = createInitialPrototypeTiles(tileCount);
+
+  return migratedTiles
+    .flatMap((tile) => {
+      if (tile.tileType === "home") {
+        return [];
+      }
+
+      const fallbackCardId = getFallbackCardIdForTileType(tile.tileType);
+      const fallbackCard = getCardDefinition(fallbackCardId);
+
+      return [
+        createPlacedTileState(
+          fallbackCardId,
+          fallbackCard?.coinYield ?? 0,
+          tile.q,
+          tile.r,
+          tile.tileType,
+        ),
+      ];
+    });
 }
 
 function createSaveSnapshotFromLegacySnapshot(legacySnapshot: LegacySaveSnapshot): SaveSnapshot {
@@ -267,17 +430,19 @@ function createSaveSnapshotFromLegacySnapshot(legacySnapshot: LegacySaveSnapshot
 
 function createSaveSnapshotFromVersionTwoSnapshot(versionTwoSnapshot: VersionTwoSaveSnapshot): SaveSnapshot {
   const defaultMeta = createDefaultMetaState();
+  const placedTiles = migratePlacedTilesFromTileCount(versionTwoSnapshot.activeRun.tilesPlaced);
 
   return {
     activeRun: {
       ...createDefaultRunState(defaultMeta.nextRentCost, "running"),
       biomeName: versionTwoSnapshot.activeRun.biomeName,
       day: versionTwoSnapshot.activeRun.day,
+      placedTiles,
       resources: {
         ...versionTwoSnapshot.activeRun.resources,
       },
       seasonLabel: versionTwoSnapshot.activeRun.seasonLabel,
-      tilesPlaced: versionTwoSnapshot.activeRun.tilesPlaced,
+      tilesPlaced: placedTiles.length + 1,
       waifuAffinity: versionTwoSnapshot.activeRun.waifuAffinity,
     },
     createdAt: versionTwoSnapshot.createdAt,
@@ -286,6 +451,22 @@ function createSaveSnapshotFromVersionTwoSnapshot(versionTwoSnapshot: VersionTwo
     meta: defaultMeta,
     profileName: versionTwoSnapshot.profileName,
     sessionCount: versionTwoSnapshot.sessionCount,
+    version: CURRENT_SAVE_VERSION,
+  };
+}
+
+function createSaveSnapshotFromVersionThreeSnapshot(
+  versionThreeSnapshot: VersionThreeSaveSnapshot,
+): SaveSnapshot {
+  const placedTiles = migratePlacedTilesFromTileCount(versionThreeSnapshot.activeRun.tilesPlaced);
+
+  return {
+    ...versionThreeSnapshot,
+    activeRun: {
+      ...versionThreeSnapshot.activeRun,
+      placedTiles,
+      tilesPlaced: placedTiles.length + 1,
+    },
     version: CURRENT_SAVE_VERSION,
   };
 }
@@ -300,6 +481,10 @@ function parseStoredSnapshot(rawValue: string): SaveSnapshot | null {
 
     if (isVersionTwoSaveSnapshot(parsedValue)) {
       return createSaveSnapshotFromVersionTwoSnapshot(parsedValue);
+    }
+
+    if (isVersionThreeSaveSnapshot(parsedValue)) {
+      return createSaveSnapshotFromVersionThreeSnapshot(parsedValue);
     }
 
     if (isLegacySaveSnapshot(parsedValue)) {
@@ -366,6 +551,14 @@ function updateOwnedCards(ownedCards: OwnedCardStack[], cardId: string) {
   );
 }
 
+export function getRunDailyCoinYield(runState: SaveRunState) {
+  return runState.placedTiles.reduce((totalYield, tile) => totalYield + tile.dailyCoinYield, 0);
+}
+
+export function getRunDailyCoinYieldLabel(runState: SaveRunState) {
+  return `${formatCoinYield(getRunDailyCoinYield(runState))}/dia`;
+}
+
 export function getSavedRun() {
   return readSaveSnapshot();
 }
@@ -415,15 +608,15 @@ export function continueSavedRun() {
 function getExpansionRewards(tileType: Exclude<PrototypeTileType, "home">) {
   switch (tileType) {
     case "field":
-      return { coins: 2, energy: 0, seeds: 1, waifuAffinity: 0 };
+      return { energy: 0, seeds: 1, waifuAffinity: 0 };
     case "garden":
-      return { coins: 3, energy: 0, seeds: 0, waifuAffinity: 1 };
+      return { energy: 0, seeds: 0, waifuAffinity: 1 };
     case "pond":
-      return { coins: 1, energy: 1, seeds: 0, waifuAffinity: 0 };
+      return { energy: 1, seeds: 0, waifuAffinity: 0 };
     case "wild":
-      return { coins: 1, energy: 0, seeds: 1, waifuAffinity: 1 };
+      return { energy: 0, seeds: 1, waifuAffinity: 1 };
     default:
-      return { coins: 0, energy: 0, seeds: 0, waifuAffinity: 0 };
+      return { energy: 0, seeds: 0, waifuAffinity: 0 };
   }
 }
 
@@ -476,10 +669,7 @@ export function prepareNextRun(deckCardIds: string[]) {
   return updatedSave;
 }
 
-export function registerPrototypeExpansion(
-  tileType: Exclude<PrototypeTileType, "home">,
-  energySpent = 1,
-) {
+export function registerPrototypeExpansion(placedTile: SavePlacedTileState, energySpent = 1) {
   const currentSave = readSaveSnapshot();
 
   if (!currentSave) {
@@ -490,13 +680,14 @@ export function registerPrototypeExpansion(
     return currentSave;
   }
 
-  const rewards = getExpansionRewards(tileType);
+  const rewards = getExpansionRewards(placedTile.tileType);
   const updatedSave: SaveSnapshot = {
     ...currentSave,
     activeRun: {
       ...currentSave.activeRun,
+      placedTiles: [...currentSave.activeRun.placedTiles, placedTile],
       resources: {
-        coins: currentSave.activeRun.resources.coins + rewards.coins,
+        ...currentSave.activeRun.resources,
         energy:
           Math.max(0, currentSave.activeRun.resources.energy - energySpent) + rewards.energy,
         seeds: currentSave.activeRun.resources.seeds + rewards.seeds,
@@ -504,7 +695,9 @@ export function registerPrototypeExpansion(
       tilesPlaced: currentSave.activeRun.tilesPlaced + 1,
       waifuAffinity: currentSave.activeRun.waifuAffinity + rewards.waifuAffinity,
     },
-    lastActionLabel: `Tile ${tileType} adicionado ao prototipo`,
+    lastActionLabel: `Tile ${placedTile.tileType} adicionado ao prototipo com rendimento ${formatCoinYield(
+      placedTile.dailyCoinYield,
+    )}/dia`,
     lastOpenedAt: new Date().toISOString(),
   };
 
@@ -524,10 +717,13 @@ export function advancePrototypeDay() {
     return currentSave;
   }
 
+  const dailyCoinYield = getRunDailyCoinYield(currentSave.activeRun);
+  const coinsAfterYield = Math.max(0, currentSave.activeRun.resources.coins + dailyCoinYield);
+
   if (currentSave.activeRun.day >= currentSave.activeRun.runLengthDays) {
-    const canPayRent = currentSave.activeRun.resources.coins >= currentSave.activeRun.rentDue;
+    const canPayRent = coinsAfterYield >= currentSave.activeRun.rentDue;
     const shopCoinsEarned = canPayRent
-      ? currentSave.activeRun.resources.coins - currentSave.activeRun.rentDue
+      ? coinsAfterYield - currentSave.activeRun.rentDue
       : 0;
     const updatedSave: SaveSnapshot = {
       ...currentSave,
@@ -537,12 +733,17 @@ export function advancePrototypeDay() {
         phase: "shop",
         resources: {
           ...currentSave.activeRun.resources,
+          coins: coinsAfterYield,
           energy: 0,
         },
       },
       lastActionLabel: canPayRent
-        ? `Run encerrada. Aluguel pago e ${shopCoinsEarned} moedas foram para a loja`
-        : "Run encerrada. O aluguel nao foi pago e nao houve sobra para a loja",
+        ? `Rendimento ${formatCoinYield(
+            dailyCoinYield,
+          )}. Run encerrada, aluguel pago e ${shopCoinsEarned} moedas foram para a loja`
+        : `Rendimento ${formatCoinYield(
+            dailyCoinYield,
+          )}. Run encerrada e o aluguel nao foi pago`,
       lastOpenedAt: new Date().toISOString(),
       meta: {
         ...currentSave.meta,
@@ -565,10 +766,11 @@ export function advancePrototypeDay() {
       day: nextDay,
       resources: {
         ...currentSave.activeRun.resources,
+        coins: coinsAfterYield,
         energy: PROTOTYPE_BASE_ENERGY,
       },
     },
-    lastActionLabel: `Dia ${nextDay} iniciado`,
+    lastActionLabel: `Dia ${nextDay} iniciado com rendimento ${formatCoinYield(dailyCoinYield)} moedas`,
     lastOpenedAt: new Date().toISOString(),
   };
 

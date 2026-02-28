@@ -6,7 +6,6 @@ import { HexMapPrototype } from "../components/HexMapPrototype";
 import { SaveSummaryCard } from "../components/SaveSummaryCard";
 import {
   createExpandedTile,
-  createInitialPrototypeTiles,
   getFrontierSlots,
   type HexCoord,
   type HexTile,
@@ -28,22 +27,41 @@ import {
 import {
   advancePrototypeDay,
   getSavedRun,
+  getRunDailyCoinYieldLabel,
   prepareNextRun,
   PROTOTYPE_BASE_ENERGY,
   PROTOTYPE_RUN_LENGTH_DAYS,
   purchaseOwnedCard,
   registerPrototypeExpansion,
   startConfiguredRun,
+  type SavePlacedTileState,
   type SaveSnapshot,
 } from "../lib/save";
 
 type HudModalId = "help" | "menu" | "status" | null;
 
-function createBoardState(tileCount = 1) {
-  const boardTiles = createInitialPrototypeTiles(tileCount);
+function createBoardState(placedTiles: SavePlacedTileState[] = []) {
+  const boardTiles: HexTile[] = [
+    {
+      dailyCoinYield: 0,
+      id: "0:0",
+      q: 0,
+      r: 0,
+      sourceCardId: null,
+      tileType: "home",
+    },
+    ...placedTiles.map((tile) => ({
+      dailyCoinYield: tile.dailyCoinYield,
+      id: `${tile.q}:${tile.r}`,
+      q: tile.q,
+      r: tile.r,
+      sourceCardId: tile.cardId,
+      tileType: tile.tileType,
+    })),
+  ];
 
   return {
-    selectedTileId: boardTiles[0]?.id ?? null,
+    selectedTileId: boardTiles[boardTiles.length - 1]?.id ?? boardTiles[0]?.id ?? null,
     tiles: boardTiles,
   };
 }
@@ -51,7 +69,7 @@ function createBoardState(tileCount = 1) {
 export function NewGameScreen() {
   const initialSave = getSavedRun();
   const initialDeckSelection = initialSave?.activeRun.deckCardIds ?? createStarterDeckSelection();
-  const initialBoardState = createBoardState(initialSave?.activeRun.tilesPlaced ?? 1);
+  const initialBoardState = createBoardState(initialSave?.activeRun.placedTiles ?? []);
 
   const [savedRun, setSavedRun] = useState<SaveSnapshot | null>(initialSave);
   const [tiles, setTiles] = useState<HexTile[]>(initialBoardState.tiles);
@@ -77,9 +95,10 @@ export function NewGameScreen() {
   const selectedDeckCount = deckSelection.length;
   const canStartRun = selectedDeckCount === DECK_SIZE;
   const shopOffers = getShopOffers(savedRun.meta.completedRuns);
+  const dailyCoinYieldLabel = getRunDailyCoinYieldLabel(savedRun.activeRun);
 
-  const applyBoardState = (tileCount = 1) => {
-    const nextBoardState = createBoardState(tileCount);
+  const applyBoardState = (placedTiles: SavePlacedTileState[] = []) => {
+    const nextBoardState = createBoardState(placedTiles);
 
     setTiles(nextBoardState.tiles);
     setSelectedTileId(nextBoardState.selectedTileId);
@@ -90,7 +109,7 @@ export function NewGameScreen() {
     setDeckSelection(nextSave.activeRun.deckCardIds);
     setDeckState(createDeckStateFromSelection(nextSave.activeRun.deckCardIds));
     setArmedCardId(null);
-    applyBoardState(nextSave.activeRun.tilesPlaced);
+    applyBoardState(nextSave.activeRun.placedTiles);
   };
 
   useEffect(() => {
@@ -189,8 +208,21 @@ export function NewGameScreen() {
       return;
     }
 
-    const createdTile = createExpandedTile(tiles, slot, armedCard.tileType);
-    const updatedSave = registerPrototypeExpansion(createdTile.tileType, armedCard.energyCost);
+    const createdTile = createExpandedTile(
+      tiles,
+      slot,
+      armedCard.tileType,
+      armedCard.coinYield,
+      armedCard.id,
+    );
+    const placedTile: SavePlacedTileState = {
+      cardId: armedCard.id,
+      dailyCoinYield: armedCard.coinYield,
+      q: createdTile.q,
+      r: createdTile.r,
+      tileType: createdTile.tileType,
+    };
+    const updatedSave = registerPrototypeExpansion(placedTile, armedCard.energyCost);
     const { nextState } = playExpansionCard(deckState, armedCard.instanceId);
 
     setTiles((currentTiles) => [...currentTiles, createdTile]);
@@ -283,6 +315,7 @@ export function NewGameScreen() {
           <span className="hud-pill">Moedas {savedRun.activeRun.resources.coins}</span>
           <span className="hud-pill">Loja {savedRun.meta.collectionCoins}</span>
           <span className="hud-pill">Energia {availableEnergy}</span>
+          <span className="hud-pill">Rend. {dailyCoinYieldLabel}</span>
           <button
             className="hud-button hud-button--action"
             disabled={!canRunGameplay}
@@ -308,6 +341,7 @@ export function NewGameScreen() {
             <span className="status-strip__item">Deck {savedRun.activeRun.deckCardIds.length}</span>
             <span className="status-strip__item">Bordas {frontierSlots.length}</span>
             <span className="status-strip__item">Tiles {tiles.length}</span>
+            <span className="status-strip__item">Rendimento {dailyCoinYieldLabel}</span>
             <span className="status-strip__item">Run {savedRun.meta.completedRuns + 1}</span>
           </div>
         </div>
@@ -363,12 +397,24 @@ export function NewGameScreen() {
                   >
                     <div className={`collection-card__art collection-card__art--${card.tileType}`}>
                       <span className="collection-card__cost">{card.energyCost}</span>
+                      <span
+                        className={`collection-card__yield ${
+                          card.coinYield < 0 ? "is-negative" : "is-positive"
+                        }`}
+                      >
+                        {card.coinYield >= 0 ? "+" : ""}
+                        {card.coinYield}/dia
+                      </span>
                     </div>
 
                     <div className="collection-card__copy">
                       <strong className="collection-card__title">{card.name}</strong>
                       <span className="collection-card__meta">
                         Possui {ownedQuantity} | No deck {selectedQuantity}
+                      </span>
+                      <span className="collection-card__meta">
+                        Rendimento {card.coinYield >= 0 ? "+" : ""}
+                        {card.coinYield}/dia
                       </span>
                     </div>
 
@@ -439,12 +485,24 @@ export function NewGameScreen() {
                   <article className={`collection-card collection-card--${card.tileType}`} key={`shop-${card.id}`}>
                     <div className={`collection-card__art collection-card__art--${card.tileType}`}>
                       <span className="collection-card__cost">{card.energyCost}</span>
+                      <span
+                        className={`collection-card__yield ${
+                          card.coinYield < 0 ? "is-negative" : "is-positive"
+                        }`}
+                      >
+                        {card.coinYield >= 0 ? "+" : ""}
+                        {card.coinYield}/dia
+                      </span>
                     </div>
 
                     <div className="collection-card__copy">
                       <strong className="collection-card__title">{card.name}</strong>
                       <span className="collection-card__meta">
                         Preco {card.purchaseCost} | Possui {ownedQuantity}
+                      </span>
+                      <span className="collection-card__meta">
+                        Rendimento {card.coinYield >= 0 ? "+" : ""}
+                        {card.coinYield}/dia
                       </span>
                     </div>
 
@@ -532,6 +590,10 @@ export function NewGameScreen() {
                 <span className="game-modal__stat-label">Aluguel</span>
                 <strong className="game-modal__stat-value">{savedRun.activeRun.rentDue}</strong>
               </div>
+              <div className="game-modal__stat-card">
+                <span className="game-modal__stat-label">Rendimento</span>
+                <strong className="game-modal__stat-value">{dailyCoinYieldLabel}</strong>
+              </div>
             </div>
           </div>
         </GameModal>
@@ -555,7 +617,7 @@ export function NewGameScreen() {
               </div>
               <div className="game-modal__tip">
                 <span className="game-modal__tip-key">E</span>
-                <p className="game-modal__tip-text">Fecha o dia. No dia 7, resolve o aluguel e abre a loja.</p>
+                <p className="game-modal__tip-text">Fecha o dia, aplica o rendimento dos tiles e, no dia 7, resolve o aluguel.</p>
               </div>
               <div className="game-modal__tip">
                 <span className="game-modal__tip-key">M</span>

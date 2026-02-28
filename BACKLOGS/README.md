@@ -69,6 +69,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `EPICO-009`: correcao geometrica do mapa hexagonal
 - `EPICO-010`: controle de camera e rodape fixo da run
 - `EPICO-011`: refinamento de visibilidade do HUD
+- `EPICO-012`: economia de rendimento diario dos tiles
 - `PBI-001`: tela inicial do jogo HexaFarm
 - `PBI-002`: estrutura base de navegacao entre telas
 - `PBI-003`: sistema minimo de save local
@@ -81,6 +82,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-010`: corrigir encaixe e geometria dos hexagonos
 - `PBI-011`: implementar pan do stage e fixar a mao no rodape
 - `PBI-012`: ocultar badge de tile selecionado
+- `PBI-013`: implementar rendimento diario por carta e tile
 
 ## Convencao de Nomes
 

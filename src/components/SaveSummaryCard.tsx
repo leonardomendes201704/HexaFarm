@@ -1,4 +1,4 @@
-import type { SaveSnapshot } from "../lib/save";
+import { getRunDailyCoinYieldLabel, type SaveSnapshot } from "../lib/save";
 
 type SaveSummaryCardProps = {
   emptyLabel?: string;
@@ -35,6 +35,7 @@ export function SaveSummaryCard({
           Moedas: {save.activeRun.resources.coins} | Sementes: {save.activeRun.resources.seeds} |
           Energia: {save.activeRun.resources.energy}
         </p>
+        <p className="route-note__text">Rendimento: {getRunDailyCoinYieldLabel(save.activeRun)}</p>
         <p className="route-note__text">
           Fase: {save.activeRun.phase} | Aluguel: {save.activeRun.rentDue} | Loja:{" "}
           {save.meta.collectionCoins}

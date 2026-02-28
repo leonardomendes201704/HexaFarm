@@ -993,6 +993,38 @@ button:disabled {
     inset 0 0 0 2px rgba(181, 138, 80, 0.18);
 }
 
+.expansion-card__yield,
+.collection-card__yield {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0 10px;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  box-shadow:
+    0 8px 12px rgba(112, 88, 57, 0.14),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.18);
+}
+
+.expansion-card__yield.is-positive,
+.collection-card__yield.is-positive {
+  background: rgba(232, 255, 229, 0.92);
+  color: #2c7b38;
+}
+
+.expansion-card__yield.is-negative,
+.collection-card__yield.is-negative {
+  background: rgba(255, 230, 225, 0.94);
+  color: #a2473a;
+}
+
 .expansion-card__art::after {
   position: absolute;
   inset: auto 12px 10px;
@@ -1179,6 +1211,12 @@ button:disabled {
 .expansion-card__title {
   color: #593d1d;
   font-size: clamp(0.86rem, 1vw, 1rem);
+}
+
+.expansion-card__yield-text {
+  color: rgba(111, 75, 46, 0.88);
+  font-size: 0.74rem;
+  font-weight: 800;
 }
 
 .hex-board {
@@ -1884,6 +1922,13 @@ button:disabled {
   color: #925a21;
   font-size: 0.8rem;
   font-weight: 900;
+}
+
+.collection-card__yield {
+  top: 10px;
+  right: 10px;
+  min-height: 30px;
+  font-size: 0.72rem;
 }
 
 .collection-card__copy {

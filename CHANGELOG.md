@@ -18,6 +18,75 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-013 de rendimento diario por carta e tile
+
+### Resumo
+
+Foi implementado um sistema de rendimento diario: cada carta agora define quantas moedas o tile gerado produz no fim do dia, inclusive com valores negativos.
+
+### Entregas realizadas
+
+- criacao do `EPICO-012` e do backlog completo do `PBI-013`
+- adicao de `coinYield` ao catalogo de cartas
+- exibicao do rendimento nas cartas da mao, na montagem de deck e na loja
+- persistencia de tiles colocados com carta de origem e rendimento diario
+- migracao automatica de saves antigos para a nova estrutura de tiles persistidos
+- remocao do ganho imediato de moedas na expansao e migracao da economia para o fim do dia
+- aplicacao do rendimento acumulado ao fechar o dia
+- aplicacao do rendimento do ultimo dia antes da validacao de aluguel
+- exposicao do rendimento acumulado no HUD, nos modais e no resumo do save
+- conclusao do `PBI-013` e do `EPICO-012`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-012_ECONOMIA_DE_RENDIMENTO_DIARIO_DOS_TILES.md`
+- `BACKLOGS/PBIS/PBI-013_IMPLEMENTAR_RENDIMENTO_DIARIO_POR_CARTA_E_TILE/DONE-PBI-013_IMPLEMENTAR_RENDIMENTO_DIARIO_POR_CARTA_E_TILE.md`
+- `BACKLOGS/PBIS/PBI-013_IMPLEMENTAR_RENDIMENTO_DIARIO_POR_CARTA_E_TILE/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-013_IMPLEMENTAR_RENDIMENTO_DIARIO_POR_CARTA_E_TILE/TASKS/DONE-*`
+- `src/lib/prototypeDeck.ts`
+- `src/lib/hexGrid.ts`
+- `src/lib/save.ts`
+- `src/components/ExpansionHand.tsx`
+- `src/components/SaveSummaryCard.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-012 - Economia de Rendimento Diario dos Tiles`
+- `PBI-013 - Implementar Rendimento Diario por Carta e Tile`
+- `HISTORIA-001 - Definir Rendimento Diario nas Cartas`
+- `HISTORIA-002 - Persistir Tiles com Rendimento na Run`
+- `HISTORIA-003 - Aplicar Producao Diaria ao Fechar o Dia`
+
+### Tasks executadas
+
+- `TASK-001 - Adicionar coinYield ao Catalogo de Cartas`
+- `TASK-002 - Exibir Rendimento nas Cartas da Mao, Deckbuilding e Loja`
+- `TASK-003 - Persistir placedTiles com cardId e Rendimento`
+- `TASK-004 - Migrar Saves Antigos para a Nova Estrutura`
+- `TASK-005 - Aplicar Rendimento no Fim do Dia e no Aluguel`
+- `TASK-006 - Expor Rendimento Acumulado no HUD e nos Resumos`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual do fluxo de colocacao de tile e fechamento do dia com rendimento
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- cada carta mostra seu rendimento diario
+- cada tile colocado preserva o rendimento da carta de origem
+- o fim do dia aplica a soma do rendimento do mapa antes de avancar
+- o aluguel do ultimo dia considera o rendimento produzido no proprio fechamento
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-013` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-012 de ocultar a badge de tile selecionado
 
 ### Resumo

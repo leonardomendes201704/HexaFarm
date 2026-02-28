@@ -7,7 +7,9 @@ export type HexCoord = {
 };
 
 export type HexTile = HexCoord & {
+  dailyCoinYield: number;
   id: string;
+  sourceCardId: string | null;
   tileType: PrototypeTileType;
 };
 
@@ -90,9 +92,11 @@ export function createInitialPrototypeTiles(tileCount: number) {
   const normalizedTileCount = Math.max(tileCount, 1);
   const tiles: HexTile[] = [
     {
+      dailyCoinYield: 0,
       id: getHexKey({ q: 0, r: 0 }),
       q: 0,
       r: 0,
+      sourceCardId: null,
       tileType: "home",
     },
   ];
@@ -105,9 +109,11 @@ export function createInitialPrototypeTiles(tileCount: number) {
     }
 
     tiles.push({
+      dailyCoinYield: 0,
       id: getHexKey(nextFrontier),
       q: nextFrontier.q,
       r: nextFrontier.r,
+      sourceCardId: null,
       tileType: getNextPrototypeTileType(tiles.length - 1),
     });
   }
@@ -116,14 +122,18 @@ export function createInitialPrototypeTiles(tileCount: number) {
 }
 
 export function createExpandedTile(
-  tiles: HexTile[],
+  _tiles: HexTile[],
   frontierSlot: HexCoord,
   tileType: ExpansionTileType,
+  dailyCoinYield: number,
+  sourceCardId: string,
 ): HexTile & { tileType: ExpansionTileType } {
   return {
+    dailyCoinYield,
     id: getHexKey(frontierSlot),
     q: frontierSlot.q,
     r: frontierSlot.r,
+    sourceCardId,
     tileType,
   };
 }
