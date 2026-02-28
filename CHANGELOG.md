@@ -18,6 +18,59 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-020 de cards da home quase transparentes
+
+### Resumo
+
+Foi feito um ajuste extremo de translucidez para deixar os cards da home quase transparentes, com a arte de fundo aparecendo muito mais.
+
+### Entregas realizadas
+
+- criacao do `EPICO-019` e do backlog completo do `PBI-020`
+- reducao adicional da opacidade dos dois paineis principais da home
+- reducao da presenca visual dos chips e do botao ghost
+- reducao adicional da opacidade dos blocos de feedback e resumo
+- preservacao de um veu minimo para manter leitura
+- conclusao do `PBI-020` e do `EPICO-019`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-019_MINIMIZAR_A_PRESENCA_DOS_CARDS_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-020_DEIXAR_OS_CARDS_DA_HOME_QUASE_TRANSPARENTES/DONE-PBI-020_DEIXAR_OS_CARDS_DA_HOME_QUASE_TRANSPARENTES.md`
+- `BACKLOGS/PBIS/PBI-020_DEIXAR_OS_CARDS_DA_HOME_QUASE_TRANSPARENTES/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-020_DEIXAR_OS_CARDS_DA_HOME_QUASE_TRANSPARENTES/TASKS/DONE-*`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-019 - Minimizar a Presenca dos Cards da Home`
+- `PBI-020 - Deixar os Cards da Home Quase Transparentes`
+- `HISTORIA-001 - Reduzir os Cards da Home ao Minimo Visual`
+
+### Tasks executadas
+
+- `TASK-001 - Reduzir Ainda Mais a Opacidade dos Paineis`
+- `TASK-002 - Reduzir a Presenca dos Blocos Internos`
+- `TASK-003 - Preservar um Veu Minimo para Leitura`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da home com cards quase transparentes
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- os cards agora deixam a arte de fundo aparecer muito mais
+- chips e blocos internos ficaram mais discretos
+- a home ainda preserva leitura minima
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-020` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-019 de aumento de translucidez dos cards da home
 
 ### Resumo
