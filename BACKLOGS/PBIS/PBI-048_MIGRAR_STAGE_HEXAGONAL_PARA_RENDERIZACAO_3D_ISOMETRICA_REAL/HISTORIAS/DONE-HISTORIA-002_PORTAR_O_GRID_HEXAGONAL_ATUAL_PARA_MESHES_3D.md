@@ -6,7 +6,7 @@ Historia
 
 ## Status
 
-Planejado
+Concluido
 
 ## Objetivo
 
@@ -17,3 +17,9 @@ Converter a representacao visual dos tiles e slots do grid atual para meshes 3D 
 - tiles sao renderizados como prismas hexagonais
 - slots de fronteira sao renderizados no stage 3D
 - alinhamento do grid continua correto
+
+## Tasks Concluidas
+
+- `DONE-TASK-004`
+- `DONE-TASK-005`
+- `DONE-TASK-006`

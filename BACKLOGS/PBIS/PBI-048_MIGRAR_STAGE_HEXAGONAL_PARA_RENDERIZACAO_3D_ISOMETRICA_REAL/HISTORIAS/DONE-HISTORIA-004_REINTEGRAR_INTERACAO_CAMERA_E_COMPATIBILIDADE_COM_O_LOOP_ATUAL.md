@@ -6,7 +6,7 @@ Historia
 
 ## Status
 
-Planejado
+Concluido
 
 ## Objetivo
 
@@ -17,3 +17,10 @@ Reaplicar selecao, hover, pan e alvos de cartas sobre o novo stage 3D, sem quebr
 - raycasting seleciona tiles e slots corretamente
 - pan da camera substitui o pan atual do stage
 - cartas continuam interagindo com tiles e slots validos
+
+## Tasks Concluidas
+
+- `DONE-TASK-009`
+- `DONE-TASK-010`
+- `DONE-TASK-011`
+- `DONE-TASK-012`

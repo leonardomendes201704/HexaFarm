@@ -6,7 +6,7 @@ Historia
 
 ## Status
 
-Planejado
+Concluido
 
 ## Objetivo
 
@@ -17,3 +17,8 @@ Dar leitura visual real aos tipos de tile e aos cultivos plantados, usando mater
 - cada bioma tem leitura visual propria
 - tiles com cultivo exibem a cultura plantada
 - o mapa ganha profundidade visual sem perder clareza
+
+## Tasks Concluidas
+
+- `DONE-TASK-007`
+- `DONE-TASK-008`

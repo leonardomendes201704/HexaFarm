@@ -10,6 +10,7 @@ const STAGE_3D_CAMERA_POSITION: [number, number, number] = [7.5, 7, 7.5];
 const STAGE_3D_CAMERA_LOOK_AT: [number, number, number] = [0, -0.5, 0];
 const STAGE_3D_CAMERA_ZOOM = 92;
 const STAGE_3D_PAN_SCALE = 0.012;
+const STAGE_3D_REDUCED_DETAIL_THRESHOLD = 28;
 
 type Stage3DCanvasProps = {
   cropArmed: boolean;
@@ -196,6 +197,7 @@ type Stage3DSceneProps = {
   selectedTileId: string | null;
   setHoveredSlotKey: (slotKey: string | null) => void;
   setHoveredTileId: (tileId: string | null) => void;
+  useReducedDetail: boolean;
   tiles: HexTile[];
 };
 
@@ -213,6 +215,7 @@ function Stage3DScene({
   selectedTileId,
   setHoveredSlotKey,
   setHoveredTileId,
+  useReducedDetail,
   tiles,
 }: Stage3DSceneProps) {
   const cropTargetTileIdSet = new Set(cropTargetTileIds);
@@ -326,8 +329,8 @@ function Stage3DScene({
             radius={1}
             topColor={tileColors.top}
           >
-            <TileSurfaceAccent tileType={tile.tileType} />
-            <CropProp3D cropName={tile.plantedCropName} />
+            {!useReducedDetail ? <TileSurfaceAccent tileType={tile.tileType} /> : null}
+            {!useReducedDetail ? <CropProp3D cropName={tile.plantedCropName} /> : null}
           </HexPrismMesh3D>
         );
       })}
@@ -352,6 +355,7 @@ export function Stage3DCanvas({
   const [hoveredTileId, setHoveredTileId] = useState<string | null>(null);
   const [isPanning, setIsPanning] = useState(false);
   const [panOffset, setPanOffset] = useState({ x: 0, z: 0 });
+  const useReducedDetail = tiles.length + frontierSlots.length > STAGE_3D_REDUCED_DETAIL_THRESHOLD;
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -407,7 +411,7 @@ export function Stage3DCanvas({
       title="Mapa 3D do stage."
     >
       <Canvas
-        dpr={[1, 1.5]}
+        dpr={useReducedDetail ? [1, 1] : [1, 1.5]}
         frameloop="demand"
         gl={{ alpha: true, antialias: true }}
       >
@@ -426,6 +430,7 @@ export function Stage3DCanvas({
           selectedTileId={selectedTileId}
           setHoveredSlotKey={setHoveredSlotKey}
           setHoveredTileId={setHoveredTileId}
+          useReducedDetail={useReducedDetail}
           tiles={tiles}
         />
       </Canvas>

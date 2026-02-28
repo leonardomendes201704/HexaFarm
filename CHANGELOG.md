@@ -417,6 +417,44 @@ O empilhamento visual entre canvas 3D e overlays 2D foi formalizado no layout.
 
 - esta entrada deve ser fechada com commit e push apos a validacao final desta task
 
+## 2026-02-28 - TASK-012 do PBI-048 concluida e backlog do PBI-048 encerrado
+
+### Resumo
+
+Foi definido um fallback de performance para o stage 3D e o backlog do `PBI-048` foi encerrado com todas as historias e tasks concluidas.
+
+### Entregas realizadas
+
+- definicao de um limiar de fallback por volume de tiles e fronteiras no stage
+- reducao automatica de `dpr` e de detalhes secundarios quando a cena cresce
+- conclusao da `TASK-012`
+- conclusao do `PBI-048` com prefixo `DONE-`
+
+### Arquivos principais criados ou alterados
+
+- `src/components/Stage3DCanvas.tsx`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/TASKS/DONE-TASK-012_VALIDAR_PERFORMANCE_E_DEFINIR_CRITERIO_DE_FALLBACK.md`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/DONE-PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL.md`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-048 - Migrar Stage Hexagonal para Renderizacao 3D Isometrica Real`
+- `TASK-012 - Validar Performance e Definir Criterio de Fallback`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- o stage 3D passa a reduzir custo visual automaticamente em cenas mais densas
+- o backlog do `PBI-048` fica tecnicamente encerrado
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta task
+
 ## 2026-02-28 - Planejamento do PBI-048 para migracao do stage para 3D isometrico real
 
 ### Resumo

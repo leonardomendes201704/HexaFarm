@@ -6,7 +6,7 @@ Historia
 
 ## Status
 
-Planejado
+Concluido
 
 ## Objetivo
 
@@ -18,3 +18,9 @@ Preparar a fundacao tecnica do novo stage 3D, incluindo stack, canvas, cena, cam
 - canvas 3D montado dentro do stage atual
 - camera isometrica configurada
 - overlays 2D continuam independentes
+
+## Tasks Concluidas
+
+- `DONE-TASK-001`
+- `DONE-TASK-002`
+- `DONE-TASK-003`

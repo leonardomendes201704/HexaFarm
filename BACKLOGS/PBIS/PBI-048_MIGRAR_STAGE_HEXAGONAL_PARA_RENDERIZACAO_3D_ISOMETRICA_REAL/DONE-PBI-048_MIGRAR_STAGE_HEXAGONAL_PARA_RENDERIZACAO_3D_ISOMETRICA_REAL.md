@@ -6,7 +6,7 @@ PBI
 
 ## Status
 
-Em andamento
+Concluido
 
 ## Epic Vinculado
 
@@ -76,3 +76,10 @@ O jogo ja possui logica de grid axial, save, cartas de expansao, cartas de culti
 - `npm run build`
 - verificacao manual de performance e interacao em runtime
 - validacao visual do alinhamento isometrico e da leitura dos tiles
+
+## Encerramento
+
+- `DONE-HISTORIA-001 - Estruturar a Base 3D do Stage`
+- `DONE-HISTORIA-002 - Portar o Grid Hexagonal Atual para Meshes 3D`
+- `DONE-HISTORIA-003 - Representar Terrenos e Cultivos no Mapa 3D`
+- `DONE-HISTORIA-004 - Reintegrar Interacao, Camera e Compatibilidade com o Loop Atual`
