@@ -7,8 +7,12 @@ export type HexCoord = {
 };
 
 export type HexTile = HexCoord & {
+  baseCoinYield: number;
+  cropYieldBonus: number;
   dailyCoinYield: number;
   id: string;
+  plantedCropCardId: string | null;
+  plantedCropName: string | null;
   sourceCardId: string | null;
   tileType: PrototypeTileType;
 };
@@ -92,8 +96,12 @@ export function createInitialPrototypeTiles(tileCount: number) {
   const normalizedTileCount = Math.max(tileCount, 1);
   const tiles: HexTile[] = [
     {
+      baseCoinYield: 0,
+      cropYieldBonus: 0,
       dailyCoinYield: 0,
       id: getHexKey({ q: 0, r: 0 }),
+      plantedCropCardId: null,
+      plantedCropName: null,
       q: 0,
       r: 0,
       sourceCardId: null,
@@ -109,8 +117,12 @@ export function createInitialPrototypeTiles(tileCount: number) {
     }
 
     tiles.push({
+      baseCoinYield: 0,
+      cropYieldBonus: 0,
       dailyCoinYield: 0,
       id: getHexKey(nextFrontier),
+      plantedCropCardId: null,
+      plantedCropName: null,
       q: nextFrontier.q,
       r: nextFrontier.r,
       sourceCardId: null,
@@ -129,11 +141,30 @@ export function createExpandedTile(
   sourceCardId: string,
 ): HexTile & { tileType: ExpansionTileType } {
   return {
+    baseCoinYield: dailyCoinYield,
+    cropYieldBonus: 0,
     dailyCoinYield,
     id: getHexKey(frontierSlot),
+    plantedCropCardId: null,
+    plantedCropName: null,
     q: frontierSlot.q,
     r: frontierSlot.r,
     sourceCardId,
     tileType,
+  };
+}
+
+export function applyCropToTile(
+  tile: HexTile,
+  cropCardId: string,
+  cropName: string,
+  cropYieldBonus: number,
+) {
+  return {
+    ...tile,
+    cropYieldBonus,
+    dailyCoinYield: tile.baseCoinYield + cropYieldBonus,
+    plantedCropCardId: cropCardId,
+    plantedCropName: cropName,
   };
 }

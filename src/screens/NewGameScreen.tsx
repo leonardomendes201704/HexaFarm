@@ -6,6 +6,7 @@ import { GameModal } from "../components/GameModal";
 import { HexMapPrototype, type TileYieldBurst } from "../components/HexMapPrototype";
 import { SaveSummaryCard } from "../components/SaveSummaryCard";
 import {
+  applyCropToTile,
   createExpandedTile,
   getFrontierSlots,
   type HexCoord,
@@ -13,10 +14,12 @@ import {
 } from "../lib/hexGrid";
 import {
   addCardToDeckSelection,
+  canPlantCropOnTile,
   createDeckStateFromSelection,
   createStarterDeckSelection,
   DECK_SIZE,
   discardHandAndRefill,
+  getCardComboTargetsLabel,
   getCardLibrary,
   getOwnedQuantity,
   getSelectedQuantity,
@@ -33,6 +36,7 @@ import {
   PROTOTYPE_BASE_ENERGY,
   PROTOTYPE_RUN_LENGTH_DAYS,
   purchaseOwnedCard,
+  registerCropPlanting,
   registerPrototypeExpansion,
   startConfiguredRun,
   type SavePlacedTileState,
@@ -42,19 +46,49 @@ import {
 type HudModalId = "help" | "menu" | "status" | null;
 const DAY_RESOLUTION_DURATION_MS = 980;
 
+function getCardMetaLine(card: ReturnType<typeof getCardLibrary>[number]) {
+  if (card.cardKind === "crop") {
+    const comboTargetsLabel = getCardComboTargetsLabel(card);
+
+    return `Combo em ${comboTargetsLabel ?? "solo fertil"} | Bonus ${card.coinYield >= 0 ? "+" : ""}${card.coinYield}/dia`;
+  }
+
+  return `Rendimento ${card.coinYield >= 0 ? "+" : ""}${card.coinYield}/dia`;
+}
+
+function hasPlayableTarget(
+  card: ReturnType<typeof getCardLibrary>[number],
+  frontierSlots: HexCoord[],
+  tiles: HexTile[],
+) {
+  if (card.cardKind === "crop") {
+    return tiles.some((tile) => canPlantCropOnTile(card, tile));
+  }
+
+  return frontierSlots.length > 0;
+}
+
 function createBoardState(placedTiles: SavePlacedTileState[] = []) {
   const boardTiles: HexTile[] = [
     {
+      baseCoinYield: 0,
+      cropYieldBonus: 0,
       dailyCoinYield: 0,
       id: "0:0",
+      plantedCropCardId: null,
+      plantedCropName: null,
       q: 0,
       r: 0,
       sourceCardId: null,
       tileType: "home",
     },
     ...placedTiles.map((tile) => ({
+      baseCoinYield: tile.baseCoinYield ?? tile.dailyCoinYield - (tile.cropYieldBonus ?? 0),
+      cropYieldBonus: tile.cropYieldBonus ?? 0,
       dailyCoinYield: tile.dailyCoinYield,
       id: `${tile.q}:${tile.r}`,
+      plantedCropCardId: tile.plantedCropCardId ?? null,
+      plantedCropName: tile.plantedCropName ?? null,
       q: tile.q,
       r: tile.r,
       sourceCardId: tile.cardId,
@@ -101,6 +135,30 @@ export function NewGameScreen() {
   const canStartRun = selectedDeckCount === DECK_SIZE;
   const shopOffers = getShopOffers(savedRun.meta.completedRuns);
   const dailyCoinYieldLabel = getRunDailyCoinYieldLabel(savedRun.activeRun);
+  const playableCardInstanceIds = useMemo(() => {
+    if (!canRunGameplay || isResolvingDay) {
+      return [] as string[];
+    }
+
+    return deckState.hand
+      .filter(
+        (card) => availableEnergy >= card.energyCost && hasPlayableTarget(card, frontierSlots, tiles),
+      )
+      .map((card) => card.instanceId);
+  }, [availableEnergy, canRunGameplay, deckState.hand, frontierSlots, isResolvingDay, tiles]);
+  const playableCardInstanceIdSet = useMemo(
+    () => new Set(playableCardInstanceIds),
+    [playableCardInstanceIds],
+  );
+  const cropTargetTileIds = useMemo(() => {
+    if (!armedCard || armedCard.cardKind !== "crop") {
+      return [] as string[];
+    }
+
+    return tiles
+      .filter((tile) => canPlantCropOnTile(armedCard, tile))
+      .map((tile) => tile.id);
+  }, [armedCard, tiles]);
 
   const applyBoardState = (placedTiles: SavePlacedTileState[] = []) => {
     const nextBoardState = createBoardState(placedTiles);
@@ -195,13 +253,13 @@ export function NewGameScreen() {
   };
 
   const handleSelectCard = (cardId: string) => {
-    if (!canRunGameplay || isResolvingDay || frontierSlots.length === 0) {
+    if (!canRunGameplay || isResolvingDay) {
       return;
     }
 
     const selectedCard = deckState.hand.find((card) => card.instanceId === cardId);
 
-    if (!selectedCard || selectedCard.energyCost > availableEnergy) {
+    if (!selectedCard || !playableCardInstanceIdSet.has(cardId)) {
       return;
     }
 
@@ -209,7 +267,13 @@ export function NewGameScreen() {
   };
 
   const handlePlaceTile = (slot: HexCoord) => {
-    if (!canRunGameplay || isResolvingDay || !armedCard || armedCard.energyCost > availableEnergy) {
+    if (
+      !canRunGameplay ||
+      isResolvingDay ||
+      !armedCard ||
+      armedCard.cardKind !== "tile" ||
+      armedCard.energyCost > availableEnergy
+    ) {
       return;
     }
 
@@ -232,6 +296,42 @@ export function NewGameScreen() {
 
     setTiles((currentTiles) => [...currentTiles, createdTile]);
     setSelectedTileId(createdTile.id);
+    setDeckState(nextState);
+    setArmedCardId(null);
+    setSavedRun(updatedSave);
+  };
+
+  const handlePlantCrop = (tileId: string) => {
+    if (
+      !canRunGameplay ||
+      isResolvingDay ||
+      !armedCard ||
+      armedCard.cardKind !== "crop" ||
+      armedCard.energyCost > availableEnergy
+    ) {
+      return;
+    }
+
+    const targetTile = tiles.find((tile) => tile.id === tileId);
+
+    if (!targetTile || !canPlantCropOnTile(armedCard, targetTile)) {
+      return;
+    }
+
+    const plantedTile = applyCropToTile(targetTile, armedCard.id, armedCard.name, armedCard.coinYield);
+    const updatedSave = registerCropPlanting(
+      tileId,
+      armedCard.id,
+      armedCard.name,
+      armedCard.coinYield,
+      armedCard.energyCost,
+    );
+    const { nextState } = playExpansionCard(deckState, armedCard.instanceId);
+
+    setTiles((currentTiles) =>
+      currentTiles.map((tile) => (tile.id === tileId ? plantedTile : tile)),
+    );
+    setSelectedTileId(tileId);
     setDeckState(nextState);
     setArmedCardId(null);
     setSavedRun(updatedSave);
@@ -388,9 +488,12 @@ export function NewGameScreen() {
         </div>
 
         <HexMapPrototype
-          expansionArmed={canRunGameplay && !isResolvingDay && armedCard !== null}
+          cropArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "crop"}
+          cropTargetTileIds={cropTargetTileIds}
+          expansionArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "tile"}
           frontierSlots={frontierSlots}
           interactionLocked={isResolvingDay}
+          onPlantCrop={handlePlantCrop}
           onPlaceTile={handlePlaceTile}
           onSelectTile={setSelectedTileId}
           selectedTileId={selectedTileId}
@@ -403,11 +506,12 @@ export function NewGameScreen() {
         <ExpansionHand
           armedCardId={armedCardId}
           availableEnergy={availableEnergy}
-          canPlayCards={frontierSlots.length > 0 && !isResolvingDay}
+          hasPlayableCards={playableCardInstanceIds.length > 0}
           discardCount={deckState.discardPile.length}
           drawCount={deckState.drawPile.length}
           hand={deckState.hand}
           onSelectCard={handleSelectCard}
+          playableCardInstanceIds={playableCardInstanceIds}
         />
       ) : null}
 
@@ -463,7 +567,7 @@ export function NewGameScreen() {
                     locked={ownedQuantity === 0}
                     metaLines={[
                       `Possui ${ownedQuantity} | No deck ${selectedQuantity}`,
-                      `Rendimento ${card.coinYield >= 0 ? "+" : ""}${card.coinYield}/dia`,
+                      getCardMetaLine(card),
                     ]}
                   />
                 );
@@ -526,7 +630,7 @@ export function NewGameScreen() {
                     key={`shop-${card.id}`}
                     metaLines={[
                       `Preco ${card.purchaseCost} | Possui ${ownedQuantity}`,
-                      `Rendimento ${card.coinYield >= 0 ? "+" : ""}${card.coinYield}/dia`,
+                      getCardMetaLine(card),
                     ]}
                   />
                 );

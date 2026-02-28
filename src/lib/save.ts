@@ -88,8 +88,12 @@ export type SaveMetaState = {
 };
 
 export type SavePlacedTileState = {
+  baseCoinYield?: number;
   cardId: string;
+  cropYieldBonus?: number;
   dailyCoinYield: number;
+  plantedCropCardId?: string | null;
+  plantedCropName?: string | null;
   q: number;
   r: number;
   tileType: ExpansionTileType;
@@ -198,8 +202,16 @@ function isSavePlacedTileState(candidateValue: unknown): candidateValue is SaveP
   const typedCandidate = candidateValue as Partial<SavePlacedTileState>;
 
   return (
+    (typedCandidate.baseCoinYield === undefined || typeof typedCandidate.baseCoinYield === "number") &&
     typeof typedCandidate.cardId === "string" &&
+    (typedCandidate.cropYieldBonus === undefined || typeof typedCandidate.cropYieldBonus === "number") &&
     typeof typedCandidate.dailyCoinYield === "number" &&
+    (typedCandidate.plantedCropCardId === undefined ||
+      typedCandidate.plantedCropCardId === null ||
+      typeof typedCandidate.plantedCropCardId === "string") &&
+    (typedCandidate.plantedCropName === undefined ||
+      typedCandidate.plantedCropName === null ||
+      typeof typedCandidate.plantedCropName === "string") &&
     typeof typedCandidate.q === "number" &&
     typeof typedCandidate.r === "number" &&
     (typedCandidate.tileType === "field" ||
@@ -333,6 +345,20 @@ function createDefaultMetaState(): SaveMetaState {
   };
 }
 
+function ensureOwnedCardsCoverage(ownedCards: OwnedCardStack[]) {
+  const coveredCards = ownedCards.map((cardStack) => ({ ...cardStack }));
+
+  createStarterOwnedCollection().forEach((starterCard) => {
+    const alreadyOwned = coveredCards.some((ownedCard) => ownedCard.cardId === starterCard.cardId);
+
+    if (!alreadyOwned) {
+      coveredCards.push({ ...starterCard });
+    }
+  });
+
+  return coveredCards;
+}
+
 function createDefaultRunState(
   rentDue: number,
   phase: RunPhase,
@@ -364,10 +390,25 @@ function createPlacedTileState(
   q: number,
   r: number,
   tileType: ExpansionTileType,
+  {
+    baseCoinYield = dailyCoinYield,
+    cropYieldBonus = 0,
+    plantedCropCardId = null,
+    plantedCropName = null,
+  }: {
+    baseCoinYield?: number;
+    cropYieldBonus?: number;
+    plantedCropCardId?: string | null;
+    plantedCropName?: string | null;
+  } = {},
 ): SavePlacedTileState {
   return {
+    baseCoinYield,
     cardId,
+    cropYieldBonus,
     dailyCoinYield,
+    plantedCropCardId,
+    plantedCropName,
     q,
     r,
     tileType,
@@ -497,6 +538,34 @@ function parseStoredSnapshot(rawValue: string): SaveSnapshot | null {
   }
 }
 
+function normalizeSaveSnapshot(snapshot: SaveSnapshot): SaveSnapshot {
+  const normalizedPlacedTiles = snapshot.activeRun.placedTiles.map((tile) => {
+    const cropYieldBonus = tile.cropYieldBonus ?? 0;
+    const baseCoinYield = tile.baseCoinYield ?? tile.dailyCoinYield - cropYieldBonus;
+
+    return {
+      ...tile,
+      baseCoinYield,
+      cropYieldBonus,
+      dailyCoinYield: baseCoinYield + cropYieldBonus,
+      plantedCropCardId: tile.plantedCropCardId ?? null,
+      plantedCropName: tile.plantedCropName ?? null,
+    };
+  });
+
+  return {
+    ...snapshot,
+    activeRun: {
+      ...snapshot.activeRun,
+      placedTiles: normalizedPlacedTiles,
+    },
+    meta: {
+      ...snapshot.meta,
+      ownedCards: ensureOwnedCardsCoverage(snapshot.meta.ownedCards),
+    },
+  };
+}
+
 function writeSaveSnapshot(snapshot: SaveSnapshot) {
   if (typeof window === "undefined") {
     return;
@@ -517,8 +586,10 @@ function readSaveSnapshot(): SaveSnapshot | null {
     const parsedCurrentSnapshot = parseStoredSnapshot(currentValue);
 
     if (parsedCurrentSnapshot) {
-      writeSaveSnapshot(parsedCurrentSnapshot);
-      return parsedCurrentSnapshot;
+      const normalizedSnapshot = normalizeSaveSnapshot(parsedCurrentSnapshot);
+
+      writeSaveSnapshot(normalizedSnapshot);
+      return normalizedSnapshot;
     }
   }
 
@@ -534,9 +605,11 @@ function readSaveSnapshot(): SaveSnapshot | null {
     return null;
   }
 
-  writeSaveSnapshot(migratedSnapshot);
+  const normalizedSnapshot = normalizeSaveSnapshot(migratedSnapshot);
 
-  return migratedSnapshot;
+  writeSaveSnapshot(normalizedSnapshot);
+
+  return normalizedSnapshot;
 }
 
 function updateOwnedCards(ownedCards: OwnedCardStack[], cardId: string) {
@@ -698,6 +771,59 @@ export function registerPrototypeExpansion(placedTile: SavePlacedTileState, ener
     lastActionLabel: `Tile ${placedTile.tileType} adicionado ao prototipo com rendimento ${formatCoinYield(
       placedTile.dailyCoinYield,
     )}/dia`,
+    lastOpenedAt: new Date().toISOString(),
+  };
+
+  writeSaveSnapshot(updatedSave);
+
+  return updatedSave;
+}
+
+export function registerCropPlanting(
+  targetTileId: string,
+  cropCardId: string,
+  cropName: string,
+  cropYieldBonus: number,
+  energySpent = 1,
+) {
+  const currentSave = readSaveSnapshot();
+
+  if (!currentSave) {
+    return createNewSave();
+  }
+
+  if (currentSave.activeRun.phase !== "running") {
+    return currentSave;
+  }
+
+  const updatedSave: SaveSnapshot = {
+    ...currentSave,
+    activeRun: {
+      ...currentSave.activeRun,
+      placedTiles: currentSave.activeRun.placedTiles.map((tile) => {
+        const tileId = `${tile.q}:${tile.r}`;
+
+        if (tileId !== targetTileId) {
+          return tile;
+        }
+
+        const baseCoinYield = tile.baseCoinYield ?? tile.dailyCoinYield - (tile.cropYieldBonus ?? 0);
+
+        return {
+          ...tile,
+          baseCoinYield,
+          cropYieldBonus,
+          dailyCoinYield: baseCoinYield + cropYieldBonus,
+          plantedCropCardId: cropCardId,
+          plantedCropName: cropName,
+        };
+      }),
+      resources: {
+        ...currentSave.activeRun.resources,
+        energy: Math.max(0, currentSave.activeRun.resources.energy - energySpent),
+      },
+    },
+    lastActionLabel: `${cropName} plantado em um lote fertil com bonus ${formatCoinYield(cropYieldBonus)}/dia`,
     lastOpenedAt: new Date().toISOString(),
   };
 

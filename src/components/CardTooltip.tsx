@@ -1,10 +1,18 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
-import { getTileLabel } from "../lib/hexGrid";
-import { getCoinYieldLabel, type CardDefinition } from "../lib/prototypeDeck";
+import {
+  getCardActionText,
+  getCardComboTargetsLabel,
+  getCardEyebrowLabel,
+  getCoinYieldLabel,
+  type CardDefinition,
+} from "../lib/prototypeDeck";
 
 type CardTooltipProps = {
-  card: Pick<CardDefinition, "coinYield" | "description" | "energyCost" | "name" | "tileType">;
+  card: Pick<
+    CardDefinition,
+    "cardKind" | "coinYield" | "description" | "energyCost" | "name" | "targetSourceCardIds" | "tileType"
+  >;
   placement?: "top" | "bottom" | "side-auto";
 };
 
@@ -19,7 +27,8 @@ const TOOLTIP_MARGIN = 20;
 const TOOLTIP_ESTIMATED_HALF_HEIGHT = 110;
 
 export function CardTooltip({ card, placement = "top" }: CardTooltipProps) {
-  const tileLabel = getTileLabel(card.tileType);
+  const eyebrowLabel = getCardEyebrowLabel(card);
+  const comboTargetsLabel = getCardComboTargetsLabel(card);
   const [isVisible, setIsVisible] = useState(false);
   const [layout, setLayout] = useState<TooltipLayout | null>(null);
   const [anchorElement, setAnchorElement] = useState<HTMLSpanElement | null>(null);
@@ -169,15 +178,20 @@ export function CardTooltip({ card, placement = "top" }: CardTooltipProps) {
         ? createPortal(
             <span aria-hidden="true" className={`card-tooltip ${layout.variant}`} style={tooltipStyle}>
               <span className="card-tooltip__eyebrow">
-                {tileLabel} - {card.energyCost} energia
+                {eyebrowLabel} - {card.energyCost} energia
               </span>
               <strong className="card-tooltip__title">{card.name}</strong>
               <span className="card-tooltip__text">{card.description}</span>
-              <span className="card-tooltip__effect">
-                Ao jogar: adiciona 1 tile de {tileLabel.toLowerCase()} em uma borda livre do mapa.
-              </span>
+              <span className="card-tooltip__effect">{getCardActionText(card)}</span>
+              {card.cardKind === "crop" ? (
+                <span className="card-tooltip__effect">
+                  Requisito: {comboTargetsLabel ?? "solo compativel"} livre no mapa.
+                </span>
+              ) : null}
               <span className={`card-tooltip__yield ${card.coinYield < 0 ? "is-negative" : "is-positive"}`}>
-                Rendimento {getCoinYieldLabel(card.coinYield)} no fim do dia.
+                {card.cardKind === "crop"
+                  ? `Bonus ${getCoinYieldLabel(card.coinYield)} no lote plantado.`
+                  : `Rendimento ${getCoinYieldLabel(card.coinYield)} no fim do dia.`}
               </span>
             </span>,
             document.body,

@@ -1,35 +1,41 @@
 import type { CSSProperties } from "react";
 import { CardTooltip } from "./CardTooltip";
-import { getTileLabel } from "../lib/hexGrid";
-import { getCoinYieldLabel, type ExpansionCard } from "../lib/prototypeDeck";
+import {
+  getCardEyebrowLabel,
+  getCoinYieldLabel,
+  type ExpansionCard,
+} from "../lib/prototypeDeck";
 
 type ExpansionHandProps = {
   armedCardId: string | null;
   availableEnergy: number;
-  canPlayCards: boolean;
   discardCount: number;
   drawCount: number;
+  hasPlayableCards: boolean;
   hand: ExpansionCard[];
   onSelectCard: (cardId: string) => void;
+  playableCardInstanceIds: string[];
 };
 
 export function ExpansionHand({
   armedCardId,
   availableEnergy,
-  canPlayCards,
   discardCount,
   drawCount,
+  hasPlayableCards,
   hand,
   onSelectCard,
+  playableCardInstanceIds,
 }: ExpansionHandProps) {
   const handCenter = (hand.length - 1) / 2;
+  const playableCardIdSet = new Set(playableCardInstanceIds);
 
   return (
     <section aria-label="Mao de expansao" className="game-hand">
       <div className="game-hand__meta">
         <span className="game-hand__counter">Compra {drawCount}</span>
         <span className="game-hand__counter">Descarte {discardCount}</span>
-        {!canPlayCards ? <span className="game-hand__counter">Sem fronteira</span> : null}
+        {!hasPlayableCards ? <span className="game-hand__counter">Sem alvo</span> : null}
       </div>
 
       <div className="game-hand__layout">
@@ -48,7 +54,7 @@ export function ExpansionHand({
             const rotation = offsetFromCenter * 7;
             const verticalLift = Math.abs(offsetFromCenter) * 12;
             const canAffordCard = availableEnergy >= card.energyCost;
-            const canPlayCard = canPlayCards && canAffordCard;
+            const canPlayCard = playableCardIdSet.has(card.instanceId) && canAffordCard;
 
             return (
               <button
@@ -97,10 +103,12 @@ export function ExpansionHand({
                   </span>
 
                   <span className="expansion-card__footer">
-                    <span className="expansion-card__eyebrow">{getTileLabel(card.tileType)}</span>
+                    <span className="expansion-card__eyebrow">{getCardEyebrowLabel(card)}</span>
                     <strong className="expansion-card__title">{card.name}</strong>
                     <span className="expansion-card__yield-text">
-                      Rendimento {getCoinYieldLabel(card.coinYield)}
+                      {card.cardKind === "crop"
+                        ? `Bonus ${getCoinYieldLabel(card.coinYield)}`
+                        : `Rendimento ${getCoinYieldLabel(card.coinYield)}`}
                     </span>
                   </span>
                 </span>

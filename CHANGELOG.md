@@ -18,6 +18,59 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-044 de cultivo e combo com Lote Fertil
+
+### Resumo
+
+Foram criadas cartas de cultivo e um sistema de combo que permite plantar culturas sobre um `Lote Fertil` existente no mapa, alterando o tile e o rendimento diario.
+
+### Entregas realizadas
+
+- criacao do backlog do `PBI-044`, vinculado ao `EPICO-035`
+- ampliacao do `card-library.json` com `cardKind`, `cropType` e `targetSourceCardIds`
+- criacao das cartas `Milho`, `Abobora` e `Tomate`
+- ampliacao do starter collection e do starter deck para incluir cartas de cultivo
+- adicao da regra de plantio apenas em `Lote Fertil` livre
+- suporte a tiles com cultura plantada no estado do mapa e no save
+- exibicao visual da cultura plantada no tile
+- atualizacao do tooltip e da mao para diferenciar cartas de cultivo
+- normalizacao de saves antigos para incluir as novas cartas no inventario base
+- conclusao do `PBI-044`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-035_SISTEMA_DE_CULTIVO_EM_SOLOS_FERTEIS.md`
+- `BACKLOGS/PBIS/PBI-044_IMPLEMENTAR_CARTAS_DE_CULTIVO_E_COMBO_COM_LOTE_FERTIL/DONE-PBI-044_IMPLEMENTAR_CARTAS_DE_CULTIVO_E_COMBO_COM_LOTE_FERTIL.md`
+- `src/data/card-library.json`
+- `src/lib/prototypeDeck.ts`
+- `src/lib/hexGrid.ts`
+- `src/lib/save.ts`
+- `src/screens/NewGameScreen.tsx`
+- `src/components/ExpansionHand.tsx`
+- `src/components/CardTooltip.tsx`
+- `src/components/HexMapPrototype.tsx`
+- `src/styles.css`
+
+### Vinculos de backlog
+
+- `EPICO-035 - Sistema de Cultivo em Solos Ferteis`
+- `PBI-044 - Implementar Cartas de Cultivo e Combo com Lote Fertil`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- cartas de cultivo podem ser selecionadas
+- `Lote Fertil` passa a aceitar plantio e exibir a cultura plantada
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - Implementacao do PBI-043 de persistencia global do BGM entre telas
 
 ### Resumo

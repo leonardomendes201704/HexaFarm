@@ -8,9 +8,12 @@ export type TileYieldBurst = {
 };
 
 type HexMapPrototypeProps = {
+  cropArmed: boolean;
+  cropTargetTileIds: string[];
   expansionArmed: boolean;
   frontierSlots: HexCoord[];
   interactionLocked?: boolean;
+  onPlantCrop: (tileId: string) => void;
   onPlaceTile: (slot: HexCoord) => void;
   onSelectTile: (tileId: string) => void;
   selectedTileId: string | null;
@@ -32,9 +35,12 @@ function projectHexCoord({ q, r }: HexCoord) {
 }
 
 export function HexMapPrototype({
+  cropArmed,
+  cropTargetTileIds,
   expansionArmed,
   frontierSlots,
   interactionLocked = false,
+  onPlantCrop,
   onPlaceTile,
   onSelectTile,
   selectedTileId,
@@ -169,22 +175,35 @@ export function HexMapPrototype({
 
             {tiles.map((tile) => {
               const position = projectHexCoord(tile);
+              const canPlantCropOnTile = cropArmed && cropTargetTileIds.includes(tile.id);
 
               return (
                 <button
                   className={`hex-node hex-node--tile hex-node--${tile.tileType} ${
                     selectedTileId === tile.id ? "is-selected" : ""
-                  }`}
+                  } ${canPlantCropOnTile ? "is-crop-target" : ""}`}
                   disabled={interactionLocked}
                   key={tile.id}
-                  onClick={() => onSelectTile(tile.id)}
+                  onClick={() => {
+                    if (canPlantCropOnTile) {
+                      onPlantCrop(tile.id);
+                      return;
+                    }
+
+                    onSelectTile(tile.id);
+                  }}
                   style={{
                     transform: `translate(${position.x + boardGeometry.offsetX}px, ${position.y + boardGeometry.offsetY}px)`,
                   }}
                   type="button"
                 >
                   <span className="hex-node__surface">
-                    <span className="hex-node__label">{getTileLabel(tile.tileType)}</span>
+                    <span className="hex-node__badge-stack">
+                      <span className="hex-node__label">{getTileLabel(tile.tileType)}</span>
+                      {tile.plantedCropName ? (
+                        <span className="hex-node__crop-badge">{tile.plantedCropName}</span>
+                      ) : null}
+                    </span>
                   </span>
                 </button>
               );

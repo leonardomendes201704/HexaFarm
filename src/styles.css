@@ -550,6 +550,7 @@ button:disabled {
 .hex-node__surface {
   position: relative;
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   align-items: center;
@@ -578,7 +579,6 @@ button:disabled {
 
 .hex-node__label {
   position: relative;
-  z-index: 1;
   padding: 6px 10px;
   border-radius: 999px;
   background: rgba(10, 21, 30, 0.18);
@@ -588,9 +588,38 @@ button:disabled {
   letter-spacing: 0.04em;
 }
 
+.hex-node__badge-stack {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+}
+
+.hex-node__crop-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 249, 233, 0.9);
+  color: #8a5828;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  box-shadow:
+    0 8px 14px rgba(92, 63, 31, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
 .hex-node--tile .hex-node__surface:hover,
 .hex-node--slot.is-armed .hex-node__surface:hover {
   transform: translateY(-4px);
+}
+
+.hex-node--tile.is-crop-target .hex-node__surface {
+  box-shadow:
+    0 0 0 3px rgba(255, 238, 175, 0.46),
+    0 18px 32px rgba(5, 14, 20, 0.28),
+    inset 0 -12px 18px rgba(4, 9, 12, 0.16),
+    inset 0 8px 12px rgba(255, 255, 255, 0.12);
 }
 
 .hex-node--home .hex-node__surface {

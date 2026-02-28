@@ -6,19 +6,25 @@ import cardLagoEspelhadoArt from "../assets/cards/card-lago-espelhado.png";
 import cardLoteFertilArt from "../assets/cards/card-lote-fertil.png";
 import cardTrilhaSelvagemArt from "../assets/cards/card-trilha-selvagem.png";
 import cardLibraryCatalog from "../data/card-library.json";
-import type { ExpansionTileType } from "./hexGrid";
+import type { ExpansionTileType, HexTile } from "./hexGrid";
 
 export const DECK_SIZE = 24;
 export const HAND_SIZE = 4;
 
+export type CardKind = "crop" | "tile";
+export type CropType = "corn" | "pumpkin" | "tomato";
+
 export type CardDefinition = {
   artAssetPath: string | null;
+  cardKind: CardKind;
   coinYield: number;
+  cropType: CropType | null;
   description: string;
   energyCost: number;
   id: string;
   name: string;
   purchaseCost: number;
+  targetSourceCardIds: string[];
   tileType: ExpansionTileType;
 };
 
@@ -69,6 +75,9 @@ const STARTER_COLLECTION: OwnedCardStack[] = [
   { cardId: "card-wild-01", quantity: 4 },
   { cardId: "card-field-02", quantity: 5 },
   { cardId: "card-garden-02", quantity: 5 },
+  { cardId: "card-crop-01", quantity: 3 },
+  { cardId: "card-crop-02", quantity: 2 },
+  { cardId: "card-crop-03", quantity: 3 },
 ];
 
 const STARTER_DECK_SELECTION = [
@@ -76,13 +85,10 @@ const STARTER_DECK_SELECTION = [
   "card-field-01",
   "card-field-01",
   "card-field-01",
-  "card-field-01",
   "card-garden-01",
   "card-garden-01",
   "card-garden-01",
   "card-garden-01",
-  "card-garden-01",
-  "card-pond-01",
   "card-pond-01",
   "card-pond-01",
   "card-pond-01",
@@ -96,6 +102,9 @@ const STARTER_DECK_SELECTION = [
   "card-garden-02",
   "card-garden-02",
   "card-garden-02",
+  "card-crop-01",
+  "card-crop-02",
+  "card-crop-03",
 ];
 
 function shuffleCards(cards: ExpansionCard[]) {
@@ -153,6 +162,28 @@ function countCardIds(cardIds: string[]) {
   }, {});
 }
 
+function getTileEyebrowLabel(tileType: ExpansionTileType) {
+  switch (tileType) {
+    case "field":
+      return "Campo";
+    case "garden":
+      return "Jardim";
+    case "pond":
+      return "Lago";
+    case "wild":
+      return "Bosque";
+    default:
+      return "Tile";
+  }
+}
+
+function createCardInstance(cardDefinition: CardDefinition, index: number): ExpansionCard {
+  return {
+    ...cardDefinition,
+    instanceId: `${cardDefinition.id}::${index}`,
+  };
+}
+
 export function getCardDefinition(cardId: string) {
   return CARD_LIBRARY.find((card) => card.id === cardId) ?? null;
 }
@@ -161,19 +192,63 @@ export function getCardLibrary() {
   return [...CARD_LIBRARY];
 }
 
+export function getCardEyebrowLabel(card: Pick<CardDefinition, "cardKind" | "tileType">) {
+  return card.cardKind === "crop" ? "Cultivo" : getTileEyebrowLabel(card.tileType);
+}
+
+export function getCardComboTargetsLabel(card: Pick<CardDefinition, "cardKind" | "targetSourceCardIds">) {
+  if (card.cardKind !== "crop" || card.targetSourceCardIds.length === 0) {
+    return null;
+  }
+
+  const targetNames = card.targetSourceCardIds
+    .map((targetCardId) => getCardDefinition(targetCardId)?.name)
+    .filter((targetName): targetName is string => Boolean(targetName));
+
+  return targetNames.length > 0 ? targetNames.join(", ") : "solo fertil";
+}
+
+export function getCardActionText(
+  card: Pick<CardDefinition, "cardKind" | "name" | "targetSourceCardIds" | "tileType">,
+) {
+  if (card.cardKind === "crop") {
+    const comboTargetsLabel = getCardComboTargetsLabel(card);
+
+    return `Ao jogar: planta ${card.name.toLowerCase()} em ${comboTargetsLabel ?? "um tile compativel"} livre.`;
+  }
+
+  return `Ao jogar: adiciona 1 tile de ${getTileEyebrowLabel(card.tileType).toLowerCase()} em uma borda livre do mapa.`;
+}
+
+export function isCropCard(card: Pick<CardDefinition, "cardKind">) {
+  return card.cardKind === "crop";
+}
+
+export function canPlantCropOnTile(
+  card: Pick<CardDefinition, "cardKind" | "targetSourceCardIds">,
+  tile: Pick<HexTile, "plantedCropCardId" | "sourceCardId" | "tileType">,
+) {
+  if (card.cardKind !== "crop") {
+    return false;
+  }
+
+  if (tile.tileType !== "field") {
+    return false;
+  }
+
+  if (!tile.sourceCardId || !card.targetSourceCardIds.includes(tile.sourceCardId)) {
+    return false;
+  }
+
+  return !tile.plantedCropCardId;
+}
+
 export function formatCoinYield(coinYield: number) {
   return `${coinYield >= 0 ? "+" : ""}${coinYield}`;
 }
 
 export function getCoinYieldLabel(coinYield: number) {
   return `${formatCoinYield(coinYield)}/dia`;
-}
-
-function createCardInstance(cardDefinition: CardDefinition, index: number): ExpansionCard {
-  return {
-    ...cardDefinition,
-    instanceId: `${cardDefinition.id}::${index}`,
-  };
 }
 
 export function createStarterOwnedCollection() {
