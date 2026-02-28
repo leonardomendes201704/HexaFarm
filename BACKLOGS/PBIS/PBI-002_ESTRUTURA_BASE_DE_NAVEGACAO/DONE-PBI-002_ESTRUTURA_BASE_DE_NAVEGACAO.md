@@ -74,9 +74,10 @@ Support
 
 ## Status de Execucao
 
-- Status: Implementado
+- Status: Concluido
 - Data da entrega base: 2026-02-28
 - Build validado: Sim
+- Marcador de arquivo: `DONE-`
 
 ## Implementacao Realizada
 

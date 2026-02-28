@@ -34,6 +34,16 @@ As entregas executadas a partir desses itens tambem devem ser refletidas em:
 
 - `CHANGELOG.md`
 
+## Regra de Conclusao
+
+O estado de conclusao do backlog deve ser refletido no nome do arquivo.
+
+- task concluida: prefixo `DONE-`
+- historia concluida: prefixo `DONE-` quando todas as tasks estiverem concluidas
+- PBI concluido: prefixo `DONE-` quando todas as historias estiverem concluidas
+
+O prefixo `DONE-` e uma marca de status no arquivo, sem alterar o ID logico do item.
+
 ## Estrutura Atual
 
 - `EPICO-001`: experiencia inicial e entrada no jogo
@@ -46,5 +56,8 @@ As entregas executadas a partir desses itens tambem devem ser refletidas em:
 - `PBI-XXX_NOME.md`
 - `HISTORIA-XXX_NOME.md`
 - `TASK-XXX_NOME.md`
+- `DONE-PBI-XXX_NOME.md`
+- `DONE-HISTORIA-XXX_NOME.md`
+- `DONE-TASK-XXX_NOME.md`
 
 Essa estrutura deve ser mantida como padrao para evitar backlog solto ou sem hierarquia.

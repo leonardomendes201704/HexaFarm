@@ -18,6 +18,52 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Convencao de conclusao com prefixo DONE-
+
+### Resumo
+
+Foi definida uma nova regra de governanca para backlog: itens concluidos passam a ser marcados no proprio nome do arquivo com prefixo `DONE-`.
+
+### Entregas realizadas
+
+- formalizacao da regra de conclusao por prefixo `DONE-` na diretriz de implementacao
+- formalizacao da regra no `BACKLOGS/README.md`
+- renomeacao dos arquivos concluidos de tasks, historias e PBIs ja entregues
+- ajuste dos PBIs concluidos para status `Concluido`
+- manutencao da rastreabilidade com os IDs logicos preservados dentro do backlog
+
+### Arquivos principais criados ou alterados
+
+- `Documentacao/DIRETRIZ_DE_IMPLEMENTACAO.md`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-001_TELA_INICIAL_HEXAFARM/DONE-PBI-001_TELA_INICIAL_HEXAFARM.md`
+- `BACKLOGS/PBIS/PBI-001_TELA_INICIAL_HEXAFARM/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-001_TELA_INICIAL_HEXAFARM/TASKS/DONE-*`
+- `BACKLOGS/PBIS/PBI-002_ESTRUTURA_BASE_DE_NAVEGACAO/DONE-PBI-002_ESTRUTURA_BASE_DE_NAVEGACAO.md`
+- `BACKLOGS/PBIS/PBI-002_ESTRUTURA_BASE_DE_NAVEGACAO/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-002_ESTRUTURA_BASE_DE_NAVEGACAO/TASKS/DONE-*`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `PBI-001 - Tela Inicial do Jogo HexaFarm`
+- `PBI-002 - Estrutura Base de Navegacao Entre Telas`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da estrutura de backlog apos renomeacao
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- arquivos concluidos do backlog agora seguem o padrao `DONE-`
+- IDs logicos dos itens foram preservados no conteudo dos documentos
+
+### Commit e push
+
+- esta entrada corresponde a entrega de governanca do backlog e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-002 de navegacao base
 
 ### Resumo
@@ -52,7 +98,7 @@ Foi implementada a primeira estrutura real de navegacao do frontend, separando a
 - `src/styles.css`
 - `BACKLOGS/README.md`
 - `BACKLOGS/EPICOS/EPICO-001_EXPERIENCIA_INICIAL_E_ENTRADA_NO_JOGO.md`
-- `BACKLOGS/PBIS/PBI-002_ESTRUTURA_BASE_DE_NAVEGACAO/PBI-002_ESTRUTURA_BASE_DE_NAVEGACAO.md`
+- `BACKLOGS/PBIS/PBI-002_ESTRUTURA_BASE_DE_NAVEGACAO/DONE-PBI-002_ESTRUTURA_BASE_DE_NAVEGACAO.md`
 - `BACKLOGS/PBIS/PBI-002_ESTRUTURA_BASE_DE_NAVEGACAO/HISTORIAS/*`
 - `BACKLOGS/PBIS/PBI-002_ESTRUTURA_BASE_DE_NAVEGACAO/TASKS/*`
 - `CHANGELOG.md`
@@ -125,7 +171,7 @@ Foi implementada a primeira versao funcional do frontend de `HexaFarm`, incluind
 - `src/lib/save.ts`
 - `src/styles.css`
 - `src/vite-env.d.ts`
-- `BACKLOGS/PBIS/PBI-001_TELA_INICIAL_HEXAFARM/PBI-001_TELA_INICIAL_HEXAFARM.md`
+- `BACKLOGS/PBIS/PBI-001_TELA_INICIAL_HEXAFARM/DONE-PBI-001_TELA_INICIAL_HEXAFARM.md`
 - `CHANGELOG.md`
 
 ### Vinculos de backlog
@@ -188,7 +234,7 @@ Foi consolidada a base documental inicial do projeto, organizada a estrutura de 
 - `Documentacao/DIRETRIZ_DE_IMPLEMENTACAO.md`
 - `BACKLOGS/README.md`
 - `BACKLOGS/EPICOS/EPICO-001_EXPERIENCIA_INICIAL_E_ENTRADA_NO_JOGO.md`
-- `BACKLOGS/PBIS/PBI-001_TELA_INICIAL_HEXAFARM/PBI-001_TELA_INICIAL_HEXAFARM.md`
+- `BACKLOGS/PBIS/PBI-001_TELA_INICIAL_HEXAFARM/DONE-PBI-001_TELA_INICIAL_HEXAFARM.md`
 - `BACKLOGS/PBIS/PBI-001_TELA_INICIAL_HEXAFARM/HISTORIAS/*`
 - `BACKLOGS/PBIS/PBI-001_TELA_INICIAL_HEXAFARM/TASKS/*`
 - `CHANGELOG.md`

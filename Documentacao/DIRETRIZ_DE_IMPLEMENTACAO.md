@@ -260,3 +260,33 @@ O ideal e que a mensagem:
 - facilite leitura futura do historico
 
 O push deve ocorrer ao final da entrega para manter o repositorio remoto atualizado e alinhado com o changelog.
+
+## 19. Regra de Conclusao de Backlog
+
+Quando um item de backlog for concluido, o proprio arquivo deve refletir esse estado por convencao de nome.
+
+Regras:
+
+- task implementada: renomear o arquivo com prefixo `DONE-`
+- historia com todas as tasks concluidas: renomear o arquivo com prefixo `DONE-`
+- PBI com todas as historias concluidas: renomear o arquivo com prefixo `DONE-`
+
+Exemplos:
+
+- `TASK-001_EXEMPLO.md` -> `DONE-TASK-001_EXEMPLO.md`
+- `HISTORIA-001_EXEMPLO.md` -> `DONE-HISTORIA-001_EXEMPLO.md`
+- `PBI-001_EXEMPLO.md` -> `DONE-PBI-001_EXEMPLO.md`
+
+O prefixo `DONE-` e o marcador oficial de conclusao do backlog no nivel de arquivo.
+
+## 20. Regra de Aplicacao da Conclusao
+
+Ao concluir uma entrega, aplicar nesta ordem:
+
+1. concluir a implementacao
+2. validar a entrega
+3. renomear os arquivos de backlog elegiveis com prefixo `DONE-`
+4. atualizar changelog e documentacao
+5. commitar e fazer push
+
+Se um item ainda depender de subtarefas ou historias abertas, ele nao deve receber o prefixo `DONE-`.
