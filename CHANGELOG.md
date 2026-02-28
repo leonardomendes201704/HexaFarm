@@ -165,6 +165,42 @@ Foi criada a base geometrica que converte o grid axial do jogo em coordenadas do
 
 - esta entrada deve ser fechada com commit e push apos a validacao final desta task
 
+## 2026-02-28 - TASK-005 do PBI-048 concluida
+
+### Resumo
+
+Foi criada a malha base reutilizavel do hexagono com volume real.
+
+### Entregas realizadas
+
+- criacao do componente `HexPrismMesh3D`
+- substituicao do placeholder direto por um prisma 3D reutilizavel
+- definicao de topo destacado para melhorar leitura de volume
+
+### Arquivos principais criados ou alterados
+
+- `src/components/HexPrismMesh3D.tsx`
+- `src/components/Stage3DCanvas.tsx`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/TASKS/DONE-TASK-005_CONSTRUIR_MESH_BASE_DO_HEXAGONO_COM_VOLUME.md`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-048 - Migrar Stage Hexagonal para Renderizacao 3D Isometrica Real`
+- `TASK-005 - Construir Mesh Base do Hexagono com Volume`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- o stage 3D passa a usar uma malha hexagonal real reutilizavel como base visual
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta task
+
 ## 2026-02-28 - Planejamento do PBI-048 para migracao do stage para 3D isometrico real
 
 ### Resumo

@@ -1,5 +1,6 @@
 import { OrthographicCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import { HexPrismMesh3D } from "./HexPrismMesh3D";
 import { projectAxialToWorld } from "../lib/hexGrid3d";
 
 const STAGE_3D_CAMERA_POSITION: [number, number, number] = [7.5, 7, 7.5];
@@ -20,10 +21,13 @@ function Stage3DBackdrop() {
         <meshStandardMaterial color="#f5dfb8" opacity={0.2} transparent />
       </mesh>
 
-      <mesh position={[centerX, centerY, centerZ]} rotation={[0, Math.PI / 6, 0]}>
-        <cylinderGeometry args={[0.95, 1.25, 0.85, 6]} />
-        <meshStandardMaterial color="#f3b183" roughness={0.45} />
-      </mesh>
+      <HexPrismMesh3D
+        bodyColor="#d2875f"
+        height={0.82}
+        position={[centerX, centerY, centerZ]}
+        radius={1}
+        topColor="#f4b890"
+      />
     </>
   );
 }
