@@ -57,10 +57,15 @@ button:disabled {
 .screen-shell__background {
   position: absolute;
   inset: 0;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  overflow: hidden;
   transform: scale(1.02);
+}
+
+.screen-shell__background-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .screen-shell__background::after {

@@ -18,6 +18,62 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-026 de video MP4 como background da home
+
+### Resumo
+
+O fundo da home foi trocado de imagem estatica para um video MP4 em tela cheia, mantendo a imagem anterior como `poster` de fallback.
+
+### Entregas realizadas
+
+- criacao do `EPICO-025` e do backlog completo do `PBI-026`
+- copia do MP4 fornecido para os assets do projeto
+- substituicao do fundo estatico por um elemento `video`
+- configuracao do video com `autoplay`, `loop`, `muted` e `playsInline`
+- aplicacao de `object-fit: cover` no video de fundo
+- preservacao da imagem anterior como `poster`
+- conclusao do `PBI-026` e do `EPICO-025`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-025_VIDEO_DE_BACKGROUND_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-026_TROCAR_BACKGROUND_DA_HOME_POR_VIDEO_MP4/DONE-PBI-026_TROCAR_BACKGROUND_DA_HOME_POR_VIDEO_MP4.md`
+- `BACKLOGS/PBIS/PBI-026_TROCAR_BACKGROUND_DA_HOME_POR_VIDEO_MP4/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-026_TROCAR_BACKGROUND_DA_HOME_POR_VIDEO_MP4/TASKS/DONE-*`
+- `src/assets/home-background-menu.mp4`
+- `src/components/TitleScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-025 - Video de Background da Home`
+- `PBI-026 - Trocar Background da Home por Video MP4`
+- `HISTORIA-001 - Integrar Video de Fundo a Home`
+
+### Tasks executadas
+
+- `TASK-001 - Adicionar o MP4 da Home como Asset`
+- `TASK-002 - Substituir o Fundo Estatico por um Elemento Video`
+- `TASK-003 - Aplicar Cover no Video e Preservar Poster`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da home com video ocupando toda a viewport
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- a home agora usa um video MP4 como fundo
+- o video cobre toda a tela
+- a imagem anterior permanece como fallback visual
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-026` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-025 de remocao de informacao redundante da home
 
 ### Resumo

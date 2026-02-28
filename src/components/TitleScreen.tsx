@@ -1,3 +1,4 @@
+import homeBackgroundVideo from "../assets/home-background-menu.mp4";
 import menuBackgroundImage from "../assets/background-menu-hexafarm.png";
 
 type TitleScreenProps = {
@@ -15,11 +16,19 @@ export function TitleScreen({
 }: TitleScreenProps) {
   return (
     <div className="screen-shell">
-      <div
-        aria-hidden="true"
-        className="screen-shell__background"
-        style={{ backgroundImage: `url(${menuBackgroundImage})` }}
-      />
+      <div aria-hidden="true" className="screen-shell__background">
+        <video
+          autoPlay
+          className="screen-shell__background-video"
+          loop
+          muted
+          playsInline
+          poster={menuBackgroundImage}
+          preload="auto"
+        >
+          <source src={homeBackgroundVideo} type="video/mp4" />
+        </video>
+      </div>
       <div className="screen-shell__blur screen-shell__blur--left" />
       <div className="screen-shell__blur screen-shell__blur--right" />
 
