@@ -1,3 +1,5 @@
+import menuBackgroundImage from "../assets/background-menu-hexafarm.png";
+
 type TitleScreenProps = {
   canContinue: boolean;
   feedbackMessage: string;
@@ -17,6 +19,11 @@ export function TitleScreen({
 }: TitleScreenProps) {
   return (
     <div className="screen-shell">
+      <div
+        aria-hidden="true"
+        className="screen-shell__background"
+        style={{ backgroundImage: `url(${menuBackgroundImage})` }}
+      />
       <div className="screen-shell__blur screen-shell__blur--left" />
       <div className="screen-shell__blur screen-shell__blur--right" />
 

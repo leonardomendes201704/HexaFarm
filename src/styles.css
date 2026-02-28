@@ -54,6 +54,24 @@ button:disabled {
   padding: 32px;
 }
 
+.screen-shell__background {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: scale(1.02);
+}
+
+.screen-shell__background::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(9, 17, 22, 0.28), rgba(9, 17, 22, 0.58)),
+    radial-gradient(circle at top center, rgba(255, 244, 203, 0.18), transparent 28%);
+  content: "";
+}
+
 .screen-shell__blur {
   position: absolute;
   border-radius: 999px;

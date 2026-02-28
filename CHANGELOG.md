@@ -18,6 +18,60 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-017 de background fullscreen na tela inicial
+
+### Resumo
+
+Foi aplicada a arte fornecida pelo usuario como background da tela inicial, cobrindo 100% da viewport e mantendo o menu legivel por cima.
+
+### Entregas realizadas
+
+- criacao do `EPICO-016` e do backlog completo do `PBI-017`
+- copia da imagem de menu para dentro do projeto como asset local
+- conexao da arte ao componente da tela inicial
+- criacao de um layer de fundo em `cover` ocupando toda a tela
+- aplicacao de um overlay sutil para preservar legibilidade dos paineis
+- conclusao do `PBI-017` e do `EPICO-016`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-016_AMBIENTACAO_VISUAL_DA_TELA_INICIAL.md`
+- `BACKLOGS/PBIS/PBI-017_APLICAR_BACKGROUND_FULLSCREEN_NA_TELA_INICIAL/DONE-PBI-017_APLICAR_BACKGROUND_FULLSCREEN_NA_TELA_INICIAL.md`
+- `BACKLOGS/PBIS/PBI-017_APLICAR_BACKGROUND_FULLSCREEN_NA_TELA_INICIAL/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-017_APLICAR_BACKGROUND_FULLSCREEN_NA_TELA_INICIAL/TASKS/DONE-*`
+- `src/assets/background-menu-hexafarm.png`
+- `src/components/TitleScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-016 - Ambientacao Visual da Tela Inicial`
+- `PBI-017 - Aplicar Background Fullscreen na Tela Inicial`
+- `HISTORIA-001 - Integrar Arte de Background a Home`
+
+### Tasks executadas
+
+- `TASK-001 - Copiar Asset de Background para o Projeto`
+- `TASK-002 - Conectar a Imagem ao Componente da Tela Inicial`
+- `TASK-003 - Garantir Cobertura Fullscreen com Overlay de Leitura`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da home com imagem cobrindo toda a viewport
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- a home agora usa a arte do menu como fundo fullscreen
+- os paineis continuam legiveis por cima da imagem
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-017` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-016 de ocultar badges auxiliares do HUD principal
 
 ### Resumo
