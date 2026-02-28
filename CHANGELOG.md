@@ -18,6 +18,59 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-019 de aumento de translucidez dos cards da home
+
+### Resumo
+
+Foi feito um ajuste fino para deixar os cards da home bem mais translúcidos, revelando mais da arte de background.
+
+### Entregas realizadas
+
+- criacao do `EPICO-018` e do backlog completo do `PBI-019`
+- reducao adicional da opacidade dos dois paineis principais da home
+- suavizacao de borda, sombra e blur para reforcar o efeito leve
+- reducao da opacidade dos chips e dos blocos internos do menu
+- preservacao da legibilidade geral sobre a base mais transparente
+- conclusao do `PBI-019` e do `EPICO-018`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-018_AJUSTE_FINO_DE_TRANSLUCIDEZ_NA_HOME.md`
+- `BACKLOGS/PBIS/PBI-019_AUMENTAR_A_TRANSLUCIDEZ_DOS_CARDS_DA_HOME/DONE-PBI-019_AUMENTAR_A_TRANSLUCIDEZ_DOS_CARDS_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-019_AUMENTAR_A_TRANSLUCIDEZ_DOS_CARDS_DA_HOME/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-019_AUMENTAR_A_TRANSLUCIDEZ_DOS_CARDS_DA_HOME/TASKS/DONE-*`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-018 - Ajuste Fino de Translucidez na Home`
+- `PBI-019 - Aumentar a Translucidez dos Cards da Home`
+- `HISTORIA-001 - Reduzir Opacidade da Superficie da Home`
+
+### Tasks executadas
+
+- `TASK-001 - Reduzir Opacidade dos Paineis Principais`
+- `TASK-002 - Reduzir Opacidade dos Chips e Blocos do Menu`
+- `TASK-003 - Preservar Contraste Visual com Base Mais Transparente`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da home com maior transparencia dos cards sobre a arte de fundo
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- os cards da home agora deixam mais da arte aparecer
+- os blocos internos tambem ficaram mais leves visualmente
+- os textos continuam legiveis
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-019` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-018 de cards brancos translucidos na home
 
 ### Resumo
