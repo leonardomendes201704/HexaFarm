@@ -484,7 +484,7 @@ export function NewGameScreen() {
                         +
                       </button>
                     </div>
-                    <CardTooltip card={card} placement="bottom" />
+                    <CardTooltip card={card} placement="side-auto" />
                   </article>
                 );
               })}
@@ -563,7 +563,7 @@ export function NewGameScreen() {
                     >
                       Comprar
                     </button>
-                    <CardTooltip card={card} placement="bottom" />
+                    <CardTooltip card={card} placement="side-auto" />
                   </article>
                 );
               })}

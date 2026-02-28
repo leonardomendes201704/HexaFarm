@@ -5,16 +5,18 @@ import { getCoinYieldLabel, type CardDefinition } from "../lib/prototypeDeck";
 
 type CardTooltipProps = {
   card: Pick<CardDefinition, "coinYield" | "description" | "energyCost" | "name" | "tileType">;
-  placement?: "top" | "bottom";
+  placement?: "top" | "bottom" | "side-auto";
 };
 
 type TooltipLayout = {
   left: number;
   top: number;
+  variant: "is-top" | "is-bottom" | "is-right" | "is-left";
 };
 
 const TOOLTIP_WIDTH = 300;
 const TOOLTIP_MARGIN = 20;
+const TOOLTIP_ESTIMATED_HALF_HEIGHT = 110;
 
 export function CardTooltip({ card, placement = "top" }: CardTooltipProps) {
   const tileLabel = getTileLabel(card.tileType);
@@ -32,9 +34,31 @@ export function CardTooltip({ card, placement = "top" }: CardTooltipProps) {
     const updateLayout = () => {
       const cardBounds = parentElement.getBoundingClientRect();
       const maxTooltipWidth = Math.min(TOOLTIP_WIDTH, window.innerWidth - 48);
+      const centeredLeft = cardBounds.left + cardBounds.width / 2;
+      const centeredTop = cardBounds.top + cardBounds.height / 2;
+
+      if (placement === "side-auto") {
+        const opensRight = centeredLeft <= window.innerWidth / 2;
+        const rightAnchor = Math.min(
+          cardBounds.right + TOOLTIP_MARGIN,
+          window.innerWidth - 24 - maxTooltipWidth,
+        );
+        const leftAnchor = Math.max(cardBounds.left - TOOLTIP_MARGIN, 24 + maxTooltipWidth);
+        const sideTop = Math.min(
+          Math.max(centeredTop, 24 + TOOLTIP_ESTIMATED_HALF_HEIGHT),
+          window.innerHeight - 24 - TOOLTIP_ESTIMATED_HALF_HEIGHT,
+        );
+
+        setLayout({
+          left: opensRight ? rightAnchor : leftAnchor,
+          top: sideTop,
+          variant: opensRight ? "is-right" : "is-left",
+        });
+        return;
+      }
+
       const minLeft = 24 + maxTooltipWidth / 2;
       const maxLeft = window.innerWidth - 24 - maxTooltipWidth / 2;
-      const centeredLeft = cardBounds.left + cardBounds.width / 2;
       const nextLeft = Math.min(Math.max(centeredLeft, minLeft), Math.max(minLeft, maxLeft));
       const nextTop =
         placement === "bottom"
@@ -44,6 +68,7 @@ export function CardTooltip({ card, placement = "top" }: CardTooltipProps) {
       setLayout({
         left: nextLeft,
         top: nextTop,
+        variant: placement === "bottom" ? "is-bottom" : "is-top",
       });
     };
 
@@ -83,9 +108,31 @@ export function CardTooltip({ card, placement = "top" }: CardTooltipProps) {
 
       const cardBounds = parentElement.getBoundingClientRect();
       const maxTooltipWidth = Math.min(TOOLTIP_WIDTH, window.innerWidth - 48);
+      const centeredLeft = cardBounds.left + cardBounds.width / 2;
+      const centeredTop = cardBounds.top + cardBounds.height / 2;
+
+      if (placement === "side-auto") {
+        const opensRight = centeredLeft <= window.innerWidth / 2;
+        const rightAnchor = Math.min(
+          cardBounds.right + TOOLTIP_MARGIN,
+          window.innerWidth - 24 - maxTooltipWidth,
+        );
+        const leftAnchor = Math.max(cardBounds.left - TOOLTIP_MARGIN, 24 + maxTooltipWidth);
+        const sideTop = Math.min(
+          Math.max(centeredTop, 24 + TOOLTIP_ESTIMATED_HALF_HEIGHT),
+          window.innerHeight - 24 - TOOLTIP_ESTIMATED_HALF_HEIGHT,
+        );
+
+        setLayout({
+          left: opensRight ? rightAnchor : leftAnchor,
+          top: sideTop,
+          variant: opensRight ? "is-right" : "is-left",
+        });
+        return;
+      }
+
       const minLeft = 24 + maxTooltipWidth / 2;
       const maxLeft = window.innerWidth - 24 - maxTooltipWidth / 2;
-      const centeredLeft = cardBounds.left + cardBounds.width / 2;
       const nextLeft = Math.min(Math.max(centeredLeft, minLeft), Math.max(minLeft, maxLeft));
       const nextTop =
         placement === "bottom"
@@ -95,6 +142,7 @@ export function CardTooltip({ card, placement = "top" }: CardTooltipProps) {
       setLayout({
         left: nextLeft,
         top: nextTop,
+        variant: placement === "bottom" ? "is-bottom" : "is-top",
       });
     };
 
@@ -119,11 +167,7 @@ export function CardTooltip({ card, placement = "top" }: CardTooltipProps) {
       <span aria-hidden="true" className="card-tooltip-anchor" ref={setAnchorElement} />
       {isVisible && layout
         ? createPortal(
-            <span
-              aria-hidden="true"
-              className={`card-tooltip ${placement === "bottom" ? "is-bottom" : "is-top"}`}
-              style={tooltipStyle}
-            >
+            <span aria-hidden="true" className={`card-tooltip ${layout.variant}`} style={tooltipStyle}>
               <span className="card-tooltip__eyebrow">
                 {tileLabel} - {card.energyCost} energia
               </span>

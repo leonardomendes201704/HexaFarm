@@ -18,6 +18,59 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-038 de regras laterais para tooltips das cartas da grade
+
+### Resumo
+
+Os tooltips das cartas em grades agora abrem lateralmente: cartas da metade esquerda abrem para a direita e cartas da metade direita abrem para a esquerda, centralizados verticalmente no card.
+
+### Entregas realizadas
+
+- criacao do backlog completo do `PBI-038`, vinculado ao `EPICO-030`
+- adicao do modo `side-auto` ao `CardTooltip`
+- aplicacao do modo lateral nas cartas da colecao
+- aplicacao do modo lateral nas cartas da loja
+- ajuste das variacoes laterais do tooltip com seta apropriada
+- conclusao do `PBI-038`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-038_REGRAS_LATERAIS_PARA_TOOLTIPS_DAS_CARTAS_DA_GRADE/DONE-PBI-038_REGRAS_LATERAIS_PARA_TOOLTIPS_DAS_CARTAS_DA_GRADE.md`
+- `BACKLOGS/PBIS/PBI-038_REGRAS_LATERAIS_PARA_TOOLTIPS_DAS_CARTAS_DA_GRADE/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-038_REGRAS_LATERAIS_PARA_TOOLTIPS_DAS_CARTAS_DA_GRADE/TASKS/DONE-*`
+- `src/components/CardTooltip.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-030 - Feedback Informativo das Cartas`
+- `PBI-038 - Regras Laterais para Tooltips das Cartas da Grade`
+- `HISTORIA-001 - Reposicionar Horizontalmente os Tooltips da Grade`
+
+### Tasks executadas
+
+- `TASK-001 - Adicionar um Modo Side-Auto ao CardTooltip`
+- `TASK-002 - Aplicar o Modo Side-Auto nas Cartas da Colecao e da Loja`
+- `TASK-003 - Ajustar a Seta e o Alinhamento Vertical dos Tooltips Laterais`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual do hover nas grades de cartas
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- os tooltips laterais ficaram mais previsiveis
+- a abertura lateral respeita o lado da grade
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-038` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-037 de reducao das margens verticais das modais
 
 ### Resumo

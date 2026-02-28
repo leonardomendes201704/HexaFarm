@@ -1228,6 +1228,14 @@ button:disabled {
   transform: translate(-50%, 0);
 }
 
+.card-tooltip.is-right {
+  transform: translate(0, -50%);
+}
+
+.card-tooltip.is-left {
+  transform: translate(-100%, -50%);
+}
+
 .card-tooltip::after {
   position: absolute;
   top: 100%;
@@ -1249,6 +1257,26 @@ button:disabled {
   border-right: 0;
   border-bottom: 0;
   transform: translate(-50%, 8px) rotate(45deg);
+}
+
+.card-tooltip.is-right::after {
+  top: 50%;
+  left: 0;
+  border-top: 1px solid rgba(186, 145, 95, 0.44);
+  border-left: 1px solid rgba(186, 145, 95, 0.44);
+  border-right: 0;
+  border-bottom: 0;
+  transform: translate(-8px, -50%) rotate(45deg);
+}
+
+.card-tooltip.is-left::after {
+  top: 50%;
+  left: 100%;
+  border-top: 0;
+  border-left: 0;
+  border-right: 1px solid rgba(186, 145, 95, 0.44);
+  border-bottom: 1px solid rgba(186, 145, 95, 0.44);
+  transform: translate(-8px, -50%) rotate(45deg);
 }
 
 .card-tooltip__eyebrow {
@@ -1555,7 +1583,7 @@ button:disabled {
   z-index: 12;
   display: grid;
   place-items: center;
-  padding: 12px 24px;
+  padding: 12px 12px;
   background: rgba(54, 34, 34, 0.26);
   backdrop-filter: blur(18px);
 }
