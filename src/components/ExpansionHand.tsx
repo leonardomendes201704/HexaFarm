@@ -11,7 +11,6 @@ type ExpansionHandProps = {
   availableEnergy: number;
   discardCount: number;
   drawCount: number;
-  hasPlayableCards: boolean;
   hand: ExpansionCard[];
   onSelectCard: (cardId: string) => void;
   playableCardInstanceIds: string[];
@@ -22,7 +21,6 @@ export function ExpansionHand({
   availableEnergy,
   discardCount,
   drawCount,
-  hasPlayableCards,
   hand,
   onSelectCard,
   playableCardInstanceIds,
@@ -32,10 +30,6 @@ export function ExpansionHand({
 
   return (
     <section aria-label="Mao de expansao" className="game-hand">
-      <div className="game-hand__meta">
-        {!hasPlayableCards ? <span className="game-hand__counter">Sem alvo</span> : null}
-      </div>
-
       <div className="game-hand__layout">
         <div className="card-pile">
           <div className="card-pile__stack">

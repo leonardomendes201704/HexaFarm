@@ -154,6 +154,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-057`: reforcar bordas das artes das cartas
 - `PBI-058`: ajustar fundo das cartas e badge de rendimento
 - `PBI-059`: adicionar icone de raio na badge de energia
+- `PBI-060`: remover painel de fundo da secao da mao
 
 ## Convencao de Nomes
 

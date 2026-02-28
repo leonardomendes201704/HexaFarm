@@ -18,6 +18,44 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-060 concluido
+
+### Resumo
+
+O painel de fundo da secao da mao foi removido, deixando apenas as cartas e as pilhas visiveis na base da tela.
+
+### Entregas realizadas
+
+- remocao do chip `Sem alvo`
+- remocao do fundo translucido, blur, sombra e padding do contêiner da mão
+- preservacao do layout das cartas e das pilhas laterais
+
+### Arquivos principais criados ou alterados
+
+- `src/components/ExpansionHand.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-060_REMOVER_PAINEL_DE_FUNDO_DA_SECAO_DA_MAO/*`
+
+### Vinculos de backlog
+
+- `EPICO-005 - Refinamento da Tela de Jogo e HUD`
+- `PBI-060 - Remover Painel de Fundo da Secao da Mao`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- a base da tela fica composta apenas por cartas e pilhas
+- o stage ganha mais area visivel por tras da mao
+
+### Commit e push
+
+- registrados no encerramento desta entrega
+
 ## 2026-02-28 - PBI-059 concluido
 
 ### Resumo

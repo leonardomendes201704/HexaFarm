@@ -548,7 +548,6 @@ export function NewGameScreen() {
         <ExpansionHand
           armedCardId={armedCardId}
           availableEnergy={availableEnergy}
-          hasPlayableCards={playableCardInstanceIds.length > 0}
           discardCount={deckState.discardPile.length}
           drawCount={deckState.drawPile.length}
           hand={deckState.hand}

@@ -1718,38 +1718,10 @@ button:disabled {
   position: fixed;
   inset: auto 50% 24px;
   z-index: 5;
-  display: grid;
-  gap: 12px;
+  display: block;
   width: min(calc(100vw - 48px), 1080px);
-  padding: 14px 18px 18px;
-  border-radius: 34px;
-  background:
-    linear-gradient(180deg, rgba(255, 250, 241, 0.22), rgba(255, 238, 214, 0.08)),
-    rgba(72, 44, 36, 0.08);
-  backdrop-filter: blur(14px);
-  box-shadow:
-    0 22px 44px rgba(57, 36, 34, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  padding: 0;
   transform: translateX(-50%);
-}
-
-.game-hand__meta {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.game-hand__counter {
-  border-radius: 999px;
-  padding: 8px 12px;
-  background: rgba(70, 42, 28, 0.16);
-  color: #fff7e7;
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  backdrop-filter: blur(8px);
 }
 
 .game-hand__fan {
@@ -1997,9 +1969,8 @@ button:disabled {
 
   .game-hand {
     inset: auto 50% 16px;
-    gap: 10px;
     width: min(calc(100vw - 24px), 1080px);
-    padding: 12px 12px 14px;
+    padding: 0;
   }
 
   .game-hand__fan {
