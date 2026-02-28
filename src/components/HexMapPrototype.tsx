@@ -11,14 +11,16 @@ type HexMapPrototypeProps = {
   tiles: HexTile[];
 };
 
-const HEX_HORIZONTAL_SPACING = 94;
-const HEX_VERTICAL_SPACING = 82;
+const HEX_SIDE = 60;
+const HEX_WIDTH = HEX_SIDE * 2;
+const HEX_HEIGHT = Math.sqrt(3) * HEX_SIDE;
+const HEX_HORIZONTAL_STEP = HEX_WIDTH * 0.75;
 const HEX_BOARD_PADDING = 72;
 
 function projectHexCoord({ q, r }: HexCoord) {
   return {
-    x: q * HEX_HORIZONTAL_SPACING + r * (HEX_HORIZONTAL_SPACING / 2),
-    y: r * HEX_VERTICAL_SPACING,
+    x: q * HEX_HORIZONTAL_STEP,
+    y: (r + q / 2) * HEX_HEIGHT,
   };
 }
 
@@ -32,11 +34,20 @@ export function HexMapPrototype({
 }: HexMapPrototypeProps) {
   const boardGeometry = useMemo(() => {
     const allCoords = [...tiles, ...frontierSlots];
-    const projectedCoords = allCoords.map((coord) => projectHexCoord(coord));
-    const minX = Math.min(...projectedCoords.map((coord) => coord.x), 0);
-    const maxX = Math.max(...projectedCoords.map((coord) => coord.x), 0);
-    const minY = Math.min(...projectedCoords.map((coord) => coord.y), 0);
-    const maxY = Math.max(...projectedCoords.map((coord) => coord.y), 0);
+    const projectedCoords = allCoords.map((coord) => {
+      const position = projectHexCoord(coord);
+
+      return {
+        bottom: position.y + HEX_HEIGHT,
+        left: position.x,
+        right: position.x + HEX_WIDTH,
+        top: position.y,
+      };
+    });
+    const minX = Math.min(...projectedCoords.map((coord) => coord.left), 0);
+    const maxX = Math.max(...projectedCoords.map((coord) => coord.right), HEX_WIDTH);
+    const minY = Math.min(...projectedCoords.map((coord) => coord.top), 0);
+    const maxY = Math.max(...projectedCoords.map((coord) => coord.bottom), HEX_HEIGHT);
 
     return {
       height: maxY - minY + HEX_BOARD_PADDING * 2,

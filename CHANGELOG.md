@@ -18,6 +18,63 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-010 de correcao geometrica dos hexagonos
+
+### Resumo
+
+Foi corrigida a geometria visual do tabuleiro para usar hexagonos flat-top regulares, com encaixe correto entre tiles e sem a inclinacao artificial que distorcia o mapa.
+
+### Entregas realizadas
+
+- criacao do `EPICO-009` e do backlog completo do `PBI-010`
+- alinhamento da projecao axial do tabuleiro com um layout flat-top regular
+- ajuste do calculo de largura e altura do board para considerar o tamanho real de cada hexagono
+- remocao do `skew` artificial que inclinava o grid
+- ajuste do bounding box dos tiles para proporcao regular
+- correcao da `clip-path` dos hexagonos para um shape simetrico
+- conclusao do `PBI-010` e do `EPICO-009`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-009_CORRECAO_GEOMETRICA_DO_MAPA_HEXAGONAL.md`
+- `BACKLOGS/PBIS/PBI-010_CORRIGIR_ENCAIXE_E_GEOMETRIA_DOS_HEXAGONOS/DONE-PBI-010_CORRIGIR_ENCAIXE_E_GEOMETRIA_DOS_HEXAGONOS.md`
+- `BACKLOGS/PBIS/PBI-010_CORRIGIR_ENCAIXE_E_GEOMETRIA_DOS_HEXAGONOS/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-010_CORRIGIR_ENCAIXE_E_GEOMETRIA_DOS_HEXAGONOS/TASKS/DONE-*`
+- `src/components/HexMapPrototype.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-009 - Correcao Geometrica do Mapa Hexagonal`
+- `PBI-010 - Corrigir Encaixe e Geometria dos Hexagonos`
+- `HISTORIA-001 - Corrigir Projecao Axial do Tabuleiro`
+- `HISTORIA-002 - Corrigir Shape Visual dos Hexagonos`
+
+### Tasks executadas
+
+- `TASK-001 - Alinhar Projecao com Hex Flat-Top`
+- `TASK-002 - Ajustar Bounding Box dos Tiles`
+- `TASK-003 - Remover Inclinacao Artificial do Board`
+- `TASK-004 - Usar Hexagono Regular na Clip-Path`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual do encaixe visual do tabuleiro apos a correcao de geometria
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- os hexagonos do mapa passaram a usar proporcao regular
+- os tiles se encaixam corretamente no grid
+- o mapa nao fica mais inclinado artificialmente
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-010` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-009 de correcao da identidade das cartas em mao
 
 ### Resumo
