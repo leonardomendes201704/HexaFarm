@@ -714,6 +714,11 @@ export function NewGameScreen() {
           className={`day-coin-overlay ${
             coinResolutionDelta < 0 ? "is-negative" : "is-positive"
           } ${isCoinCounterFlying ? "is-flying" : ""}`}
+          style={
+            {
+              "--coin-burst-duration": `${COIN_COUNTER_COUNT_DURATION_MS}ms`,
+            } as CSSProperties
+          }
         >
           <div className="day-coin-overlay__burst">
             {coinBurstParticles.map((particle) => (

@@ -1785,20 +1785,27 @@ button:disabled {
   width: var(--coin-particle-size, 18px);
   height: var(--coin-particle-size, 18px);
   border-radius: 50%;
+  border: 1px solid rgba(255, 232, 137, 0.82);
   background:
-    radial-gradient(circle at 30% 30%, #fff8c7, #f4c84f 58%, #d79218 100%);
+    radial-gradient(circle at 28% 28%, #fffef0, #ffe06a 46%, #f7ba1d 68%, #d18600 100%);
   box-shadow:
-    0 0 22px rgba(255, 216, 108, 0.42),
-    inset 0 1px 0 rgba(255, 251, 220, 0.84);
-  animation: day-coin-particle-burst 1.28s cubic-bezier(0.14, 0.8, 0.2, 1) forwards;
+    0 0 28px rgba(255, 209, 56, 0.68),
+    0 0 54px rgba(255, 197, 48, 0.34),
+    inset 0 1px 0 rgba(255, 255, 240, 0.96);
+  filter: saturate(1.18) brightness(1.08);
+  animation: day-coin-particle-burst var(--coin-burst-duration, 980ms)
+    cubic-bezier(0.14, 0.8, 0.2, 1) forwards;
 }
 
 .day-coin-overlay.is-negative .day-coin-overlay__particle {
+  border-color: rgba(255, 187, 152, 0.84);
   background:
-    radial-gradient(circle at 30% 30%, #ffe3d8, #f5a06f 58%, #cf5d38 100%);
+    radial-gradient(circle at 28% 28%, #fff2ec, #ffbe93 46%, #f17e46 68%, #cb4d2f 100%);
   box-shadow:
-    0 0 16px rgba(239, 134, 94, 0.32),
-    inset 0 1px 0 rgba(255, 239, 231, 0.82);
+    0 0 24px rgba(242, 122, 74, 0.58),
+    0 0 42px rgba(221, 88, 55, 0.28),
+    inset 0 1px 0 rgba(255, 246, 241, 0.96);
+  filter: saturate(1.1) brightness(1.04);
 }
 
 .day-coin-overlay__counter {

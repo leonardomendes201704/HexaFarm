@@ -18,6 +18,45 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-067 concluido
+
+### Resumo
+
+As moedas do burst ficaram mais brilhantes e menos “lavadas”, e a duracao da explosao passou a usar exatamente o mesmo tempo da contagem central.
+
+### Entregas realizadas
+
+- aumento do brilho, saturacao e contraste das particulas de moeda
+- reforco do contorno e do glow das moedas positivas e negativas
+- vinculacao da duracao do burst a uma variavel derivada de `COIN_COUNTER_COUNT_DURATION_MS`
+
+### Arquivos principais criados ou alterados
+
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-067_REFORCAR_BRILHO_DAS_MOEDAS_E_SINCRONIZAR_BURST_COM_A_CONTAGEM/*`
+
+### Vinculos de backlog
+
+- `EPICO-005 - Refinamento da Tela de Jogo e HUD`
+- `PBI-067 - Reforcar Brilho das Moedas e Sincronizar Burst com a Contagem`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- as moedas ficam mais vivas e opacas
+- o burst dura o mesmo tempo da contagem central
+
+### Commit e push
+
+- registrados no encerramento desta entrega
+
+---
+
 ## 2026-02-28 - PBI-066 concluido
 
 ### Resumo
