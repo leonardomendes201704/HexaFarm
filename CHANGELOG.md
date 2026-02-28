@@ -18,6 +18,50 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-043 de persistencia global do BGM entre telas
+
+### Resumo
+
+O BGM passou a ser controlado em nivel global da aplicacao, mantendo a musica em loop durante toda a jornada e sem reinicio ao trocar de tela.
+
+### Entregas realizadas
+
+- criacao do backlog do `PBI-043`, vinculado ao `EPICO-034`
+- criacao do `AppAudioProvider` para manter o `Audio` acima das rotas
+- remocao do controle local de audio da `HomeScreen`
+- manutencao do gesto inicial de desbloqueio do BGM a partir do modal de boas-vindas
+- eliminacao do reset de musica ao navegar para `Novo Jogo`, `Continuar` e `Opcoes`
+- atualizacao visual do status de musica em `Opcoes`
+- conclusao do `PBI-043`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-034_PERSISTENCIA_GLOBAL_DO_BGM_DA_JORNADA.md`
+- `BACKLOGS/PBIS/PBI-043_TORNAR_O_BGM_GLOBAL_E_CONTINUO_ENTRE_TELAS/DONE-PBI-043_TORNAR_O_BGM_GLOBAL_E_CONTINUO_ENTRE_TELAS.md`
+- `src/audio/AppAudioProvider.tsx`
+- `src/App.tsx`
+- `src/screens/HomeScreen.tsx`
+- `src/screens/OptionsScreen.tsx`
+
+### Vinculos de backlog
+
+- `EPICO-034 - Persistencia Global do BGM da Jornada`
+- `PBI-043 - Tornar o BGM Global e Continuo Entre Telas`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- build deve concluir com sucesso
+- o BGM deve continuar tocando ao navegar entre as telas, sem reiniciar
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - Implementacao do PBI-042 de centralizacao do catalogo de cartas em JSON
 
 ### Resumo

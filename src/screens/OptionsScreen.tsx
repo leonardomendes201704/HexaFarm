@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useAppAudio } from "../audio/AppAudioProvider";
 import { FlowScreen } from "../components/FlowScreen";
 import { SaveSummaryCard } from "../components/SaveSummaryCard";
 import { clearSavedRun, getSavedRun, type SaveSnapshot } from "../lib/save";
 
 export function OptionsScreen() {
+  const { hasUnlockedBgm, isBgmPlaying } = useAppAudio();
   const [savedRun, setSavedRun] = useState<SaveSnapshot | null>(() => getSavedRun());
   const [feedbackMessage, setFeedbackMessage] = useState(
     "Ajustes gerais e gerenciamento do save local ficam centralizados aqui.",
@@ -32,7 +34,9 @@ export function OptionsScreen() {
       <div className="options-card">
         <div className="options-card__row">
           <span>Musica ambiente</span>
-          <span className="pill">Stub</span>
+          <span className="pill">
+            {isBgmPlaying ? "Ligada" : hasUnlockedBgm ? "Pausada" : "Aguardando gesto"}
+          </span>
         </div>
         <div className="options-card__row">
           <span>Efeitos de interface</span>
