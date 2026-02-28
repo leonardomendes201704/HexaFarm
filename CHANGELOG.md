@@ -18,6 +18,42 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-055 concluido
+
+### Resumo
+
+A tela `Montar Baralho da Run` passou a mostrar apenas cartas que o jogador possui.
+
+### Entregas realizadas
+
+- criacao de uma lista derivada apenas com cartas de quantidade possuida maior que zero
+- aplicacao desse filtro na grade da modal de deckbuilding
+- remocao da necessidade de marcar cartas indisponiveis como `locked` nessa tela
+
+### Arquivos principais criados ou alterados
+
+- `src/screens/NewGameScreen.tsx`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-055_OCULTAR_CARTAS_NAO_POSSUIDAS_NA_MONTAGEM_DA_RUN/*`
+
+### Vinculos de backlog
+
+- `EPICO-033 - Estruturacao Data-Driven do Catalogo de Cartas`
+- `PBI-055 - Ocultar Cartas Nao Possuidas na Montagem da Run`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- cartas com quantidade zero deixam de aparecer na montagem do baralho
+- a loja continua sendo o local para descobrir e comprar cartas ainda nao possuidas
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - PBI-054 concluido
 
 ### Resumo

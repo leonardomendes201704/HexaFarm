@@ -125,6 +125,13 @@ export function NewGameScreen() {
   const dayResolutionTimeoutRef = useRef<number | null>(null);
 
   const collectionCards = useMemo(() => getCardLibrary(), []);
+  const ownedCollectionCards = useMemo(
+    () =>
+      collectionCards.filter(
+        (card) => getOwnedQuantity(savedRun?.meta.ownedCards ?? [], card.id) > 0,
+      ),
+    [collectionCards, savedRun],
+  );
   const frontierSlots = getFrontierSlots(tiles);
   const armedCard = deckState.hand.find((card) => card.instanceId === armedCardId) ?? null;
 
@@ -570,7 +577,7 @@ export function NewGameScreen() {
             </div>
 
             <div className="collection-grid">
-              {collectionCards.map((card) => {
+              {ownedCollectionCards.map((card) => {
                 const ownedQuantity = getOwnedQuantity(savedRun.meta.ownedCards, card.id);
                 const selectedQuantity = getSelectedQuantity(deckSelection, card.id);
                 const canAddMore = selectedDeckCount < DECK_SIZE && selectedQuantity < ownedQuantity;
@@ -599,7 +606,6 @@ export function NewGameScreen() {
                     }
                     card={card}
                     key={card.id}
-                    locked={ownedQuantity === 0}
                     metaLines={[
                       `Possui ${ownedQuantity} | No deck ${selectedQuantity}`,
                       getCardMetaLine(card),
