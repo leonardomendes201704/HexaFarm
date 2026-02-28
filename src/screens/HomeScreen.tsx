@@ -20,7 +20,7 @@ export function HomeScreen() {
     const homeBgm = new Audio(homeMenuBgmTrack);
 
     homeBgm.loop = true;
-    homeBgm.volume = 0.32;
+    homeBgm.volume = 0.05;
     homeBgmRef.current = homeBgm;
 
     return () => {

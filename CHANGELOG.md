@@ -18,6 +18,54 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-024 de ajuste do volume padrao do BGM da home
+
+### Resumo
+
+O volume inicial da trilha da home foi reduzido para 5%, deixando o BGM bem mais discreto por padrao.
+
+### Entregas realizadas
+
+- criacao do `EPICO-023` e do backlog completo do `PBI-024`
+- reducao do volume inicial do `HTMLAudioElement` da home para `0.05`
+- manutencao do restante do fluxo de reproducao do BGM
+- conclusao do `PBI-024` e do `EPICO-023`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-023_AJUSTE_DE_VOLUME_DA_TRILHA_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-024_AJUSTAR_VOLUME_PADRAO_DO_BGM_DA_HOME/DONE-PBI-024_AJUSTAR_VOLUME_PADRAO_DO_BGM_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-024_AJUSTAR_VOLUME_PADRAO_DO_BGM_DA_HOME/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-024_AJUSTAR_VOLUME_PADRAO_DO_BGM_DA_HOME/TASKS/DONE-*`
+- `src/screens/HomeScreen.tsx`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-023 - Ajuste de Volume da Trilha da Home`
+- `PBI-024 - Ajustar Volume Padrao do BGM da Home`
+- `HISTORIA-001 - Reduzir o Volume Inicial da Trilha da Home`
+
+### Tasks executadas
+
+- `TASK-001 - Definir Volume Inicial do BGM em 5 por cento`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual do BGM da home com volume inicial reduzido
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- a trilha da home continua tocando normalmente
+- o volume inicial passou a ser 5%
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-024` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-023 de fullscreen ao fechar o modal de boas-vindas
 
 ### Resumo
