@@ -18,6 +18,56 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-023 de fullscreen ao fechar o modal de boas-vindas
+
+### Resumo
+
+O fechamento do modal de boas-vindas agora tambem tenta colocar a home em fullscreen, junto com o inicio da trilha do menu.
+
+### Entregas realizadas
+
+- criacao do `EPICO-022` e do backlog completo do `PBI-023`
+- adicao da tentativa de fullscreen no clique de fechar do modal inicial
+- manutencao do inicio da musica no mesmo fechamento
+- atualizacao do texto do modal para explicar o novo comportamento
+- conclusao do `PBI-023` e do `EPICO-022`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-022_IMERSAO_NO_FECHAMENTO_DO_MODAL_INICIAL.md`
+- `BACKLOGS/PBIS/PBI-023_ENTRAR_EM_FULLSCREEN_AO_FECHAR_MODAL_DE_BOAS_VINDAS/DONE-PBI-023_ENTRAR_EM_FULLSCREEN_AO_FECHAR_MODAL_DE_BOAS_VINDAS.md`
+- `BACKLOGS/PBIS/PBI-023_ENTRAR_EM_FULLSCREEN_AO_FECHAR_MODAL_DE_BOAS_VINDAS/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-023_ENTRAR_EM_FULLSCREEN_AO_FECHAR_MODAL_DE_BOAS_VINDAS/TASKS/DONE-*`
+- `src/screens/HomeScreen.tsx`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-022 - Imersao no Fechamento do Modal Inicial`
+- `PBI-023 - Entrar em Fullscreen ao Fechar Modal de Boas-Vindas`
+- `HISTORIA-001 - Reaproveitar o Fechamento do Modal como Gatilho de Imersao`
+
+### Tasks executadas
+
+- `TASK-001 - Acionar Fullscreen no Fechamento do Modal`
+- `TASK-002 - Atualizar Texto do Modal para o Novo Comportamento`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual do fechamento do modal com fullscreen e audio
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- ao fechar o modal, a home agora tenta entrar em fullscreen
+- a musica continua iniciando no mesmo gesto
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-023` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-022 de BGM no menu com modal de boas-vindas
 
 ### Resumo

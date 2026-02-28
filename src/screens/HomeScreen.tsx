@@ -45,6 +45,7 @@ export function HomeScreen() {
   };
 
   const handleDismissWelcomeModal = () => {
+    void requestGameFullscreen();
     setIsWelcomeModalOpen(false);
 
     const homeBgm = homeBgmRef.current;
@@ -109,7 +110,7 @@ export function HomeScreen() {
             <div className="route-note">
               <p className="route-note__label">Boas-vindas</p>
               <p className="route-note__text">
-                Feche este modal para iniciar a musica ambiente do menu e entrar na home com a trilha ativa.
+                Feche este modal para entrar em tela cheia e iniciar a musica ambiente do menu.
               </p>
             </div>
 
@@ -120,7 +121,7 @@ export function HomeScreen() {
               </div>
               <div className="game-modal__stat-card">
                 <span className="game-modal__stat-label">Acao</span>
-                <strong className="game-modal__stat-value">Fechar para tocar</strong>
+                <strong className="game-modal__stat-value">Fechar para tocar e abrir</strong>
               </div>
             </div>
           </div>
