@@ -18,6 +18,43 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-058 concluido
+
+### Resumo
+
+O corpo das cartas deixou de usar fundo branco neutro e passou a usar tons claros derivados da cor da moldura, e a badge de rendimento ganhou um pequeno icone de moeda dourada.
+
+### Entregas realizadas
+
+- criacao de variaveis de preenchimento claro para o corpo das cartas
+- aplicacao de fundos tematicos por tipo na moldura externa
+- adicao de um icone circular de moeda dourada na badge de rendimento
+- aplicacao do ajuste tanto na mao quanto na grade de cartas
+
+### Arquivos principais criados ou alterados
+
+- `src/styles.css`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-058_AJUSTAR_FUNDO_DAS_CARTAS_E_BADGE_DE_RENDIMENTO/*`
+
+### Vinculos de backlog
+
+- `EPICO-032 - Integracao de Artes Reais nas Cartas`
+- `PBI-058 - Ajustar Fundo das Cartas e Badge de Rendimento`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- as cartas deixam de parecer brancas e passam a herdar um tom suave da propria moldura
+- a badge `X/dia` fica mais tematica com o icone de moeda
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - PBI-057 concluido
 
 ### Resumo
