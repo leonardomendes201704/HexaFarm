@@ -444,6 +444,14 @@ export function NewGameScreen() {
                     key={card.id}
                   >
                     <div className={`collection-card__art collection-card__art--${card.tileType}`}>
+                      {card.artAssetPath ? (
+                        <img
+                          alt=""
+                          aria-hidden="true"
+                          className="collection-card__art-image"
+                          src={card.artAssetPath}
+                        />
+                      ) : null}
                       <span className="collection-card__cost">{card.energyCost}</span>
                       <span
                         className={`collection-card__yield ${
@@ -533,6 +541,14 @@ export function NewGameScreen() {
                 return (
                   <article className={`collection-card collection-card--${card.tileType}`} key={`shop-${card.id}`}>
                     <div className={`collection-card__art collection-card__art--${card.tileType}`}>
+                      {card.artAssetPath ? (
+                        <img
+                          alt=""
+                          aria-hidden="true"
+                          className="collection-card__art-image"
+                          src={card.artAssetPath}
+                        />
+                      ) : null}
                       <span className="collection-card__cost">{card.energyCost}</span>
                       <span
                         className={`collection-card__yield ${

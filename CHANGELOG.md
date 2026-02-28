@@ -18,6 +18,51 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-040 de integracao da arte real da carta Abrir Clareira
+
+### Resumo
+
+O prototipo agora aceita arte real por carta, e `Abrir Clareira` passou a exibir a imagem fornecida no espaco de arte da carta.
+
+### Entregas realizadas
+
+- criacao do backlog do `PBI-040`, vinculado ao `EPICO-032`
+- copia do asset `card-abrir-clareira.png` para `src/assets/cards/`
+- adicao de suporte a `artAssetPath` no catalogo das cartas
+- vinculacao da arte real a carta `Abrir Clareira`
+- renderizacao da imagem na mao, na montagem do baralho e na loja
+- manutencao do fallback visual para cartas sem arte cadastrada
+- conclusao do `PBI-040`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-032_INTEGRACAO_DE_ARTES_REAIS_NAS_CARTAS.md`
+- `BACKLOGS/PBIS/PBI-040_APLICAR_ARTE_REAL_NA_CARTA_ABRIR_CLAREIRA/DONE-PBI-040_APLICAR_ARTE_REAL_NA_CARTA_ABRIR_CLAREIRA.md`
+- `src/assets/cards/card-abrir-clareira.png`
+- `src/lib/prototypeDeck.ts`
+- `src/components/ExpansionHand.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+
+### Vinculos de backlog
+
+- `EPICO-032 - Integracao de Artes Reais nas Cartas`
+- `PBI-040 - Aplicar Arte Real na Carta Abrir Clareira`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- build deve concluir com sucesso
+- a carta `Abrir Clareira` deve mostrar a arte real na area reservada
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - Implementacao do PBI-039 de refinamento das cores do tooltip das cartas
 
 ### Resumo

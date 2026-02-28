@@ -949,6 +949,15 @@ button:disabled {
   background: linear-gradient(180deg, rgba(255, 220, 191, 0.45), rgba(255, 244, 224, 0.92));
 }
 
+.expansion-card__art-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
 .expansion-card__cost {
   position: absolute;
   top: 12px;
@@ -1008,6 +1017,7 @@ button:disabled {
   border-radius: 999px 999px 14px 14px;
   background: linear-gradient(180deg, rgba(226, 193, 116, 0.55), rgba(156, 126, 57, 0.85));
   content: "";
+  z-index: 1;
 }
 
 .expansion-card__art--field {
@@ -1037,6 +1047,7 @@ button:disabled {
 .expansion-card__spark {
   position: absolute;
   top: 16px;
+  z-index: 2;
   width: 12px;
   height: 12px;
   border-radius: 4px;
@@ -1057,7 +1068,7 @@ button:disabled {
 
 .expansion-card__icon {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   width: 100%;
   min-height: 118px;
@@ -2042,10 +2053,20 @@ button:disabled {
     linear-gradient(180deg, rgba(226, 236, 214, 0.88), rgba(255, 244, 214, 0.92));
 }
 
+.collection-card__art-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
 .collection-card__cost {
   position: absolute;
   top: 10px;
   left: 10px;
+  z-index: 2;
   display: inline-flex;
   width: 30px;
   height: 30px;

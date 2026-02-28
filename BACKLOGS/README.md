@@ -89,6 +89,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `EPICO-029`: refinamento da modal de montagem de baralho
 - `EPICO-030`: feedback informativo das cartas
 - `EPICO-031`: refinamento de camadas e espaco util da interface
+- `EPICO-032`: integracao de artes reais nas cartas
 - `PBI-001`: tela inicial do jogo HexaFarm
 - `PBI-002`: estrutura base de navegacao entre telas
 - `PBI-003`: sistema minimo de save local
@@ -128,6 +129,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-037`: reduzir margens verticais das modais
 - `PBI-038`: regras laterais para tooltips das cartas da grade
 - `PBI-039`: refinar cores do tooltip das cartas
+- `PBI-040`: aplicar arte real na carta Abrir Clareira
 
 ## Convencao de Nomes
 

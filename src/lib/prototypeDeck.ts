@@ -1,9 +1,11 @@
+import cardAbrirClareiraArt from "../assets/cards/card-abrir-clareira.png";
 import type { ExpansionTileType } from "./hexGrid";
 
 export const DECK_SIZE = 24;
 export const HAND_SIZE = 4;
 
 export type CardDefinition = {
+  artAssetPath: string | null;
   coinYield: number;
   description: string;
   energyCost: number;
@@ -30,6 +32,7 @@ export type PrototypeDeckState = {
 
 const CARD_LIBRARY: CardDefinition[] = [
   {
+    artAssetPath: cardAbrirClareiraArt,
     coinYield: 2,
     description:
       "Abre um campo simples e confiavel. Excelente para comecar a run com renda estavel sem gastar muita energia.",
@@ -40,6 +43,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "field",
   },
   {
+    artAssetPath: null,
     coinYield: 1,
     description:
       "Cria um jardim acolhedor e barato. Serve para expandir com seguranca e manter lucro positivo desde cedo.",
@@ -50,6 +54,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "garden",
   },
   {
+    artAssetPath: null,
     coinYield: -1,
     description:
       "Abre um lago raso na borda. Ele custa manutencao diaria, mas prepara espaco para uma malha de agua e futuras sinergias.",
@@ -60,6 +65,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "pond",
   },
   {
+    artAssetPath: null,
     coinYield: 1,
     description:
       "Expande a fronteira com um bosque leve. Boa carta de preenchimento para crescer o mapa sem travar sua energia.",
@@ -70,6 +76,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "wild",
   },
   {
+    artAssetPath: null,
     coinYield: 3,
     description:
       "Abre um lote de campo mais rentavel. Custa mais energia, mas acelera a corrida por moedas e ajuda no aluguel.",
@@ -80,6 +87,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "field",
   },
   {
+    artAssetPath: null,
     coinYield: 2,
     description:
       "Transforma a borda em um canteiro mais lucrativo. Uma melhora natural para runs que querem valor constante.",
@@ -90,6 +98,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "garden",
   },
   {
+    artAssetPath: null,
     coinYield: 1,
     description:
       "Cria um lago mais amplo e refinado. E mais caro de jogar, mas ja se paga melhor que os lagos iniciais.",
@@ -100,6 +109,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "pond",
   },
   {
+    artAssetPath: null,
     coinYield: 2,
     description:
       "Ergue um bosque valioso na borda. Brilha em runs mais longas, quando expandir sem perder rendimento faz diferenca.",
@@ -110,6 +120,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "wild",
   },
   {
+    artAssetPath: null,
     coinYield: 1,
     description:
       "Adiciona um campo enxuto e barato. Ideal para fechar o deck com cartas leves e manter a curva de energia suave.",
@@ -120,6 +131,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "field",
   },
   {
+    artAssetPath: null,
     coinYield: 4,
     description:
       "Planta um jardim premium de alto retorno. Uma carta de valor para quem quer explodir renda no meio e fim da run.",
