@@ -18,6 +18,56 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-039 de refinamento das cores do tooltip das cartas
+
+### Resumo
+
+O tooltip das cartas recebeu um visual mais quente, com fundo amarelo/pastel e borda laranja mais grossa.
+
+### Entregas realizadas
+
+- criacao do backlog completo do `PBI-039`, vinculado ao `EPICO-030`
+- aplicacao de fundo amarelo/pastel mais forte no tooltip
+- aumento da espessura da borda laranja do tooltip
+- atualizacao da seta do tooltip para acompanhar as novas cores e bordas
+- conclusao do `PBI-039`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-039_REFINAR_CORES_DO_TOOLTIP_DAS_CARTAS/DONE-PBI-039_REFINAR_CORES_DO_TOOLTIP_DAS_CARTAS.md`
+- `BACKLOGS/PBIS/PBI-039_REFINAR_CORES_DO_TOOLTIP_DAS_CARTAS/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-039_REFINAR_CORES_DO_TOOLTIP_DAS_CARTAS/TASKS/DONE-*`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-030 - Feedback Informativo das Cartas`
+- `PBI-039 - Refinar Cores do Tooltip das Cartas`
+- `HISTORIA-001 - Reforcar o Tratamento Visual do Card Tooltip`
+
+### Tasks executadas
+
+- `TASK-001 - Aplicar Fundo Amarelo Pastel no Tooltip`
+- `TASK-002 - Engrossar a Borda Laranja do Tooltip`
+- `TASK-003 - Atualizar a Seta para Combinar com o Novo Estilo`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual do visual dos tooltips
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- tooltip ficou mais quente e mais destacado
+- borda e seta ficaram visualmente mais fortes
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-039` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-038 de regras laterais para tooltips das cartas da grade
 
 ### Resumo

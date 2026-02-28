@@ -1207,12 +1207,12 @@ button:disabled {
   display: grid;
   gap: 6px;
   width: min(300px, calc(100vw - 48px));
-  border: 1px solid rgba(186, 145, 95, 0.44);
+  border: 3px solid rgba(233, 151, 84, 0.82);
   border-radius: 22px;
   padding: 14px 16px;
   background:
-    radial-gradient(circle at top right, rgba(255, 241, 210, 0.78), transparent 34%),
-    linear-gradient(180deg, rgba(255, 252, 245, 0.98), rgba(255, 242, 224, 0.96));
+    radial-gradient(circle at top right, rgba(255, 248, 194, 0.92), transparent 34%),
+    linear-gradient(180deg, rgba(255, 248, 214, 0.99), rgba(255, 236, 176, 0.97));
   box-shadow:
     0 22px 34px rgba(48, 31, 24, 0.22),
     inset 0 1px 0 rgba(255, 255, 255, 0.92);
@@ -1242,9 +1242,9 @@ button:disabled {
   left: 50%;
   width: 16px;
   height: 16px;
-  border-right: 1px solid rgba(186, 145, 95, 0.44);
-  border-bottom: 1px solid rgba(186, 145, 95, 0.44);
-  background: rgba(255, 245, 229, 0.98);
+  border-right: 3px solid rgba(233, 151, 84, 0.82);
+  border-bottom: 3px solid rgba(233, 151, 84, 0.82);
+  background: rgba(255, 240, 187, 0.98);
   content: "";
   transform: translate(-50%, -8px) rotate(45deg);
 }
@@ -1252,8 +1252,8 @@ button:disabled {
 .card-tooltip.is-bottom::after {
   top: auto;
   bottom: 100%;
-  border-top: 1px solid rgba(186, 145, 95, 0.44);
-  border-left: 1px solid rgba(186, 145, 95, 0.44);
+  border-top: 3px solid rgba(233, 151, 84, 0.82);
+  border-left: 3px solid rgba(233, 151, 84, 0.82);
   border-right: 0;
   border-bottom: 0;
   transform: translate(-50%, 8px) rotate(45deg);
@@ -1262,8 +1262,8 @@ button:disabled {
 .card-tooltip.is-right::after {
   top: 50%;
   left: 0;
-  border-top: 1px solid rgba(186, 145, 95, 0.44);
-  border-left: 1px solid rgba(186, 145, 95, 0.44);
+  border-top: 3px solid rgba(233, 151, 84, 0.82);
+  border-left: 3px solid rgba(233, 151, 84, 0.82);
   border-right: 0;
   border-bottom: 0;
   transform: translate(-8px, -50%) rotate(45deg);
@@ -1274,8 +1274,8 @@ button:disabled {
   left: 100%;
   border-top: 0;
   border-left: 0;
-  border-right: 1px solid rgba(186, 145, 95, 0.44);
-  border-bottom: 1px solid rgba(186, 145, 95, 0.44);
+  border-right: 3px solid rgba(233, 151, 84, 0.82);
+  border-bottom: 3px solid rgba(233, 151, 84, 0.82);
   transform: translate(-8px, -50%) rotate(45deg);
 }
 

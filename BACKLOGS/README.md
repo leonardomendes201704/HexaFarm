@@ -127,6 +127,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-036`: refinar altura da modal deckbuilding e camada dos tooltips
 - `PBI-037`: reduzir margens verticais das modais
 - `PBI-038`: regras laterais para tooltips das cartas da grade
+- `PBI-039`: refinar cores do tooltip das cartas
 
 ## Convencao de Nomes
 
