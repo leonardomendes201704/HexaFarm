@@ -201,6 +201,42 @@ Foi criada a malha base reutilizavel do hexagono com volume real.
 
 - esta entrada deve ser fechada com commit e push apos a validacao final desta task
 
+## 2026-02-28 - TASK-006 do PBI-048 concluida
+
+### Resumo
+
+O stage 3D passou a espelhar os tiles e os slots de expansao reais da run atual.
+
+### Entregas realizadas
+
+- `Stage3DCanvas` tornou-se data-driven
+- renderizacao dos tiles do save atual como prismas 3D
+- renderizacao dos slots de expansao como prismas baixos transluidos
+
+### Arquivos principais criados ou alterados
+
+- `src/components/Stage3DCanvas.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/TASKS/DONE-TASK-006_RENDERIZAR_TILES_E_SLOTS_DO_SAVE_ATUAL_NO_STAGE_3D.md`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-048 - Migrar Stage Hexagonal para Renderizacao 3D Isometrica Real`
+- `TASK-006 - Renderizar Tiles e Slots do Save Atual no Stage 3D`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- a cena 3D passa a refletir visualmente o estado atual do mapa salvo
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta task
+
 ## 2026-02-28 - Planejamento do PBI-048 para migracao do stage para 3D isometrico real
 
 ### Resumo

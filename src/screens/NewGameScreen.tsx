@@ -491,7 +491,7 @@ export function NewGameScreen() {
       </header>
 
       <div className="gameplay-stage">
-        <Stage3DCanvas />
+        <Stage3DCanvas frontierSlots={frontierSlots} tiles={tiles} />
 
         <div className="gameplay-stage__status">
           {armedCard ? (
