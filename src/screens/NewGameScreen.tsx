@@ -12,8 +12,19 @@ import {
   type HexCoord,
   type HexTile,
 } from "../lib/hexGrid";
-import { createInitialExpansionDeck, playExpansionCard, type PrototypeDeckState } from "../lib/prototypeDeck";
-import { getSavedRun, registerPrototypeExpansion, type SaveSnapshot } from "../lib/save";
+import {
+  createInitialExpansionDeck,
+  discardHandAndRefill,
+  playExpansionCard,
+  type PrototypeDeckState,
+} from "../lib/prototypeDeck";
+import {
+  advancePrototypeDay,
+  getSavedRun,
+  PROTOTYPE_BASE_ENERGY,
+  registerPrototypeExpansion,
+  type SaveSnapshot,
+} from "../lib/save";
 
 type HudModalId = "help" | "menu" | "status" | null;
 
@@ -62,6 +73,12 @@ export function NewGameScreen() {
       if (pressedKey === "h") {
         setActiveModal((currentModal) => (currentModal === "help" ? null : "help"));
       }
+
+      if (pressedKey === "e") {
+        setDeckState((currentDeckState) => discardHandAndRefill(currentDeckState));
+        setArmedCardId(null);
+        setSavedRun(advancePrototypeDay());
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -75,8 +92,16 @@ export function NewGameScreen() {
     return <Navigate replace to="/" />;
   }
 
+  const availableEnergy = savedRun.activeRun.resources.energy;
+
   const handleSelectCard = (cardId: string) => {
     if (frontierSlots.length === 0) {
+      return;
+    }
+
+    const selectedCard = deckState.hand.find((card) => card.id === cardId);
+
+    if (!selectedCard || selectedCard.energyCost > availableEnergy) {
       return;
     }
 
@@ -84,12 +109,12 @@ export function NewGameScreen() {
   };
 
   const handlePlaceTile = (slot: HexCoord) => {
-    if (!armedCard) {
+    if (!armedCard || armedCard.energyCost > availableEnergy) {
       return;
     }
 
     const createdTile = createExpandedTile(tiles, slot, armedCard.tileType);
-    const updatedSave = registerPrototypeExpansion(createdTile.tileType);
+    const updatedSave = registerPrototypeExpansion(createdTile.tileType, armedCard.energyCost);
     const { nextState } = playExpansionCard(deckState, armedCard.id);
 
     setTiles((currentTiles) => [...currentTiles, createdTile]);
@@ -97,6 +122,12 @@ export function NewGameScreen() {
     setDeckState(nextState);
     setArmedCardId(null);
     setSavedRun(updatedSave);
+  };
+
+  const handleEndDay = () => {
+    setDeckState((currentDeckState) => discardHandAndRefill(currentDeckState));
+    setArmedCardId(null);
+    setSavedRun(advancePrototypeDay());
   };
 
   return (
@@ -138,9 +169,14 @@ export function NewGameScreen() {
         </div>
 
         <div className="gameplay-hud__cluster gameplay-hud__cluster--right">
+          <span className="hud-pill">Dia {savedRun.activeRun.day}</span>
           <span className="hud-pill">Moedas {savedRun.activeRun.resources.coins}</span>
           <span className="hud-pill">Sementes {savedRun.activeRun.resources.seeds}</span>
-          <span className="hud-pill">Energia {savedRun.activeRun.resources.energy}</span>
+          <span className="hud-pill">Energia {availableEnergy}</span>
+          <button className="hud-button hud-button--action" onClick={handleEndDay} type="button">
+            <span className="hud-button__key">E</span>
+            <span>Fim do Dia</span>
+          </button>
         </div>
       </header>
 
@@ -161,6 +197,8 @@ export function NewGameScreen() {
           ) : null}
 
           <div className="status-strip">
+            <span className="status-strip__item">Dia {savedRun.activeRun.day}</span>
+            <span className="status-strip__item">Energia {availableEnergy}</span>
             <span className="status-strip__item">Tiles {tiles.length}</span>
             <span className="status-strip__item">Bordas {frontierSlots.length}</span>
           </div>
@@ -168,6 +206,7 @@ export function NewGameScreen() {
 
         <ExpansionHand
           armedCardId={armedCardId}
+          availableEnergy={availableEnergy}
           canPlayCards={frontierSlots.length > 0}
           discardCount={deckState.discardPile.length}
           drawCount={deckState.drawPile.length}
@@ -213,6 +252,16 @@ export function NewGameScreen() {
 
             <div className="game-modal__stats">
               <div className="game-modal__stat-card">
+                <span className="game-modal__stat-label">Dia</span>
+                <strong className="game-modal__stat-value">{savedRun.activeRun.day}</strong>
+              </div>
+              <div className="game-modal__stat-card">
+                <span className="game-modal__stat-label">Energia</span>
+                <strong className="game-modal__stat-value">
+                  {availableEnergy}/{PROTOTYPE_BASE_ENERGY}
+                </strong>
+              </div>
+              <div className="game-modal__stat-card">
                 <span className="game-modal__stat-label">Deck</span>
                 <strong className="game-modal__stat-value">{deckState.drawPile.length}</strong>
               </div>
@@ -246,8 +295,12 @@ export function NewGameScreen() {
                 <p className="game-modal__tip-text">Clique em uma borda brilhante para criar o novo hex.</p>
               </div>
               <div className="game-modal__tip">
+                <span className="game-modal__tip-key">E</span>
+                <p className="game-modal__tip-text">Encerra o dia, recarrega energia e renova a mao.</p>
+              </div>
+              <div className="game-modal__tip">
                 <span className="game-modal__tip-key">M</span>
-                <p className="game-modal__tip-text">Abre o menu. R mostra a run. Esc fecha tudo.</p>
+                <p className="game-modal__tip-text">Abre o menu. R mostra a run. H ajuda. Esc fecha tudo.</p>
               </div>
             </div>
           </div>

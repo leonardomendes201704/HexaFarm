@@ -3,6 +3,7 @@ import type { PrototypeTileType } from "./hexGrid";
 const SAVE_KEY = "hexafarm.save";
 const LEGACY_SAVE_KEY = "hexafarm.save.stub";
 const CURRENT_SAVE_VERSION = 2;
+export const PROTOTYPE_BASE_ENERGY = 3;
 
 type LegacySaveSnapshot = {
   createdAt: string;
@@ -97,7 +98,7 @@ function createDefaultRunState(): SaveRunState {
     waifuAffinity: 0,
     resources: {
       coins: 12,
-      energy: 3,
+      energy: PROTOTYPE_BASE_ENERGY,
       seeds: 4,
     },
   };
@@ -234,7 +235,10 @@ function getExpansionRewards(tileType: Exclude<PrototypeTileType, "home">) {
   }
 }
 
-export function registerPrototypeExpansion(tileType: Exclude<PrototypeTileType, "home">) {
+export function registerPrototypeExpansion(
+  tileType: Exclude<PrototypeTileType, "home">,
+  energySpent = 1,
+) {
   const currentSave = readSaveSnapshot();
 
   if (!currentSave) {
@@ -248,13 +252,41 @@ export function registerPrototypeExpansion(tileType: Exclude<PrototypeTileType, 
       ...currentSave.activeRun,
       resources: {
         coins: currentSave.activeRun.resources.coins + rewards.coins,
-        energy: currentSave.activeRun.resources.energy + rewards.energy,
+        energy:
+          Math.max(0, currentSave.activeRun.resources.energy - energySpent) + rewards.energy,
         seeds: currentSave.activeRun.resources.seeds + rewards.seeds,
       },
       tilesPlaced: currentSave.activeRun.tilesPlaced + 1,
       waifuAffinity: currentSave.activeRun.waifuAffinity + rewards.waifuAffinity,
     },
     lastActionLabel: `Tile ${tileType} adicionado ao prototipo`,
+    lastOpenedAt: new Date().toISOString(),
+  };
+
+  writeSaveSnapshot(updatedSave);
+
+  return updatedSave;
+}
+
+export function advancePrototypeDay() {
+  const currentSave = readSaveSnapshot();
+
+  if (!currentSave) {
+    return createNewSave();
+  }
+
+  const nextDay = currentSave.activeRun.day + 1;
+  const updatedSave: SaveSnapshot = {
+    ...currentSave,
+    activeRun: {
+      ...currentSave.activeRun,
+      day: nextDay,
+      resources: {
+        ...currentSave.activeRun.resources,
+        energy: PROTOTYPE_BASE_ENERGY,
+      },
+    },
+    lastActionLabel: `Dia ${nextDay} iniciado`,
     lastOpenedAt: new Date().toISOString(),
   };
 

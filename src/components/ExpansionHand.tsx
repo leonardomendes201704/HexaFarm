@@ -4,6 +4,7 @@ import type { ExpansionCard } from "../lib/prototypeDeck";
 
 type ExpansionHandProps = {
   armedCardId: string | null;
+  availableEnergy: number;
   canPlayCards: boolean;
   discardCount: number;
   drawCount: number;
@@ -13,6 +14,7 @@ type ExpansionHandProps = {
 
 export function ExpansionHand({
   armedCardId,
+  availableEnergy,
   canPlayCards,
   discardCount,
   drawCount,
@@ -34,14 +36,16 @@ export function ExpansionHand({
           const offsetFromCenter = index - handCenter;
           const rotation = offsetFromCenter * 7;
           const verticalLift = Math.abs(offsetFromCenter) * 12;
+          const canAffordCard = availableEnergy >= card.energyCost;
+          const canPlayCard = canPlayCards && canAffordCard;
 
           return (
             <button
               className={`expansion-card expansion-card--${card.tileType} ${
                 armedCardId === card.id ? "is-selected" : ""
-              }`}
+              } ${!canAffordCard ? "is-muted" : ""}`}
               aria-label={`${card.name}. ${card.description}`}
-              disabled={!canPlayCards}
+              disabled={!canPlayCard}
               key={card.id}
               onClick={() => onSelectCard(card.id)}
               style={
@@ -55,6 +59,7 @@ export function ExpansionHand({
             >
               <span className="expansion-card__frame">
                 <span className={`expansion-card__art expansion-card__art--${card.tileType}`}>
+                  <span className="expansion-card__cost">{card.energyCost}</span>
                   <span className="expansion-card__spark expansion-card__spark--left" />
                   <span className="expansion-card__spark expansion-card__spark--right" />
                   <span className={`expansion-card__icon expansion-card__icon--${card.tileType}`}>

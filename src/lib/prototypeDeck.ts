@@ -2,6 +2,7 @@ import type { ExpansionTileType } from "./hexGrid";
 
 export type ExpansionCard = {
   description: string;
+  energyCost: number;
   id: string;
   name: string;
   tileType: ExpansionTileType;
@@ -18,36 +19,42 @@ const HAND_SIZE = 3;
 const INITIAL_EXPANSION_CARDS: ExpansionCard[] = [
   {
     description: "Cria um campo basico para expandir sua producao inicial.",
+    energyCost: 1,
     id: "card-field-01",
     name: "Abrir Clareira",
     tileType: "field",
   },
   {
     description: "Adiciona um jardim acolhedor e aumenta a afinidade visual da run.",
+    energyCost: 1,
     id: "card-garden-01",
     name: "Jardim Macio",
     tileType: "garden",
   },
   {
     description: "Abre um lago raso para apoiar irrigacao e rotas futuras.",
+    energyCost: 2,
     id: "card-pond-01",
     name: "Canal Raso",
     tileType: "pond",
   },
   {
     description: "Expande a borda com um bosque leve e utilitario.",
+    energyCost: 1,
     id: "card-wild-01",
     name: "Trilha Selvagem",
     tileType: "wild",
   },
   {
     description: "Adiciona mais espaco fertil para cultivar cedo.",
+    energyCost: 2,
     id: "card-field-02",
     name: "Lote Fertil",
     tileType: "field",
   },
   {
     description: "Transforma a borda em uma area floral mais charmosa.",
+    energyCost: 1,
     id: "card-garden-02",
     name: "Canteiro Fofo",
     tileType: "garden",
@@ -115,4 +122,14 @@ export function playExpansionCard(deckState: PrototypeDeckState, cardId: string)
     nextState: drawToHand(afterDiscard),
     playedCard,
   };
+}
+
+export function discardHandAndRefill(deckState: PrototypeDeckState) {
+  const afterDiscard: PrototypeDeckState = {
+    discardPile: [...deckState.discardPile, ...deckState.hand],
+    drawPile: [...deckState.drawPile],
+    hand: [],
+  };
+
+  return drawToHand(afterDiscard);
 }

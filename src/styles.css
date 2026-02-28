@@ -926,6 +926,10 @@ button:disabled {
     rotate(var(--card-rotation, 0deg));
 }
 
+.expansion-card.is-muted {
+  filter: saturate(0.82);
+}
+
 .expansion-card__frame {
   display: grid;
   gap: 10px;
@@ -954,6 +958,26 @@ button:disabled {
   min-height: 150px;
   padding: 16px;
   background: linear-gradient(180deg, rgba(255, 220, 191, 0.45), rgba(255, 244, 224, 0.92));
+}
+
+.expansion-card__cost {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 252, 240, 0.92);
+  color: #925a21;
+  font-size: 0.86rem;
+  font-weight: 900;
+  box-shadow:
+    0 8px 12px rgba(112, 88, 57, 0.14),
+    inset 0 0 0 2px rgba(181, 138, 80, 0.18);
 }
 
 .expansion-card__art::after {
@@ -1247,6 +1271,11 @@ button:disabled {
 .hud-button:hover {
   transform: translateY(-2px);
   background: rgba(255, 255, 255, 0.28);
+}
+
+.hud-button--action {
+  background: rgba(255, 243, 214, 0.36);
+  color: #6a3f1c;
 }
 
 .hud-button__key {

@@ -18,6 +18,71 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-007 de energia e ciclo minimo de dia
+
+### Resumo
+
+Foi implementado o primeiro loop real de turno do prototipo, com custo de energia por carta, bloqueio de jogadas sem energia e uma acao de `Fim do Dia` para recarregar energia e renovar a mao.
+
+### Entregas realizadas
+
+- criacao do `EPICO-006` e do backlog completo do `PBI-007`
+- adicao de custo de energia ao modelo das cartas de expansao
+- bloqueio de cartas quando a energia atual nao for suficiente
+- consumo de energia ao jogar uma carta
+- criacao do fluxo de `Fim do Dia` com descarte da mao e nova compra
+- persistencia de avanco de dia e restauracao de energia no save
+- exposicao de `Dia`, `Energia` e `Fim do Dia` no HUD principal
+- atualizacao do modal de run e da ajuda para refletir o novo loop
+- conclusao do `PBI-007` e do `EPICO-006`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-006_CICLO_MINIMO_DE_TURNO_E_ENERGIA.md`
+- `BACKLOGS/PBIS/PBI-007_ENERGIA_E_CICLO_MINIMO_DE_DIA/DONE-PBI-007_ENERGIA_E_CICLO_MINIMO_DE_DIA.md`
+- `BACKLOGS/PBIS/PBI-007_ENERGIA_E_CICLO_MINIMO_DE_DIA/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-007_ENERGIA_E_CICLO_MINIMO_DE_DIA/TASKS/DONE-*`
+- `src/lib/prototypeDeck.ts`
+- `src/lib/save.ts`
+- `src/components/ExpansionHand.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-006 - Ciclo Minimo de Turno e Energia`
+- `PBI-007 - Energia e Ciclo Minimo de Dia`
+- `HISTORIA-001 - Aplicar Custo de Energia nas Cartas`
+- `HISTORIA-002 - Implementar Fim de Dia e Renovacao do Turno`
+- `HISTORIA-003 - Expor Estado do Turno na Interface`
+
+### Tasks executadas
+
+- `TASK-001 - Definir Custo de Energia por Carta`
+- `TASK-002 - Bloquear Cartas sem Energia`
+- `TASK-003 - Criar Fluxo de Fim de Dia no Deck`
+- `TASK-004 - Avancar Dia e Recarregar Energia no Save`
+- `TASK-005 - Expor Controle de Fim de Dia no HUD`
+- `TASK-006 - Atualizar HUD e Modal com Estado de Turno`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual do consumo de energia, bloqueio de cartas e fim de dia
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- usar cartas agora consome energia da run
+- cartas caras ficam indisponiveis quando a energia e insuficiente
+- `Fim do Dia` aumenta o dia, restaura a energia base e renova a mao
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-007` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-006 da tela de jogo fullscreen com HUD modal
 
 ### Resumo
