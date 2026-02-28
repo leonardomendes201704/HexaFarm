@@ -18,6 +18,43 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-050 concluido
+
+### Resumo
+
+Foi corrigido o z-fighting das meshes que ficam sobre o topo dos tiles 3D.
+
+### Entregas realizadas
+
+- elevacao real da mesh de highlight acima do topo do tile
+- aplicacao de `polygonOffset` nos materiais mais suscetiveis a conflito de profundidade
+- criacao de uma folga explicita para detalhes de superficie acima da malha base
+
+### Arquivos principais criados ou alterados
+
+- `src/components/HexPrismMesh3D.tsx`
+- `src/components/Stage3DCanvas.tsx`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-050_CORRIGIR_Z_FIGHTING_DAS_MESHES_SUPERFICIAIS_3D/*`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-050 - Corrigir Z-Fighting das Meshes Superficiais 3D`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- highlights e detalhes de superficie deixam de flickar durante o pan
+- a leitura visual fica mais limpa e menos "colada" ao topo do tile
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - PBI-049 concluido
 
 ### Resumo

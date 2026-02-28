@@ -35,6 +35,7 @@ export function HexPrismMesh3D({
   const hexRotation: [number, number, number] = [0, Math.PI / 6, 0];
   const plateauHeight = Math.max(height * 0.32, 0.04);
   const highlightHeight = Math.max(height * 0.12, 0.02);
+  const highlightClearance = Math.max(height * 0.08, 0.012);
 
   return (
     <group
@@ -66,13 +67,19 @@ export function HexPrismMesh3D({
       </mesh>
 
       {highlightColor ? (
-        <mesh position={[0, height + highlightHeight / 2, 0]} rotation={hexRotation}>
+        <mesh
+          position={[0, height + highlightClearance + highlightHeight / 2, 0]}
+          rotation={hexRotation}
+        >
           <cylinderGeometry args={[radius * 1.06, radius * 1.06, highlightHeight, 6]} />
           <meshStandardMaterial
             color={highlightColor}
             emissive={highlightColor}
             emissiveIntensity={0.3}
             opacity={0.7}
+            polygonOffset
+            polygonOffsetFactor={-2}
+            polygonOffsetUnits={-2}
             roughness={0.3}
             transparent
           />

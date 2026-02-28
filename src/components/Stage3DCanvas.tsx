@@ -17,6 +17,7 @@ const STAGE_3D_TILE_HEIGHT_HOME = 0.82 * STAGE_3D_TILE_THICKNESS_SCALE;
 const STAGE_3D_SLOT_HEIGHT = 0.22 * STAGE_3D_TILE_THICKNESS_SCALE;
 const STAGE_3D_TILE_TOP_Y = STAGE_3D_TILE_HEIGHT_STANDARD;
 const STAGE_3D_HOME_TOP_Y = STAGE_3D_TILE_HEIGHT_HOME;
+const STAGE_3D_SURFACE_CLEARANCE = 0.02;
 
 type Stage3DCanvasProps = {
   cropArmed: boolean;
@@ -43,19 +44,31 @@ function TileSurfaceAccent({ tileType }: { tileType: PrototypeTileType }) {
   switch (tileType) {
     case "field":
       return (
-        <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.02, 0]}>
+        <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.03 + STAGE_3D_SURFACE_CLEARANCE, 0]}>
           <cylinderGeometry args={[0.46, 0.58, 0.06, 10]} />
-          <meshStandardMaterial color="#7ac86a" roughness={0.86} />
+          <meshStandardMaterial
+            color="#7ac86a"
+            polygonOffset
+            polygonOffsetFactor={-2}
+            polygonOffsetUnits={-2}
+            roughness={0.86}
+          />
         </mesh>
       );
     case "garden":
       return (
         <>
-          <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.02, 0]}>
+          <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.03 + STAGE_3D_SURFACE_CLEARANCE, 0]}>
             <cylinderGeometry args={[0.42, 0.54, 0.06, 10]} />
-            <meshStandardMaterial color="#f0b48f" roughness={0.82} />
+            <meshStandardMaterial
+              color="#f0b48f"
+              polygonOffset
+              polygonOffsetFactor={-2}
+              polygonOffsetUnits={-2}
+              roughness={0.82}
+            />
           </mesh>
-          <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.08, 0]}>
+          <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.08 + STAGE_3D_SURFACE_CLEARANCE, 0]}>
             <sphereGeometry args={[0.12, 12, 12]} />
             <meshStandardMaterial color="#ffd8a8" roughness={0.5} />
           </mesh>
@@ -63,19 +76,30 @@ function TileSurfaceAccent({ tileType }: { tileType: PrototypeTileType }) {
       );
     case "pond":
       return (
-        <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.016, 0]}>
+        <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.02 + STAGE_3D_SURFACE_CLEARANCE, 0]}>
           <cylinderGeometry args={[0.5, 0.62, 0.04, 10]} />
-          <meshStandardMaterial color="#8fe2ff" metalness={0.12} roughness={0.22} />
+          <meshStandardMaterial
+            color="#8fe2ff"
+            metalness={0.12}
+            polygonOffset
+            polygonOffsetFactor={-2}
+            polygonOffsetUnits={-2}
+            roughness={0.22}
+          />
         </mesh>
       );
     case "wild":
       return (
         <>
-          <mesh position={[-0.18, STAGE_3D_TILE_TOP_Y + 0.06, -0.08]}>
+          <mesh
+            position={[-0.18, STAGE_3D_TILE_TOP_Y + 0.06 + STAGE_3D_SURFACE_CLEARANCE, -0.08]}
+          >
             <cylinderGeometry args={[0.12, 0.18, 0.12, 6]} />
             <meshStandardMaterial color="#93b46e" roughness={0.72} />
           </mesh>
-          <mesh position={[0.16, STAGE_3D_TILE_TOP_Y + 0.05, 0.1]}>
+          <mesh
+            position={[0.16, STAGE_3D_TILE_TOP_Y + 0.05 + STAGE_3D_SURFACE_CLEARANCE, 0.1]}
+          >
             <cylinderGeometry args={[0.1, 0.16, 0.1, 6]} />
             <meshStandardMaterial color="#89a865" roughness={0.74} />
           </mesh>
@@ -83,7 +107,7 @@ function TileSurfaceAccent({ tileType }: { tileType: PrototypeTileType }) {
       );
     case "home":
       return (
-        <mesh position={[0, STAGE_3D_HOME_TOP_Y + 0.05, 0]}>
+        <mesh position={[0, STAGE_3D_HOME_TOP_Y + 0.06 + STAGE_3D_SURFACE_CLEARANCE, 0]}>
           <cylinderGeometry args={[0.22, 0.28, 0.12, 8]} />
           <meshStandardMaterial color="#f6d9b9" roughness={0.52} />
         </mesh>

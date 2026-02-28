@@ -144,6 +144,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-047`: compensar centro vertical do stage com variavel ajustavel
 - `PBI-048`: migrar stage hexagonal para renderizacao 3d isometrica real
 - `PBI-049`: ajustar espessura dos tiles 3d
+- `PBI-050`: corrigir z-fighting das meshes superficiais 3d
 
 ## Convencao de Nomes
 
