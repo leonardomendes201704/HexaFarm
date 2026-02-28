@@ -18,6 +18,43 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Regra de resumo do que validar em execucao por task
+
+### Resumo
+
+Foi adicionada uma nova regra de entrega: toda task implementada deve terminar com um resumo claro do que deve ser visto em execucao para validar a mudanca.
+
+### Entregas realizadas
+
+- formalizacao da exigencia de resumo de validacao em execucao na diretriz de implementacao
+- formalizacao da mesma regra no padrao do backlog
+- definicao do bloco `O que voce deve ver na execucao` como parte esperada do fechamento de task
+
+### Arquivos principais criados ou alterados
+
+- `Documentacao/DIRETRIZ_DE_IMPLEMENTACAO.md`
+- `BACKLOGS/README.md`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- sem item funcional de backlog associado
+- mudanca de governanca aplicada como diretriz operacional do repositorio
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual das diretrizes atualizadas
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- a regra de fechamento de task agora exige resumo observavel de validacao em execucao
+
+### Commit e push
+
+- esta entrada corresponde a uma mudanca de governanca e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Convencao de conclusao com prefixo DONE-
 
 ### Resumo

@@ -290,3 +290,31 @@ Ao concluir uma entrega, aplicar nesta ordem:
 5. commitar e fazer push
 
 Se um item ainda depender de subtarefas ou historias abertas, ele nao deve receber o prefixo `DONE-`.
+
+## 21. Regra de Validacao em Execucao por Task
+
+Ao final de cada task implementada, a entrega deve incluir um resumo curto e objetivo do que deve ser observado em execucao para validar o que foi feito.
+
+Esse resumo deve responder, de forma pratica:
+
+- o que deve aparecer na interface
+- o que deve acontecer ao interagir
+- o que deve mudar no fluxo
+- o que confirma que a task esta funcionando
+
+Formato esperado na comunicacao de fechamento:
+
+- `O que voce deve ver na execucao`
+
+Se a task nao gerar mudanca visual ou interativa direta, isso deve ser dito explicitamente, com foco no comportamento esperado ou na validacao tecnica aplicavel.
+
+## 22. Regra de Fechamento de Task
+
+Quando uma task for concluida, o fechamento ideal deve conter:
+
+1. resumo da implementacao
+2. validacao tecnica executada
+3. o que voce deve ver na execucao
+4. status de backlog com prefixo `DONE-`, quando aplicavel
+
+Esse resumo faz parte da definicao de entrega clara e validavel.

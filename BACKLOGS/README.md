@@ -44,6 +44,18 @@ O estado de conclusao do backlog deve ser refletido no nome do arquivo.
 
 O prefixo `DONE-` e uma marca de status no arquivo, sem alterar o ID logico do item.
 
+## Regra de Validacao de Task
+
+Toda task implementada deve fechar com um resumo objetivo de validacao em execucao.
+
+Esse resumo deve informar:
+
+- o que deve ser visto ao executar
+- qual interacao deve funcionar
+- qual efeito esperado confirma a implementacao
+
+Se a task nao tiver efeito visual direto, a validacao deve descrever o comportamento tecnico esperado.
+
 ## Estrutura Atual
 
 - `EPICO-001`: experiencia inicial e entrada no jogo
