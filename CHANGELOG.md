@@ -18,6 +18,43 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-054 concluido
+
+### Resumo
+
+O catalogo de cartas passou a resolver artes automaticamente a partir do `imageAssetName` do JSON, sem depender de um mapa manual no codigo.
+
+### Entregas realizadas
+
+- remocao dos imports individuais de imagens no `prototypeDeck`
+- adicao de descoberta automatica de assets com `import.meta.glob`
+- indexacao dos assets por nome de arquivo
+- resolucao do `artAssetPath` diretamente a partir do `imageAssetName` do JSON
+
+### Arquivos principais criados ou alterados
+
+- `src/lib/prototypeDeck.ts`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-054_RESOLVER_ARTES_DE_CARTAS_VIA_JSON_COM_IMPORT_META_GLOB/*`
+
+### Vinculos de backlog
+
+- `EPICO-033 - Estruturacao Data-Driven do Catalogo de Cartas`
+- `PBI-054 - Resolver Artes de Cartas via JSON com import.meta.glob`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- cartas com arquivo presente em `assets/cards` e `imageAssetName` valido passam a resolver a arte automaticamente
+- o catalogo deixa de depender de manutencao manual de um mapa de imagens
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - PBI-053 concluido
 
 ### Resumo

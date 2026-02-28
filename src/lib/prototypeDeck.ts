@@ -1,10 +1,3 @@
-import cardAbrirClareiraArt from "../assets/cards/card-abrir-clareira.png";
-import cardCanalRasoArt from "../assets/cards/card-canal-raso.png";
-import cardCanteiroFofoArt from "../assets/cards/card-canteiro-fofo.png";
-import cardJardimMacioArt from "../assets/cards/card-jardim-macio.png";
-import cardLagoEspelhadoArt from "../assets/cards/card-lago-espelhado.png";
-import cardLoteFertilArt from "../assets/cards/card-lote-fertil.png";
-import cardTrilhaSelvagemArt from "../assets/cards/card-trilha-selvagem.png";
 import cardLibraryCatalog from "../data/card-library.json";
 import type { ExpansionTileType, HexTile } from "./hexGrid";
 
@@ -47,15 +40,18 @@ export type PrototypeDeckState = {
   hand: ExpansionCard[];
 };
 
-const CARD_ART_ASSET_MAP: Record<string, string> = {
-  "card-abrir-clareira.png": cardAbrirClareiraArt,
-  "card-canal-raso.png": cardCanalRasoArt,
-  "card-canteiro-fofo.png": cardCanteiroFofoArt,
-  "card-jardim-macio.png": cardJardimMacioArt,
-  "card-lago-espelhado.png": cardLagoEspelhadoArt,
-  "card-lote-fertil.png": cardLoteFertilArt,
-  "card-trilha-selvagem.png": cardTrilhaSelvagemArt,
-};
+const CARD_ART_ASSET_MODULES = import.meta.glob<string>("../assets/cards/*", {
+  eager: true,
+  import: "default",
+}) as Record<string, string>;
+
+const CARD_ART_ASSET_BY_NAME: Record<string, string> = Object.fromEntries(
+  Object.entries(CARD_ART_ASSET_MODULES).map(([assetModulePath, assetUrl]) => {
+    const assetFileName = assetModulePath.split("/").pop() ?? assetModulePath;
+
+    return [assetFileName, assetUrl];
+  }),
+);
 
 const CARD_LIBRARY_SOURCE = cardLibraryCatalog as CardCatalogEntry[];
 
@@ -64,7 +60,7 @@ const CARD_LIBRARY: CardDefinition[] = CARD_LIBRARY_SOURCE.map((cardEntry) => {
 
   return {
     ...cardData,
-    artAssetPath: imageAssetName ? CARD_ART_ASSET_MAP[imageAssetName] ?? null : null,
+    artAssetPath: imageAssetName ? CARD_ART_ASSET_BY_NAME[imageAssetName] ?? null : null,
   };
 });
 

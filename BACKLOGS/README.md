@@ -148,6 +148,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-051`: adicionar atalho para ocultar slabs 3d
 - `PBI-052`: adicionar atalho para ocultar topo dos tiles 3d
 - `PBI-053`: adicionar atalho para ocultar highlights 3d
+- `PBI-054`: resolver artes de cartas via json com import meta glob
 
 ## Convencao de Nomes
 
