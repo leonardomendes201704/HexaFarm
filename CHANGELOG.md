@@ -18,6 +18,71 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-005 do sistema inicial de cartas de expansao
+
+### Resumo
+
+Foi implementada a primeira mao de cartas de expansao do prototipo, substituindo o gatilho de expansao por botao unico por um ciclo minimo de deck, compra e descarte.
+
+### Entregas realizadas
+
+- criacao do `EPICO-004` e do backlog completo do `PBI-005`
+- definicao do modelo inicial de cartas de expansao
+- associacao entre cada carta e um tipo especifico de tile
+- implementacao do ciclo minimo de deck, mao, compra e descarte
+- criacao do componente visual da mao de cartas
+- integracao da selecao da carta ao prototipo do mapa
+- uso da carta para definir o tile criado na expansao
+- conclusao do `PBI-005` e do `EPICO-004`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-004_FUNDACAO_DO_SISTEMA_INICIAL_DE_CARTAS_DE_EXPANSAO.md`
+- `BACKLOGS/PBIS/PBI-005_SISTEMA_INICIAL_DE_CARTAS_DE_EXPANSAO/DONE-PBI-005_SISTEMA_INICIAL_DE_CARTAS_DE_EXPANSAO.md`
+- `BACKLOGS/PBIS/PBI-005_SISTEMA_INICIAL_DE_CARTAS_DE_EXPANSAO/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-005_SISTEMA_INICIAL_DE_CARTAS_DE_EXPANSAO/TASKS/DONE-*`
+- `src/lib/prototypeDeck.ts`
+- `src/lib/hexGrid.ts`
+- `src/components/ExpansionHand.tsx`
+- `src/components/HexMapPrototype.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-004 - Fundacao do Sistema Inicial de Cartas de Expansao`
+- `PBI-005 - Sistema Inicial de Cartas de Expansao`
+- `HISTORIA-001 - Definir o Modelo Inicial das Cartas de Expansao`
+- `HISTORIA-002 - Implementar o Ciclo Minimo de Deck, Mao e Descarte`
+- `HISTORIA-003 - Conectar a Selecao de Carta a Expansao do Mapa`
+
+### Tasks executadas
+
+- `TASK-001 - Definir Tipos e Dados das Cartas de Expansao`
+- `TASK-002 - Associar Cartas a Tipos de Tile`
+- `TASK-003 - Implementar Deck Minimo e Compra Inicial`
+- `TASK-004 - Renderizar a Mao e Atualizar Descarte`
+- `TASK-005 - Armar Expansao a partir da Carta Selecionada`
+- `TASK-006 - Criar Tile Correspondente a Carta Jogada`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da integracao entre a mao de cartas e o mapa
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- a expansao agora depende de uma carta selecionada
+- a mao e atualizada apos cada jogada
+- o tile criado corresponde ao tipo da carta utilizada
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-005` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-004 do mapa hexagonal isometrico
 
 ### Resumo

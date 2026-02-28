@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { ExpansionHand } from "../components/ExpansionHand";
 import { FlowScreen } from "../components/FlowScreen";
 import { HexMapPrototype } from "../components/HexMapPrototype";
 import { SaveSummaryCard } from "../components/SaveSummaryCard";
@@ -11,6 +12,7 @@ import {
   type HexCoord,
   type HexTile,
 } from "../lib/hexGrid";
+import { createInitialExpansionDeck, playExpansionCard, type PrototypeDeckState } from "../lib/prototypeDeck";
 import { getSavedRun, registerPrototypeExpansion, type SaveSnapshot } from "../lib/save";
 
 export function NewGameScreen() {
@@ -19,7 +21,8 @@ export function NewGameScreen() {
     createInitialPrototypeTiles(getSavedRun()?.activeRun.tilesPlaced ?? 1),
   );
   const [selectedTileId, setSelectedTileId] = useState<string | null>(() => tiles[0]?.id ?? null);
-  const [expansionArmed, setExpansionArmed] = useState(false);
+  const [deckState, setDeckState] = useState<PrototypeDeckState>(() => createInitialExpansionDeck());
+  const [armedCardId, setArmedCardId] = useState<string | null>(null);
 
   if (!savedRun) {
     return <Navigate replace to="/" />;
@@ -27,49 +30,61 @@ export function NewGameScreen() {
 
   const frontierSlots = getFrontierSlots(tiles);
   const selectedTile = tiles.find((tile) => tile.id === selectedTileId) ?? tiles[0] ?? null;
+  const armedCard = deckState.hand.find((card) => card.id === armedCardId) ?? null;
 
-  const handleArmExpansion = () => {
+  const handleSelectCard = (cardId: string) => {
     if (frontierSlots.length === 0) {
       return;
     }
 
-    setExpansionArmed(true);
+    setArmedCardId(cardId);
   };
 
   const handlePlaceTile = (slot: HexCoord) => {
-    if (!expansionArmed) {
+    if (!armedCard) {
       return;
     }
 
-    const createdTile = createExpandedTile(tiles, slot);
+    const createdTile = createExpandedTile(tiles, slot, armedCard.tileType);
     const updatedSave = registerPrototypeExpansion(createdTile.tileType);
+    const { nextState } = playExpansionCard(deckState, armedCard.id);
 
     setTiles((currentTiles) => [...currentTiles, createdTile]);
     setSelectedTileId(createdTile.id);
-    setExpansionArmed(false);
+    setDeckState(nextState);
+    setArmedCardId(null);
     setSavedRun(updatedSave);
   };
 
   return (
     <FlowScreen
-      description="A preparacao da run agora exibe o primeiro tabuleiro hexagonal do projeto. O foco desta entrega e validar leitura isometrica fake 3D e expansao basica por tile."
-      detail="Este prototipo ainda nao e o mapa final da run, mas ja prova a estrutura central: um grid hexagonal com fronteiras validas e crescimento visual a partir de uma acao de expansao."
+      description="A expansao do mapa agora passa por cartas reais. O prototipo ja conecta mao, compra simples e descarte ao tabuleiro hexagonal."
+      detail="Esta entrega nao implementa o deckbuilder completo, mas valida o nucleo esperado: escolher uma carta e fazer o tipo do tile criado depender dela."
       eyebrow="Novo Jogo"
-      highlights={["Mapa hexagonal", "Expansao basica", "Fake 3D"]}
+      highlights={["Mao inicial", "Compra simples", "Carta define tile"]}
       statusItems={[
         { label: "Home", value: "Ativa" },
-        { label: "Rotas base", value: "Prontas" },
         { label: "Mapa hexagonal", value: "Ativo" },
-        { label: "Expansao", value: "Prototipo" },
+        { label: "Cartas de expansao", value: "Ativas" },
+        { label: "Deck minimo", value: "Pronto" },
       ]}
-      title="Prototipo da Fazenda Hexagonal"
+      title="Prototipo do Deckbuilder Espacial"
     >
       <SaveSummaryCard save={savedRun} title="Run ativa" />
 
+      <ExpansionHand
+        armedCardId={armedCardId}
+        canPlayCards={frontierSlots.length > 0}
+        discardCount={deckState.discardPile.length}
+        drawCount={deckState.drawPile.length}
+        hand={deckState.hand}
+        onSelectCard={handleSelectCard}
+      />
+
       <HexMapPrototype
-        expansionArmed={expansionArmed}
+        armedCardName={armedCard?.name ?? null}
+        expansionArmed={armedCard !== null}
         frontierSlots={frontierSlots}
-        onArmExpansion={handleArmExpansion}
         onPlaceTile={handlePlaceTile}
         onSelectTile={setSelectedTileId}
         selectedTileId={selectedTileId}
@@ -77,11 +92,21 @@ export function NewGameScreen() {
       />
 
       <div className="route-note">
-        <p className="route-note__label">Tile selecionado</p>
-        {selectedTile ? (
+        <p className="route-note__label">Estado da jogada</p>
+        {armedCard ? (
           <>
             <p className="route-note__text">
-              {getTileLabel(selectedTile.tileType)} em ({selectedTile.q}, {selectedTile.r})
+              Carta pronta: {armedCard.name} ({getTileLabel(armedCard.tileType)})
+            </p>
+            <p className="route-note__text">
+              Clique em uma fronteira destacada para criar o novo tile correspondente.
+            </p>
+          </>
+        ) : selectedTile ? (
+          <>
+            <p className="route-note__text">
+              Tile selecionado: {getTileLabel(selectedTile.tileType)} em ({selectedTile.q},{" "}
+              {selectedTile.r})
             </p>
             <p className="route-note__text">
               Fronteiras abertas: {frontierSlots.length} | Tiles colocados nesta sessao:{" "}
@@ -89,7 +114,7 @@ export function NewGameScreen() {
             </p>
           </>
         ) : (
-          <p className="route-note__text">Nenhum tile selecionado.</p>
+          <p className="route-note__text">Nenhuma carta ou tile selecionado.</p>
         )}
       </div>
     </FlowScreen>

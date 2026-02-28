@@ -525,6 +525,104 @@ button:disabled {
   max-width: 34rem;
 }
 
+.hex-prototype__status {
+  border: 1px solid rgba(248, 232, 205, 0.08);
+  border-radius: 999px;
+  padding: 10px 14px;
+  background: rgba(248, 232, 205, 0.05);
+  color: rgba(248, 240, 228, 0.8);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.hex-prototype__status.is-active {
+  background: rgba(245, 199, 128, 0.12);
+  color: #fff6e7;
+}
+
+.card-hand-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.card-hand-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.card-hand-panel__counts {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.card-hand-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+}
+
+.expansion-card {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  border-radius: 24px;
+  padding: 16px;
+  text-align: left;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.expansion-card:hover:not(:disabled) {
+  transform: translateY(-3px);
+}
+
+.expansion-card.is-selected {
+  box-shadow:
+    0 0 0 3px rgba(255, 222, 177, 0.22),
+    0 16px 26px rgba(8, 15, 20, 0.22);
+}
+
+.expansion-card__eyebrow {
+  color: rgba(255, 246, 231, 0.78);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.expansion-card__title {
+  color: #fff8ef;
+  font-size: 1rem;
+}
+
+.expansion-card__description {
+  color: rgba(249, 238, 221, 0.82);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.expansion-card--field {
+  background: linear-gradient(180deg, rgba(76, 155, 86, 0.56), rgba(33, 74, 47, 0.78));
+}
+
+.expansion-card--garden {
+  background: linear-gradient(180deg, rgba(229, 140, 125, 0.58), rgba(110, 49, 57, 0.78));
+}
+
+.expansion-card--pond {
+  background: linear-gradient(180deg, rgba(44, 137, 168, 0.6), rgba(22, 62, 94, 0.8));
+}
+
+.expansion-card--wild {
+  background: linear-gradient(180deg, rgba(88, 114, 67, 0.6), rgba(36, 48, 31, 0.82));
+}
+
 .hex-board-shell {
   overflow: auto;
   border-radius: 28px;
@@ -766,6 +864,10 @@ button:disabled {
   }
 
   .hex-prototype__header {
+    align-items: stretch;
+  }
+
+  .card-hand-panel__header {
     align-items: stretch;
   }
 

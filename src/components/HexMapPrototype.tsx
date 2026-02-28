@@ -3,9 +3,9 @@ import type { HexCoord, HexTile } from "../lib/hexGrid";
 import { getTileLabel } from "../lib/hexGrid";
 
 type HexMapPrototypeProps = {
+  armedCardName: string | null;
   expansionArmed: boolean;
   frontierSlots: HexCoord[];
-  onArmExpansion: () => void;
   onPlaceTile: (slot: HexCoord) => void;
   onSelectTile: (tileId: string) => void;
   selectedTileId: string | null;
@@ -24,9 +24,9 @@ function projectHexCoord({ q, r }: HexCoord) {
 }
 
 export function HexMapPrototype({
+  armedCardName,
   expansionArmed,
   frontierSlots,
-  onArmExpansion,
   onPlaceTile,
   onSelectTile,
   selectedTileId,
@@ -55,18 +55,14 @@ export function HexMapPrototype({
           <p className="route-note__label">Carta de expansao</p>
           <p className="route-note__text">
             {expansionArmed
-              ? "Escolha uma fronteira destacada para adicionar um novo tile."
-              : "Arme uma carta e clique em uma fronteira valida para expandir o mapa."}
+              ? `Carta armada: ${armedCardName}. Escolha uma fronteira destacada para adicionar o novo tile.`
+              : "Selecione uma carta da mao e depois clique em uma fronteira valida para expandir o mapa."}
           </p>
         </div>
 
-        <button
-          className={`button ${expansionArmed ? "button--secondary" : "button--primary"}`}
-          onClick={onArmExpansion}
-          type="button"
-        >
-          {expansionArmed ? "Escolher Fronteira" : "Usar Carta: Abrir Clareira"}
-        </button>
+        <span className={`hex-prototype__status ${expansionArmed ? "is-active" : ""}`}>
+          {expansionArmed ? "Expansao armada" : "Nenhuma carta armada"}
+        </span>
       </div>
 
       <div className="hex-board-shell">

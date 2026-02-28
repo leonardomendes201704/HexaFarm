@@ -118,11 +118,12 @@ export function createInitialPrototypeTiles(tileCount: number) {
 export function createExpandedTile(
   tiles: HexTile[],
   frontierSlot: HexCoord,
+  tileType: ExpansionTileType,
 ): HexTile & { tileType: ExpansionTileType } {
   return {
     id: getHexKey(frontierSlot),
     q: frontierSlot.q,
     r: frontierSlot.r,
-    tileType: getNextPrototypeTileType(tiles.length - 1),
+    tileType,
   };
 }
