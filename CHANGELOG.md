@@ -18,6 +18,71 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-006 da tela de jogo fullscreen com HUD modal
+
+### Resumo
+
+Foi refatorada a tela de `Novo Jogo` para um formato muito mais proximo de uma tela de jogo: mapa fullscreen, HUD minimo, modais por atalho e cartas com apresentacao visual inspirada em um hand fan de jogo cozy.
+
+### Entregas realizadas
+
+- criacao do `EPICO-005` e do backlog completo do `PBI-006`
+- substituicao do layout informativo antigo por uma cena fullscreen de jogo
+- promocao do mapa hexagonal para o palco principal da tela
+- reducao drastica de textos inline e paines desnecessarios
+- criacao de HUD minimalista com recursos e estado rapido da jogada
+- criacao de modais de `Menu`, `Run` e `Ajuda`
+- adicao de atalhos de teclado `M`, `R`, `H` e `Esc`
+- redesenho da mao de cartas para uma apresentacao mais ilustrada e mais proxima de cartas jogaveis
+- conclusao do `PBI-006` e do `EPICO-005`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-005_REFINAMENTO_DA_TELA_DE_JOGO_E_HUD.md`
+- `BACKLOGS/PBIS/PBI-006_TELA_DE_JOGO_FULLSCREEN_COM_HUD_MODAL/DONE-PBI-006_TELA_DE_JOGO_FULLSCREEN_COM_HUD_MODAL.md`
+- `BACKLOGS/PBIS/PBI-006_TELA_DE_JOGO_FULLSCREEN_COM_HUD_MODAL/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-006_TELA_DE_JOGO_FULLSCREEN_COM_HUD_MODAL/TASKS/DONE-*`
+- `src/components/GameModal.tsx`
+- `src/components/ExpansionHand.tsx`
+- `src/components/HexMapPrototype.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-005 - Refinamento da Tela de Jogo e HUD`
+- `PBI-006 - Tela de Jogo Fullscreen com HUD Modal`
+- `HISTORIA-001 - Reestruturar a Cena Principal para Fullscreen`
+- `HISTORIA-002 - Redesenhar a Mao de Cartas com Foco Visual`
+- `HISTORIA-003 - Mover Informacoes Auxiliares para Modais por Atalho`
+
+### Tasks executadas
+
+- `TASK-001 - Refazer Layout da Tela de Novo Jogo com Mapa Fullscreen`
+- `TASK-002 - Reduzir Textos Inline e HUD Fixo`
+- `TASK-003 - Reestilizar Cartas com Visual Mais Ilustrado`
+- `TASK-004 - Reorganizar a Mao com Apresentacao de Jogo`
+- `TASK-005 - Criar Modais de Menu e Status`
+- `TASK-006 - Adicionar Atalhos de Teclado para HUD e Modais`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual dos atalhos, modais e da nova composicao da tela
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- a tela de `Novo Jogo` agora abre como uma cena fullscreen com o mapa como foco principal
+- a mao de cartas passou a ter leitura visual de carta jogavel, com fan na base da tela
+- informacoes secundarias sairam da superficie principal e foram movidas para modais
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-006` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-005 do sistema inicial de cartas de expansao
 
 ### Resumo

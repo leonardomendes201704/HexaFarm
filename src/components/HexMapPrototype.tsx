@@ -3,7 +3,6 @@ import type { HexCoord, HexTile } from "../lib/hexGrid";
 import { getTileLabel } from "../lib/hexGrid";
 
 type HexMapPrototypeProps = {
-  armedCardName: string | null;
   expansionArmed: boolean;
   frontierSlots: HexCoord[];
   onPlaceTile: (slot: HexCoord) => void;
@@ -24,7 +23,6 @@ function projectHexCoord({ q, r }: HexCoord) {
 }
 
 export function HexMapPrototype({
-  armedCardName,
   expansionArmed,
   frontierSlots,
   onPlaceTile,
@@ -50,21 +48,6 @@ export function HexMapPrototype({
 
   return (
     <section className="hex-prototype">
-      <div className="hex-prototype__header">
-        <div className="hex-prototype__meta">
-          <p className="route-note__label">Carta de expansao</p>
-          <p className="route-note__text">
-            {expansionArmed
-              ? `Carta armada: ${armedCardName}. Escolha uma fronteira destacada para adicionar o novo tile.`
-              : "Selecione uma carta da mao e depois clique em uma fronteira valida para expandir o mapa."}
-          </p>
-        </div>
-
-        <span className={`hex-prototype__status ${expansionArmed ? "is-active" : ""}`}>
-          {expansionArmed ? "Expansao armada" : "Nenhuma carta armada"}
-        </span>
-      </div>
-
       <div className="hex-board-shell">
         <div
           className="hex-board"

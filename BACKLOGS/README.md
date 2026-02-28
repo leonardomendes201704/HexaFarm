@@ -62,11 +62,13 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `EPICO-002`: persistencia local e continuidade de run
 - `EPICO-003`: fundacao do mapa hexagonal isometrico
 - `EPICO-004`: fundacao do sistema inicial de cartas de expansao
+- `EPICO-005`: refinamento da tela de jogo e HUD
 - `PBI-001`: tela inicial do jogo HexaFarm
 - `PBI-002`: estrutura base de navegacao entre telas
 - `PBI-003`: sistema minimo de save local
 - `PBI-004`: prototipo do mapa hexagonal isometrico
 - `PBI-005`: sistema inicial de cartas de expansao
+- `PBI-006`: tela de jogo fullscreen com HUD modal
 
 ## Convencao de Nomes
 
