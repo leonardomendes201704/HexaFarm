@@ -47,9 +47,6 @@ export function TitleScreen({
         <section className="menu-panel" aria-label="Menu principal">
           <div className="menu-panel__header">
             <p className="eyebrow">Inicio da Jornada</p>
-            <p className="menu-panel__status">
-              {canContinue ? "Save local detectado" : "Nenhum save local encontrado"}
-            </p>
           </div>
 
           <div className="menu-actions">
@@ -69,11 +66,6 @@ export function TitleScreen({
             <button className="button button--ghost" onClick={onOpenOptions} type="button">
               Opcoes
             </button>
-          </div>
-
-          <div className="menu-panel__footer">
-            <span>PBI-001 concluido</span>
-            <span>PBI-003: save local minimo conectado</span>
           </div>
         </section>
       </main>

@@ -210,17 +210,10 @@ button:disabled {
   padding: 32px;
 }
 
-.menu-panel__header,
-.menu-panel__footer {
+.menu-panel__header {
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
-
-.menu-panel__status {
-  margin: 0;
-  color: rgba(92, 62, 40, 0.82);
-  font-size: 0.98rem;
 }
 
 .menu-actions {
@@ -319,12 +312,6 @@ button:disabled {
   justify-content: space-between;
   gap: 12px;
   color: #f4ebdd;
-}
-
-.menu-panel__footer {
-  margin-top: 8px;
-  color: rgba(106, 73, 49, 0.82);
-  font-size: 0.84rem;
 }
 
 .route-layout {

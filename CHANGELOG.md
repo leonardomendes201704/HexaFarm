@@ -18,6 +18,57 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-029 de ocultacao do status e rodape tecnico da home
+
+### Resumo
+
+A home foi limpa de textos auxiliares e tecnicos que nao precisavam ficar visiveis, removendo o status textual de save e o rodape interno com referencias de PBI.
+
+### Entregas realizadas
+
+- criacao do backlog completo do `PBI-029`, vinculado ao `EPICO-024`
+- remocao do status textual de save do header do menu principal
+- remocao do rodape tecnico com referencias de PBI
+- limpeza do CSS orfao associado a esses elementos
+- conclusao do `PBI-029`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-029_OCULTAR_STATUS_E_RODAPE_TECNICO_DA_HOME/DONE-PBI-029_OCULTAR_STATUS_E_RODAPE_TECNICO_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-029_OCULTAR_STATUS_E_RODAPE_TECNICO_DA_HOME/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-029_OCULTAR_STATUS_E_RODAPE_TECNICO_DA_HOME/TASKS/DONE-*`
+- `src/components/TitleScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-024 - Limpeza de Informacao da Home`
+- `PBI-029 - Ocultar Status e Rodape Tecnico da Home`
+- `HISTORIA-001 - Remover Telemetria e Rodape de Implementacao da Home`
+
+### Tasks executadas
+
+- `TASK-001 - Remover o Status Textual de Save do Header do Menu`
+- `TASK-002 - Remover o Rodape Tecnico com Referencias de PBI`
+- `TASK-003 - Limpar o CSS Orfao dos Elementos Removidos`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da home sem os textos auxiliares
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- o menu da home ficou mais limpo
+- a disponibilidade de `Continuar` continua clara pelo estado do botao
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-029` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-028 de ajuste da cor e stroke do titulo HexaFarm
 
 ### Resumo
