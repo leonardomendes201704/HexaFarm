@@ -94,6 +94,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `EPICO-034`: persistencia global do BGM da jornada
 - `EPICO-035`: sistema de cultivo em solos ferteis
 - `EPICO-036`: refinamento do hud superior e ocupacao total do stage
+- `EPICO-037`: renderizacao 3d isometrica real do stage
 - `PBI-001`: tela inicial do jogo HexaFarm
 - `PBI-002`: estrutura base de navegacao entre telas
 - `PBI-003`: sistema minimo de save local
@@ -141,6 +142,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-045`: adicionar calendario semanal no hud e expandir stage fullscreen
 - `PBI-046`: remover badges redundantes de compra e descarte na mao
 - `PBI-047`: compensar centro vertical do stage com variavel ajustavel
+- `PBI-048`: migrar stage hexagonal para renderizacao 3d isometrica real
 
 ## Convencao de Nomes
 

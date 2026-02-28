@@ -18,6 +18,46 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Planejamento do PBI-048 para migracao do stage para 3D isometrico real
+
+### Resumo
+
+Foi estruturado o backlog inicial da migracao do stage para uma renderizacao 3D isometrica real, antes de qualquer implementacao tecnica.
+
+### Entregas realizadas
+
+- criacao do `EPICO-037`
+- criacao do `PBI-048` em estado planejado
+- decomposicao do PBI em 4 historias
+- decomposicao tecnica em 12 tasks
+- definicao de escopo, riscos, criterios de aceitacao e validacao planejada
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-037_RENDERIZACAO_3D_ISOMETRICA_REAL_DO_STAGE.md`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL.md`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/HISTORIAS/*`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/TASKS/*`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-048 - Migrar Stage Hexagonal para Renderizacao 3D Isometrica Real`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- build deve continuar concluindo com sucesso, pois a entrega e somente documental
+- o backlog do PBI fica pronto para orientar a implementacao futura
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - Sincronizacao manual de novos assets de cartas e nomes de arquivos no catalogo
 
 ### Resumo
