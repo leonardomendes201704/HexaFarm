@@ -9,6 +9,7 @@ import {
 type ExpansionHandProps = {
   armedCardId: string | null;
   availableEnergy: number;
+  discardAnimationDurationMs: number;
   discardCount: number;
   drawCount: number;
   hand: ExpansionCard[];
@@ -20,6 +21,7 @@ type ExpansionHandProps = {
 export function ExpansionHand({
   armedCardId,
   availableEnergy,
+  discardAnimationDurationMs,
   discardCount,
   drawCount,
   hand,
@@ -36,11 +38,18 @@ export function ExpansionHand({
     : Math.min(viewportWidth * 0.18, 188);
   const overlapOffset = isCompactLayout ? 16 : 28;
   const collapseStep = Math.max(Math.round(estimatedCardWidth - overlapOffset), 0);
+  const discardCollapseDurationMs = Math.round(discardAnimationDurationMs * 0.53);
 
   return (
     <section
       aria-label="Mao de expansao"
       className={`game-hand ${isDiscarding ? "is-discarding" : ""}`}
+      style={
+        {
+          "--hand-discard-duration": `${discardAnimationDurationMs}ms`,
+          "--hand-discard-collapse-duration": `${discardCollapseDurationMs}ms`,
+        } as CSSProperties
+      }
     >
       <div className="game-hand__layout">
         <div className="card-pile">

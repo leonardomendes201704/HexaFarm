@@ -46,7 +46,11 @@ import {
 
 type HudModalId = "help" | "menu" | "status" | null;
 const DAY_RESOLUTION_DURATION_MS = 980;
-const HAND_DISCARD_ANIMATION_DURATION_MS = 640;
+const HAND_DISCARD_ANIMATION_SPEED = 0.5;
+const HAND_DISCARD_ANIMATION_BASE_DURATION_MS = 640;
+const HAND_DISCARD_ANIMATION_DURATION_MS = Math.round(
+  HAND_DISCARD_ANIMATION_BASE_DURATION_MS / HAND_DISCARD_ANIMATION_SPEED,
+);
 const WEEK_DAY_LABELS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"] as const;
 
 function getCardMetaLine(card: ReturnType<typeof getCardLibrary>[number]) {
@@ -581,6 +585,7 @@ export function NewGameScreen() {
         <ExpansionHand
           armedCardId={armedCardId}
           availableEnergy={availableEnergy}
+          discardAnimationDurationMs={HAND_DISCARD_ANIMATION_DURATION_MS}
           discardCount={deckState.discardPile.length}
           drawCount={deckState.drawPile.length}
           hand={deckState.hand}

@@ -18,6 +18,46 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-063 concluido
+
+### Resumo
+
+A animacao de descarte da mao foi desacelerada em 50% e agora usa uma variavel dedicada de velocidade para facilitar novos ajustes.
+
+### Entregas realizadas
+
+- criacao da constante `HAND_DISCARD_ANIMATION_SPEED`
+- derivacao da duracao total de descarte a partir da velocidade
+- sincronizacao da duracao do CSS com o mesmo timing usado no fluxo do fim do dia
+
+### Arquivos principais criados ou alterados
+
+- `src/screens/NewGameScreen.tsx`
+- `src/components/ExpansionHand.tsx`
+- `src/styles.css`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-063_REDUZIR_VELOCIDADE_DA_ANIMACAO_DE_DESCARTE_DA_MAO/*`
+
+### Vinculos de backlog
+
+- `EPICO-005 - Refinamento da Tela de Jogo e HUD`
+- `PBI-063 - Reduzir Velocidade da Animacao de Descarte da Mao`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- a animacao de descarte fica mais lenta e mais legivel
+- o tempo do `setTimeout` continua sincronizado com a animacao visual
+
+### Commit e push
+
+- registrados no encerramento desta entrega
+
+---
+
 ## 2026-02-28 - PBI-062 concluido
 
 ### Resumo

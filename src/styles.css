@@ -1006,7 +1006,8 @@ button:disabled {
 .expansion-card.is-discarding.is-selected {
   pointer-events: none;
   z-index: 8;
-  animation: expansion-card-collapse 0.34s cubic-bezier(0.24, 0.8, 0.22, 1) forwards;
+  animation: expansion-card-collapse var(--hand-discard-collapse-duration, 340ms)
+    cubic-bezier(0.24, 0.8, 0.22, 1) forwards;
 }
 
 .expansion-card.is-muted {
@@ -1782,6 +1783,8 @@ button:disabled {
 }
 
 .game-hand {
+  --hand-discard-duration: 640ms;
+  --hand-discard-collapse-duration: 340ms;
   --hand-discard-rise: 18px;
   --hand-discard-travel-x: 304px;
   position: fixed;
@@ -2133,7 +2136,8 @@ button:disabled {
   pointer-events: none;
   z-index: 9;
   opacity: 0;
-  animation: hand-discard-stack-travel 0.64s cubic-bezier(0.24, 0.8, 0.22, 1) forwards;
+  animation: hand-discard-stack-travel var(--hand-discard-duration, 640ms)
+    cubic-bezier(0.24, 0.8, 0.22, 1) forwards;
 }
 
 .game-hand__discard-proxy-card {
