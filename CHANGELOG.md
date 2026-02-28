@@ -18,6 +18,66 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-011 de pan do stage e rodape fixo da mao
+
+### Resumo
+
+Foi removido o scroll do palco de jogo e adicionado pan manual com botao direito do mouse, junto com a fixacao da mao e das pilhas no rodape da viewport.
+
+### Entregas realizadas
+
+- criacao do `EPICO-010` e do backlog completo do `PBI-011`
+- remocao das barras de rolagem da area do mapa
+- criacao de pan manual com botao direito do mouse
+- bloqueio do menu de contexto na area do palco durante o pan
+- centralizacao do mapa com deslocamento manual por arraste
+- fixacao da mao e das pilhas em um rodape visual persistente
+- ajuste do layout do stage para reservar espaco ao rodape fixo
+- atualizacao das dicas da run para o novo controle
+- conclusao do `PBI-011` e do `EPICO-010`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-010_CONTROLE_DE_CAMERA_E_RODAPE_FIXO_DA_RUN.md`
+- `BACKLOGS/PBIS/PBI-011_IMPLEMENTAR_PAN_DO_STAGE_E_FIXAR_A_MAO_NO_RODAPE/DONE-PBI-011_IMPLEMENTAR_PAN_DO_STAGE_E_FIXAR_A_MAO_NO_RODAPE.md`
+- `BACKLOGS/PBIS/PBI-011_IMPLEMENTAR_PAN_DO_STAGE_E_FIXAR_A_MAO_NO_RODAPE/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-011_IMPLEMENTAR_PAN_DO_STAGE_E_FIXAR_A_MAO_NO_RODAPE/TASKS/DONE-*`
+- `src/components/HexMapPrototype.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-010 - Controle de Camera e Rodape Fixo da Run`
+- `PBI-011 - Implementar Pan do Stage e Fixar a Mao no Rodape`
+- `HISTORIA-001 - Implementar Pan Manual do Mapa`
+- `HISTORIA-002 - Fixar Mao e Pilhas no Rodape`
+
+### Tasks executadas
+
+- `TASK-001 - Remover Scroll da Area do Mapa`
+- `TASK-002 - Adicionar Pan com Botao Direito`
+- `TASK-003 - Fixar a Mao e as Pilhas no Rodape`
+- `TASK-004 - Ajustar HUD e Dicas para o Novo Controle`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual do pan com botao direito e da mao fixa no rodape
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- o mapa nao exibe mais scrollbars
+- o palco pode ser arrastado com o botao direito do mouse
+- a mao e as pilhas permanecem fixas no rodape
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-011` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-010 de correcao geometrica dos hexagonos
 
 ### Resumo

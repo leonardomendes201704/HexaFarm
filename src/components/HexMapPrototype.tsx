@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from "react";
 import type { HexCoord, HexTile } from "../lib/hexGrid";
 import { getTileLabel } from "../lib/hexGrid";
 
@@ -32,6 +32,10 @@ export function HexMapPrototype({
   selectedTileId,
   tiles,
 }: HexMapPrototypeProps) {
+  const dragOriginRef = useRef<{ x: number; y: number } | null>(null);
+  const [isPanning, setIsPanning] = useState(false);
+  const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
+
   const boardGeometry = useMemo(() => {
     const allCoords = [...tiles, ...frontierSlots];
     const projectedCoords = allCoords.map((coord) => {
@@ -57,58 +61,121 @@ export function HexMapPrototype({
     };
   }, [frontierSlots, tiles]);
 
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      const dragOrigin = dragOriginRef.current;
+
+      if (!dragOrigin) {
+        return;
+      }
+
+      const deltaX = event.clientX - dragOrigin.x;
+      const deltaY = event.clientY - dragOrigin.y;
+
+      dragOriginRef.current = {
+        x: event.clientX,
+        y: event.clientY,
+      };
+
+      setPanOffset((currentOffset) => ({
+        x: currentOffset.x + deltaX,
+        y: currentOffset.y + deltaY,
+      }));
+    };
+
+    const handleMouseUp = () => {
+      if (!dragOriginRef.current) {
+        return;
+      }
+
+      dragOriginRef.current = null;
+      setIsPanning(false);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);
+
+  const handlePanStart = (event: ReactMouseEvent<HTMLDivElement>) => {
+    if (event.button !== 2) {
+      return;
+    }
+
+    event.preventDefault();
+
+    dragOriginRef.current = {
+      x: event.clientX,
+      y: event.clientY,
+    };
+
+    setIsPanning(true);
+  };
+
   return (
     <section className="hex-prototype">
-      <div className="hex-board-shell">
-        <div
-          className="hex-board"
-          style={{
-            height: `${boardGeometry.height}px`,
-            width: `${boardGeometry.width}px`,
-          }}
-        >
-          {frontierSlots.map((slot) => {
-            const position = projectHexCoord(slot);
+      <div
+        className={`hex-board-shell ${isPanning ? "is-panning" : ""}`}
+        onContextMenu={(event) => event.preventDefault()}
+        onMouseDown={handlePanStart}
+        title="Arraste com o botao direito do mouse para mover o mapa."
+      >
+        <div className="hex-board-viewport">
+          <div
+            className="hex-board"
+            style={{
+              height: `${boardGeometry.height}px`,
+              transform: `translate(-50%, -50%) translate(${panOffset.x}px, ${panOffset.y}px)`,
+              width: `${boardGeometry.width}px`,
+            }}
+          >
+            {frontierSlots.map((slot) => {
+              const position = projectHexCoord(slot);
 
-            return (
-              <button
-                className={`hex-node hex-node--slot ${expansionArmed ? "is-armed" : ""}`}
-                disabled={!expansionArmed}
-                key={`slot-${slot.q}-${slot.r}`}
-                onClick={() => onPlaceTile(slot)}
-                style={{
-                  transform: `translate(${position.x + boardGeometry.offsetX}px, ${position.y + boardGeometry.offsetY}px)`,
-                }}
-                type="button"
-              >
-                <span className="hex-node__surface">
-                  <span className="hex-node__label">+</span>
-                </span>
-              </button>
-            );
-          })}
+              return (
+                <button
+                  className={`hex-node hex-node--slot ${expansionArmed ? "is-armed" : ""}`}
+                  disabled={!expansionArmed}
+                  key={`slot-${slot.q}-${slot.r}`}
+                  onClick={() => onPlaceTile(slot)}
+                  style={{
+                    transform: `translate(${position.x + boardGeometry.offsetX}px, ${position.y + boardGeometry.offsetY}px)`,
+                  }}
+                  type="button"
+                >
+                  <span className="hex-node__surface">
+                    <span className="hex-node__label">+</span>
+                  </span>
+                </button>
+              );
+            })}
 
-          {tiles.map((tile) => {
-            const position = projectHexCoord(tile);
+            {tiles.map((tile) => {
+              const position = projectHexCoord(tile);
 
-            return (
-              <button
-                className={`hex-node hex-node--tile hex-node--${tile.tileType} ${
-                  selectedTileId === tile.id ? "is-selected" : ""
-                }`}
-                key={tile.id}
-                onClick={() => onSelectTile(tile.id)}
-                style={{
-                  transform: `translate(${position.x + boardGeometry.offsetX}px, ${position.y + boardGeometry.offsetY}px)`,
-                }}
-                type="button"
-              >
-                <span className="hex-node__surface">
-                  <span className="hex-node__label">{getTileLabel(tile.tileType)}</span>
-                </span>
-              </button>
-            );
-          })}
+              return (
+                <button
+                  className={`hex-node hex-node--tile hex-node--${tile.tileType} ${
+                    selectedTileId === tile.id ? "is-selected" : ""
+                  }`}
+                  key={tile.id}
+                  onClick={() => onSelectTile(tile.id)}
+                  style={{
+                    transform: `translate(${position.x + boardGeometry.offsetX}px, ${position.y + boardGeometry.offsetY}px)`,
+                  }}
+                  type="button"
+                >
+                  <span className="hex-node__surface">
+                    <span className="hex-node__label">{getTileLabel(tile.tileType)}</span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

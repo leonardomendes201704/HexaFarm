@@ -624,7 +624,7 @@ button:disabled {
 }
 
 .hex-board-shell {
-  overflow: auto;
+  overflow: hidden;
   border-radius: 28px;
   padding: 18px;
   background:
@@ -635,7 +635,7 @@ button:disabled {
 
 .hex-board {
   position: relative;
-  margin: 0 auto;
+  margin: 0;
   transform: none;
 }
 
@@ -878,14 +878,14 @@ button:disabled {
 .hex-prototype {
   height: 100%;
   min-height: 0;
+  overflow: hidden;
 }
 
 .hex-board-shell {
-  display: grid;
+  position: relative;
   height: 100%;
   min-height: 0;
-  overflow: auto;
-  place-items: center;
+  overflow: hidden;
   border-radius: 34px;
   padding: 32px;
   background:
@@ -896,6 +896,20 @@ button:disabled {
   box-shadow:
     inset 0 0 0 1px rgba(248, 235, 210, 0.08),
     inset 0 -48px 68px rgba(11, 22, 28, 0.12);
+  cursor: grab;
+  user-select: none;
+}
+
+.hex-board-shell.is-panning {
+  cursor: grabbing;
+}
+
+.hex-board-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .expansion-card {
@@ -1167,9 +1181,19 @@ button:disabled {
   font-size: clamp(0.86rem, 1vw, 1rem);
 }
 
+.hex-board {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  will-change: transform;
+}
+
 .gameplay-screen {
   position: relative;
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100vh;
   min-height: 100vh;
   padding: 24px;
   background:
@@ -1293,10 +1317,10 @@ button:disabled {
   position: relative;
   z-index: 2;
   display: grid;
-  flex: 1;
+  overflow: hidden;
   min-height: 0;
   margin-top: 18px;
-  padding: 16px 0 180px;
+  padding: 16px 0 308px;
 }
 
 .gameplay-stage__status {
@@ -1365,12 +1389,21 @@ button:disabled {
 }
 
 .game-hand {
-  position: absolute;
+  position: fixed;
   inset: auto 50% 24px;
   z-index: 5;
   display: grid;
   gap: 12px;
-  width: min(100%, 980px);
+  width: min(calc(100vw - 48px), 1080px);
+  padding: 14px 18px 18px;
+  border-radius: 34px;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 241, 0.22), rgba(255, 238, 214, 0.08)),
+    rgba(72, 44, 36, 0.08);
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 22px 44px rgba(57, 36, 34, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
   transform: translateX(-50%);
 }
 
@@ -1561,11 +1594,12 @@ button:disabled {
 
 .game-modal__tip-key {
   display: inline-flex;
-  width: 36px;
+  min-width: 36px;
   height: 36px;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  padding: 0 10px;
   background: rgba(255, 246, 216, 0.92);
   color: #7b4d24;
   font-weight: 800;
@@ -1598,7 +1632,7 @@ button:disabled {
   }
 
   .gameplay-stage {
-    padding-bottom: 220px;
+    padding-bottom: 246px;
   }
 
   .gameplay-stage__status {
@@ -1620,6 +1654,8 @@ button:disabled {
   .game-hand {
     inset: auto 50% 16px;
     gap: 10px;
+    width: min(calc(100vw - 24px), 1080px);
+    padding: 12px 12px 14px;
   }
 
   .game-hand__fan {
@@ -1908,6 +1944,10 @@ button:disabled {
     grid-template-columns: 1fr;
     justify-items: center;
     gap: 12px;
+  }
+
+  .gameplay-stage {
+    padding-bottom: 324px;
   }
 
   .card-pile {

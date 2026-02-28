@@ -321,18 +321,6 @@ export function NewGameScreen() {
           </div>
         </div>
 
-        {canRunGameplay ? (
-          <ExpansionHand
-            armedCardId={armedCardId}
-            availableEnergy={availableEnergy}
-            canPlayCards={frontierSlots.length > 0}
-            discardCount={deckState.discardPile.length}
-            drawCount={deckState.drawPile.length}
-            hand={deckState.hand}
-            onSelectCard={handleSelectCard}
-          />
-        ) : null}
-
         <HexMapPrototype
           expansionArmed={canRunGameplay && armedCard !== null}
           frontierSlots={frontierSlots}
@@ -342,6 +330,18 @@ export function NewGameScreen() {
           tiles={tiles}
         />
       </div>
+
+      {canRunGameplay ? (
+        <ExpansionHand
+          armedCardId={armedCardId}
+          availableEnergy={availableEnergy}
+          canPlayCards={frontierSlots.length > 0}
+          discardCount={deckState.discardPile.length}
+          drawCount={deckState.drawPile.length}
+          hand={deckState.hand}
+          onSelectCard={handleSelectCard}
+        />
+      ) : null}
 
       {phase === "deckbuilding" ? (
         <GameModal dismissible={false} onClose={() => undefined} size="wide" shortcut="Deck" title="Montar Baralho da Run">
@@ -557,6 +557,10 @@ export function NewGameScreen() {
               <div className="game-modal__tip">
                 <span className="game-modal__tip-key">2</span>
                 <p className="game-modal__tip-text">Compre da pilha, jogue e empurre a carta para o descarte.</p>
+              </div>
+              <div className="game-modal__tip">
+                <span className="game-modal__tip-key">RMB</span>
+                <p className="game-modal__tip-text">Segure e arraste com o botao direito para mover o mapa sem scroll.</p>
               </div>
               <div className="game-modal__tip">
                 <span className="game-modal__tip-key">E</span>
