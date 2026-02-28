@@ -503,18 +503,20 @@ export function NewGameScreen() {
           </div>
         </div>
 
-        <Stage3DCanvas
-          cropArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "crop"}
-          cropTargetTileIds={cropTargetTileIds}
-          expansionArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "tile"}
-          frontierSlots={frontierSlots}
-          interactionLocked={isResolvingDay}
-          onPlantCrop={handlePlantCrop}
-          onPlaceTile={handlePlaceTile}
-          onSelectTile={setSelectedTileId}
-          selectedTileId={selectedTileId}
-          tiles={tiles}
-        />
+        <div className="gameplay-stage__canvas-shell">
+          <Stage3DCanvas
+            cropArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "crop"}
+            cropTargetTileIds={cropTargetTileIds}
+            expansionArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "tile"}
+            frontierSlots={frontierSlots}
+            interactionLocked={isResolvingDay}
+            onPlantCrop={handlePlantCrop}
+            onPlaceTile={handlePlaceTile}
+            onSelectTile={setSelectedTileId}
+            selectedTileId={selectedTileId}
+            tiles={tiles}
+          />
+        </div>
       </div>
 
       {canRunGameplay ? (

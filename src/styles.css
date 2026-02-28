@@ -1373,6 +1373,7 @@ button:disabled {
   height: 100vh;
   min-height: 100vh;
   padding: 0;
+  isolation: isolate;
   background:
     radial-gradient(circle at top center, rgba(255, 244, 193, 0.42), transparent 24%),
     linear-gradient(180deg, #a8cfff 0%, #f6bfd7 30%, #ffe8bf 52%, #c8ecb1 100%);
@@ -1541,6 +1542,12 @@ button:disabled {
   min-height: 100%;
   margin-top: 0;
   padding: 0;
+}
+
+.gameplay-stage__canvas-shell {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 .stage-3d-canvas {

@@ -381,6 +381,42 @@ O pan com botao direito passou a deslocar a camera ortografica do stage 3D.
 
 - esta entrada deve ser fechada com commit e push apos a validacao final desta task
 
+## 2026-02-28 - TASK-011 do PBI-048 concluida
+
+### Resumo
+
+O empilhamento visual entre canvas 3D e overlays 2D foi formalizado no layout.
+
+### Entregas realizadas
+
+- criacao de uma camada-base explicita para o canvas 3D
+- isolamento da tela de jogo para estabilizar a pilha visual
+- manutencao declarada de HUD, mao e modais sobre o canvas
+
+### Arquivos principais criados ou alterados
+
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/TASKS/DONE-TASK-011_MANTER_HUD_CARTAS_E_MODAIS_SOBRE_O_CANVAS.md`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-048 - Migrar Stage Hexagonal para Renderizacao 3D Isometrica Real`
+- `TASK-011 - Manter HUD, Cartas e Modais Sobre o Canvas`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- o canvas 3D permanece abaixo da interface 2D de forma estavel
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta task
+
 ## 2026-02-28 - Planejamento do PBI-048 para migracao do stage para 3D isometrico real
 
 ### Resumo
