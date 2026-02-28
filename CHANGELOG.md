@@ -18,6 +18,57 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-030 de filtro visual no video da home
+
+### Resumo
+
+O video de fundo da home recebeu um filtro visual para ficar mais claro e mais vivo, reduzindo a sensacao de escuridao sem trocar o arquivo de video.
+
+### Entregas realizadas
+
+- criacao do backlog completo do `PBI-030`, vinculado ao `EPICO-025`
+- aplicacao de `brightness` no video de fundo
+- aplicacao de `saturate` no video de fundo
+- aplicacao de `contrast` leve para preservar leitura
+- conclusao do `PBI-030`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-030_APLICAR_FILTRO_VISUAL_NO_VIDEO_DA_HOME/DONE-PBI-030_APLICAR_FILTRO_VISUAL_NO_VIDEO_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-030_APLICAR_FILTRO_VISUAL_NO_VIDEO_DA_HOME/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-030_APLICAR_FILTRO_VISUAL_NO_VIDEO_DA_HOME/TASKS/DONE-*`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-025 - Video de Background da Home`
+- `PBI-030 - Aplicar Filtro Visual no Video da Home`
+- `HISTORIA-001 - Reequilibrar Brilho e Saturacao do Video da Home`
+
+### Tasks executadas
+
+- `TASK-001 - Aumentar o Brilho do Video da Home`
+- `TASK-002 - Aumentar a Saturacao do Video da Home`
+- `TASK-003 - Preservar Leitura com Contraste Leve`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da home com video mais claro e mais vivo
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- o video de fundo ficou mais luminoso
+- as cores do video ficaram mais vivas
+- a interface continuou legivel
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-030` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-029 de ocultacao do status e rodape tecnico da home
 
 ### Resumo

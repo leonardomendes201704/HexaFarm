@@ -66,6 +66,7 @@ button:disabled {
   height: 100%;
   object-fit: cover;
   object-position: center;
+  filter: brightness(1.18) saturate(1.22) contrast(1.06);
 }
 
 .screen-shell__background::after {

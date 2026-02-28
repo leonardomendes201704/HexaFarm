@@ -114,6 +114,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-027`: altura auto-fit e alinhamento inferior dos cards da home
 - `PBI-028`: ajustar cor e stroke do titulo HexaFarm
 - `PBI-029`: ocultar status e rodape tecnico da home
+- `PBI-030`: aplicar filtro visual no video da home
 
 ## Convencao de Nomes
 
