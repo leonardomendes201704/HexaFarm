@@ -366,6 +366,13 @@ button:disabled {
   font-weight: 700;
 }
 
+.button--danger {
+  background: linear-gradient(135deg, rgba(233, 124, 95, 0.9), rgba(178, 62, 59, 0.9));
+  box-shadow: 0 14px 28px rgba(161, 60, 52, 0.2);
+  color: #fff3eb;
+  font-weight: 800;
+}
+
 .button:disabled {
   opacity: 0.48;
   filter: saturate(0.75);
@@ -378,6 +385,15 @@ button:disabled {
   padding: 16px;
   background: rgba(248, 241, 229, 0.06);
   color: rgba(250, 244, 236, 0.88);
+}
+
+.menu-panel__save-summary {
+  margin: 0;
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: rgba(247, 235, 216, 0.06);
+  color: rgba(248, 240, 228, 0.88);
+  font-size: 0.92rem;
 }
 
 .options-card {
@@ -483,6 +499,11 @@ button:disabled {
 .route-note__text {
   margin: 0;
   color: rgba(248, 240, 228, 0.88);
+}
+
+.save-summary-grid {
+  display: grid;
+  gap: 8px;
 }
 
 .route-actions {

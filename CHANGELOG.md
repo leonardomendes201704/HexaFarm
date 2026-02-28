@@ -18,6 +18,73 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-003 de save local minimo
+
+### Resumo
+
+Foi implementado o primeiro sistema real de save local do projeto, substituindo o stub anterior por um modelo versionado, com migracao, leitura, escrita, exibicao na interface e limpeza manual do save.
+
+### Entregas realizadas
+
+- criacao do `EPICO-002` e do backlog completo do `PBI-003`
+- definicao de um contrato versionado para o save local
+- suporte a migracao automatica do formato stub anterior
+- leitura e escrita reais no `localStorage`
+- integracao do save com a home, `Novo Jogo` e `Continuar`
+- exibicao de resumo persistido da run nas telas de fluxo
+- criacao de uma acao de `Limpar Save Local` em `Opcoes`
+- conclusao do `PBI-003` e do `EPICO-002`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-002_PERSISTENCIA_LOCAL_E_CONTINUIDADE_DE_RUN.md`
+- `BACKLOGS/PBIS/PBI-003_SISTEMA_MINIMO_DE_SAVE_LOCAL/DONE-PBI-003_SISTEMA_MINIMO_DE_SAVE_LOCAL.md`
+- `BACKLOGS/PBIS/PBI-003_SISTEMA_MINIMO_DE_SAVE_LOCAL/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-003_SISTEMA_MINIMO_DE_SAVE_LOCAL/TASKS/DONE-*`
+- `src/lib/save.ts`
+- `src/components/TitleScreen.tsx`
+- `src/components/SaveSummaryCard.tsx`
+- `src/screens/HomeScreen.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/screens/ContinueScreen.tsx`
+- `src/screens/OptionsScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-002 - Persistencia Local e Continuidade de Run`
+- `PBI-003 - Sistema Minimo de Save Local`
+- `HISTORIA-001 - Definir Modelo Versionado de Save e Persistencia`
+- `HISTORIA-002 - Integrar Novo Jogo e Continuar ao Save Real`
+- `HISTORIA-003 - Expor Estado e Limpeza do Save na UI`
+
+### Tasks executadas
+
+- `TASK-001 - Definir Contrato do Save Versionado`
+- `TASK-002 - Implementar Leitura, Escrita e Migracao do Save`
+- `TASK-003 - Integrar Home ao Save Real`
+- `TASK-004 - Exibir Resumo Real no Fluxo de Continuar`
+- `TASK-005 - Adicionar Acao de Limpar Save em Opcoes`
+- `TASK-006 - Refletir Estado do Save nas Telas de Fluxo`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual do fluxo de save e da estrutura de backlog
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- o save antigo pode ser migrado para o novo formato
+- `Continuar` depende de um save valido
+- `Opcoes` pode limpar o save e invalidar a continuidade
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-003` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Regra de resumo do que validar em execucao por task
 
 ### Resumo

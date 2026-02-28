@@ -1,21 +1,24 @@
+import { Navigate } from "react-router-dom";
 import { FlowScreen } from "../components/FlowScreen";
+import { SaveSummaryCard } from "../components/SaveSummaryCard";
+import { getSavedRun } from "../lib/save";
 
 export function NewGameScreen() {
+  const savedRun = getSavedRun();
+
+  if (!savedRun) {
+    return <Navigate replace to="/" />;
+  }
+
   return (
     <FlowScreen
-      description="A preparacao da run agora possui sua propria rota. O proximo passo vai substituir esse placeholder pelo setup real da fazenda hexagonal."
-      detail="Ao sair da home, o frontend ja trata a jornada como um fluxo proprio. Isso reduz acoplamento e prepara a integracao com a tela do mapa."
+      description="A preparacao da run agora cria um save local minimo real. Isso torna o fluxo de entrada persistente e pronto para sustentar o mapa hexagonal."
+      detail="O save deixa de ser um stub solto e passa a carregar metadados versionados da run. Esse contrato sera reaproveitado quando o gameplay entrar."
       eyebrow="Novo Jogo"
-      highlights={["Rota dedicada", "Save inicial", "Pronto para setup da run"]}
-      title="Nova Jornada Preparada"
+      highlights={["Save versionado", "Run persistida", "Pronto para evolucao"]}
+      title="Nova Jornada Persistida"
     >
-      <div className="route-note">
-        <p className="route-note__label">Estado atual</p>
-        <p className="route-note__text">
-          Um save stub foi criado antes da navegacao. O mapa, o deck inicial e a selecao de seed
-          entram nos proximos PBIs.
-        </p>
-      </div>
+      <SaveSummaryCard save={savedRun} title="Save criado" />
     </FlowScreen>
   );
 }

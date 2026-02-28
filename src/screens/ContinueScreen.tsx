@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { FlowScreen } from "../components/FlowScreen";
+import { SaveSummaryCard } from "../components/SaveSummaryCard";
 import { getSavedRun } from "../lib/save";
 
 export function ContinueScreen() {
@@ -9,27 +10,15 @@ export function ContinueScreen() {
     return <Navigate replace to="/" />;
   }
 
-  const formattedLastOpened = new Date(savedRun.lastOpenedAt).toLocaleString("pt-BR", {
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    month: "2-digit",
-  });
-
   return (
     <FlowScreen
-      description="O fluxo de continuidade agora e uma tela separada. Isso permite evoluir o carregamento de run sem sobrecarregar a home."
-      detail="A rota de continuidade valida a existencia de save antes de abrir. Se nao existir save, a navegacao retorna automaticamente para a tela inicial."
+      description="O fluxo de continuidade agora consome um save local versionado e exibe o estado persistido da run."
+      detail="A rota de continuidade le o save salvo, mostra metadados reais e continua protegida quando nao existe um estado valido."
       eyebrow="Continuar"
-      highlights={["Rota protegida", "Save validado", "Fluxo preparado"]}
+      highlights={["Rota protegida", "Save real", "Resumo persistido"]}
       title="Retomar Jornada"
     >
-      <div className="route-note">
-        <p className="route-note__label">Save ativo</p>
-        <p className="route-note__text">
-          Perfil: {savedRun.profileName} | Ultima abertura: {formattedLastOpened}
-        </p>
-      </div>
+      <SaveSummaryCard save={savedRun} title="Save carregado" />
     </FlowScreen>
   );
 }

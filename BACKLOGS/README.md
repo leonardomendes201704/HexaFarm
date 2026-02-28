@@ -59,8 +59,10 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 ## Estrutura Atual
 
 - `EPICO-001`: experiencia inicial e entrada no jogo
+- `EPICO-002`: persistencia local e continuidade de run
 - `PBI-001`: tela inicial do jogo HexaFarm
 - `PBI-002`: estrutura base de navegacao entre telas
+- `PBI-003`: sistema minimo de save local
 
 ## Convencao de Nomes
 

@@ -1,28 +1,31 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TitleScreen } from "../components/TitleScreen";
-import { createNewSave, hasSavedRun, touchSave } from "../lib/save";
+import { createNewSave, getSavedRun, type SaveSnapshot, continueSavedRun } from "../lib/save";
 
 export function HomeScreen() {
   const navigate = useNavigate();
-  const [canContinue, setCanContinue] = useState(false);
+  const [savedRun, setSavedRun] = useState<SaveSnapshot | null>(null);
 
   useEffect(() => {
-    setCanContinue(hasSavedRun());
+    setSavedRun(getSavedRun());
   }, []);
 
   const handleNewGame = () => {
-    createNewSave();
-    setCanContinue(true);
+    const freshSave = createNewSave();
+
+    setSavedRun(freshSave);
     navigate("/run/new");
   };
 
   const handleContinue = () => {
-    if (!canContinue) {
+    if (!savedRun) {
       return;
     }
 
-    touchSave();
+    const updatedSave = continueSavedRun();
+
+    setSavedRun(updatedSave);
     navigate("/run/continue");
   };
 
@@ -30,9 +33,13 @@ export function HomeScreen() {
     navigate("/options");
   };
 
-  const feedbackMessage = canContinue
-    ? "Seu ultimo save local esta pronto para retomada. A navegacao agora separa a home dos fluxos iniciais."
-    : "Crie uma nova jornada para habilitar Continue e abrir o primeiro fluxo desacoplado da home.";
+  const canContinue = savedRun !== null;
+  const feedbackMessage = savedRun
+    ? `Run salva em ${savedRun.activeRun.seasonLabel}, dia ${savedRun.activeRun.day}. ${savedRun.activeRun.tilesPlaced} tile(s) ja preparados para a proxima sessao.`
+    : "Nenhum save ativo. Use Novo Jogo para criar a primeira run persistida no navegador.";
+  const saveSummaryLabel = savedRun
+    ? `Perfil ${savedRun.profileName} | ${savedRun.activeRun.resources.coins} moedas | ${savedRun.activeRun.resources.seeds} sementes`
+    : null;
 
   return (
     <TitleScreen
@@ -41,6 +48,7 @@ export function HomeScreen() {
       onContinue={handleContinue}
       onNewGame={handleNewGame}
       onOpenOptions={handleOpenOptions}
+      saveSummaryLabel={saveSummaryLabel}
     />
   );
 }

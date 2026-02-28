@@ -4,6 +4,7 @@ type TitleScreenProps = {
   onContinue: () => void;
   onNewGame: () => void;
   onOpenOptions: () => void;
+  saveSummaryLabel: string | null;
 };
 
 export function TitleScreen({
@@ -12,6 +13,7 @@ export function TitleScreen({
   onContinue,
   onNewGame,
   onOpenOptions,
+  saveSummaryLabel,
 }: TitleScreenProps) {
   return (
     <div className="screen-shell">
@@ -82,9 +84,11 @@ export function TitleScreen({
             {feedbackMessage}
           </p>
 
+          {saveSummaryLabel ? <p className="menu-panel__save-summary">{saveSummaryLabel}</p> : null}
+
           <div className="menu-panel__footer">
             <span>PBI-001 concluido</span>
-            <span>PBI-002: navegacao base conectada</span>
+            <span>PBI-003: save local minimo conectado</span>
           </div>
         </section>
       </main>
