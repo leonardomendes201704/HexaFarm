@@ -1003,11 +1003,13 @@ button:disabled {
   left: 12px;
   z-index: 2;
   display: inline-flex;
-  width: 34px;
-  height: 34px;
+  min-width: 34px;
+  min-height: 34px;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  gap: 4px;
+  padding: 0 9px 0 10px;
+  border-radius: 999px;
   background: rgba(255, 252, 240, 0.92);
   color: #925a21;
   font-size: 0.86rem;
@@ -1015,6 +1017,17 @@ button:disabled {
   box-shadow:
     0 8px 12px rgba(112, 88, 57, 0.14),
     inset 0 0 0 2px rgba(181, 138, 80, 0.18);
+}
+
+.expansion-card__cost::after,
+.collection-card__cost::after {
+  color: #f0be34;
+  font-size: 0.72rem;
+  line-height: 1;
+  text-shadow:
+    0 1px 0 rgba(255, 244, 181, 0.74),
+    0 0 8px rgba(255, 213, 84, 0.28);
+  content: "⚡";
 }
 
 .expansion-card__yield,
@@ -2295,11 +2308,13 @@ button:disabled {
   left: 10px;
   z-index: 2;
   display: inline-flex;
-  width: 30px;
-  height: 30px;
+  min-width: 30px;
+  min-height: 30px;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  gap: 4px;
+  padding: 0 8px 0 9px;
+  border-radius: 999px;
   background: rgba(255, 252, 240, 0.94);
   color: #925a21;
   font-size: 0.8rem;

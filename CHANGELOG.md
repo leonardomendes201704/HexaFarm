@@ -18,6 +18,43 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-059 concluido
+
+### Resumo
+
+A badge de energia das cartas passou a mostrar um pequeno icone de raio amarelo ao lado direito do valor.
+
+### Entregas realizadas
+
+- ajuste da badge de energia para formato pill compacto
+- adicao do icone de raio via pseudo-elemento CSS
+- alinhamento lateral entre numero e icone
+- aplicacao do ajuste na mao e na grade de cartas
+
+### Arquivos principais criados ou alterados
+
+- `src/styles.css`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-059_ADICIONAR_ICONE_DE_RAIO_NA_BADGE_DE_ENERGIA/*`
+
+### Vinculos de backlog
+
+- `EPICO-032 - Integracao de Artes Reais nas Cartas`
+- `PBI-059 - Adicionar Icone de Raio na Badge de Energia`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- a badge de custo passa a exibir valor e raio amarelo lado a lado
+- a leitura da semantica de energia fica mais clara
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - PBI-058 concluido
 
 ### Resumo
