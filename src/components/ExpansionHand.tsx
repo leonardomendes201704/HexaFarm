@@ -7,24 +7,32 @@ import {
 } from "../lib/prototypeDeck";
 
 type ExpansionHandProps = {
+  activeDrawCardIndex: number | null;
   armedCardId: string | null;
   availableEnergy: number;
   discardAnimationDurationMs: number;
+  drawAnimationDurationMs: number;
+  drawnHandCardCount: number;
   discardCount: number;
   drawCount: number;
   hand: ExpansionCard[];
+  isDrawing: boolean;
   isDiscarding: boolean;
   onSelectCard: (cardId: string) => void;
   playableCardInstanceIds: string[];
 };
 
 export function ExpansionHand({
+  activeDrawCardIndex,
   armedCardId,
   availableEnergy,
   discardAnimationDurationMs,
+  drawAnimationDurationMs,
+  drawnHandCardCount,
   discardCount,
   drawCount,
   hand,
+  isDrawing,
   isDiscarding,
   onSelectCard,
   playableCardInstanceIds,
@@ -39,15 +47,62 @@ export function ExpansionHand({
   const overlapOffset = isCompactLayout ? 16 : 28;
   const collapseStep = Math.max(Math.round(estimatedCardWidth - overlapOffset), 0);
   const discardCollapseDurationMs = Math.round(discardAnimationDurationMs * 0.53);
+  const activeDrawCard =
+    activeDrawCardIndex !== null && activeDrawCardIndex >= 0 && activeDrawCardIndex < hand.length
+      ? hand[activeDrawCardIndex]
+      : null;
+
+  const renderCardFrame = (card: ExpansionCard) => (
+    <span className="expansion-card__frame">
+      <span className={`expansion-card__art expansion-card__art--${card.tileType}`}>
+        {card.artAssetPath ? (
+          <img
+            alt=""
+            aria-hidden="true"
+            className="expansion-card__art-image"
+            src={card.artAssetPath}
+          />
+        ) : null}
+        <span className="expansion-card__cost">{card.energyCost}</span>
+        <span
+          className={`expansion-card__yield ${
+            card.coinYield < 0 ? "is-negative" : "is-positive"
+          }`}
+        >
+          {getCoinYieldLabel(card.coinYield)}
+        </span>
+        {!card.artAssetPath ? (
+          <>
+            <span className="expansion-card__spark expansion-card__spark--left" />
+            <span className="expansion-card__spark expansion-card__spark--right" />
+            <span className={`expansion-card__icon expansion-card__icon--${card.tileType}`}>
+              <span className="expansion-card__icon-core" />
+            </span>
+          </>
+        ) : null}
+      </span>
+
+      <span className="expansion-card__footer">
+        <span className="expansion-card__eyebrow">{getCardEyebrowLabel(card)}</span>
+        <strong className="expansion-card__title">{card.name}</strong>
+        <span className="expansion-card__yield-text">
+          {card.cardKind === "crop"
+            ? `Bonus ${getCoinYieldLabel(card.coinYield)}`
+            : `Rendimento ${getCoinYieldLabel(card.coinYield)}`}
+        </span>
+      </span>
+    </span>
+  );
 
   return (
     <section
       aria-label="Mao de expansao"
-      className={`game-hand ${isDiscarding ? "is-discarding" : ""}`}
+      className={`game-hand ${isDiscarding ? "is-discarding" : ""} ${isDrawing ? "is-drawing" : ""}`}
       style={
         {
           "--hand-discard-duration": `${discardAnimationDurationMs}ms`,
           "--hand-discard-collapse-duration": `${discardCollapseDurationMs}ms`,
+          "--hand-draw-duration": `${drawAnimationDurationMs}ms`,
         } as CSSProperties
       }
     >
@@ -69,6 +124,7 @@ export function ExpansionHand({
             const canAffordCard = availableEnergy >= card.energyCost;
             const canPlayCard = playableCardIdSet.has(card.instanceId) && canAffordCard;
             const discardCollapseX = Math.round(-offsetFromCenter * collapseStep);
+            const isHiddenInDraw = isDrawing && index >= drawnHandCardCount;
 
             return (
               <button
@@ -76,9 +132,11 @@ export function ExpansionHand({
                   card.cardKind === "crop" ? "expansion-card--crop" : "expansion-card--tile"
                 } ${
                   armedCardId === card.instanceId ? "is-selected" : ""
-                } ${!canAffordCard ? "is-muted" : ""} ${isDiscarding ? "is-discarding" : ""}`}
+                } ${!canAffordCard ? "is-muted" : ""} ${isDiscarding ? "is-discarding" : ""} ${
+                  isHiddenInDraw ? "is-hidden-in-draw" : ""
+                }`}
                 aria-label={`${card.name}. ${card.description}`}
-                disabled={!canPlayCard || isDiscarding}
+                disabled={!canPlayCard || isDiscarding || isDrawing}
                 key={card.instanceId}
                 onClick={() => onSelectCard(card.instanceId)}
                 style={
@@ -86,54 +144,38 @@ export function ExpansionHand({
                     "--card-rotation": `${rotation}deg`,
                     "--card-vertical-offset": `${verticalLift}px`,
                     "--discard-collapse-x": `${discardCollapseX}px`,
+                    "--draw-target-offset-x": `${Math.round(offsetFromCenter * collapseStep)}px`,
                   } as CSSProperties
                 }
                 type="button"
               >
-                <span className="expansion-card__frame">
-                  <span className={`expansion-card__art expansion-card__art--${card.tileType}`}>
-                    {card.artAssetPath ? (
-                      <img
-                        alt=""
-                        aria-hidden="true"
-                        className="expansion-card__art-image"
-                        src={card.artAssetPath}
-                      />
-                    ) : null}
-                    <span className="expansion-card__cost">{card.energyCost}</span>
-                    <span
-                      className={`expansion-card__yield ${
-                        card.coinYield < 0 ? "is-negative" : "is-positive"
-                      }`}
-                    >
-                      {getCoinYieldLabel(card.coinYield)}
-                    </span>
-                    {!card.artAssetPath ? (
-                      <>
-                        <span className="expansion-card__spark expansion-card__spark--left" />
-                        <span className="expansion-card__spark expansion-card__spark--right" />
-                        <span className={`expansion-card__icon expansion-card__icon--${card.tileType}`}>
-                          <span className="expansion-card__icon-core" />
-                        </span>
-                      </>
-                    ) : null}
-                  </span>
-
-                  <span className="expansion-card__footer">
-                    <span className="expansion-card__eyebrow">{getCardEyebrowLabel(card)}</span>
-                    <strong className="expansion-card__title">{card.name}</strong>
-                    <span className="expansion-card__yield-text">
-                      {card.cardKind === "crop"
-                        ? `Bonus ${getCoinYieldLabel(card.coinYield)}`
-                        : `Rendimento ${getCoinYieldLabel(card.coinYield)}`}
-                    </span>
-                  </span>
-                </span>
+                {renderCardFrame(card)}
                 <CardTooltip card={card} />
               </button>
             );
           })}
         </div>
+
+        {isDrawing && activeDrawCard ? (
+          <div
+            aria-hidden="true"
+            className={`expansion-card expansion-card--${activeDrawCard.tileType} ${
+              activeDrawCard.cardKind === "crop" ? "expansion-card--crop" : "expansion-card--tile"
+            } expansion-card--draw-proxy`}
+            style={
+              {
+                "--card-rotation": "0deg",
+                "--card-vertical-offset": "0px",
+                "--draw-target-offset-x":
+                  activeDrawCardIndex !== null
+                    ? `${Math.round((activeDrawCardIndex - handCenter) * collapseStep)}px`
+                    : "0px",
+              } as CSSProperties
+            }
+          >
+            {renderCardFrame(activeDrawCard)}
+          </div>
+        ) : null}
 
         {isDiscarding && hand.length > 0 ? (
           <div aria-hidden="true" className="game-hand__discard-proxy">

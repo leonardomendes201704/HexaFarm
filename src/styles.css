@@ -969,6 +969,28 @@ button:disabled {
   }
 }
 
+@keyframes hand-draw-card-flight {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(-8deg) scale(0.86);
+  }
+
+  14% {
+    opacity: 1;
+    transform: translate(0, -4px) rotate(-6deg) scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(
+        calc(var(--hand-draw-travel-x, 238px) + var(--draw-target-offset-x, 0px)),
+        var(--card-vertical-offset, 0px)
+      )
+      rotate(var(--card-rotation, 0deg))
+      scale(1);
+  }
+}
+
 .expansion-card {
   --card-shell-border: rgba(196, 154, 92, 0.86);
   --card-shell-fill-top: rgba(255, 248, 236, 0.97);
@@ -1010,6 +1032,21 @@ button:disabled {
     cubic-bezier(0.24, 0.8, 0.22, 1) forwards;
 }
 
+.expansion-card.is-hidden-in-draw {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.expansion-card--draw-proxy {
+  position: absolute;
+  left: 56px;
+  bottom: 0;
+  z-index: 10;
+  pointer-events: none;
+  animation: hand-draw-card-flight var(--hand-draw-duration, 420ms)
+    cubic-bezier(0.18, 0.82, 0.2, 1) forwards;
+}
+
 .expansion-card.is-muted {
   filter: saturate(0.82);
 }
@@ -1041,6 +1078,13 @@ button:disabled {
     0 12px 20px rgba(7, 13, 19, 0.18),
     0 0 0 2px rgba(255, 232, 194, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.expansion-card--draw-proxy .expansion-card__frame {
+  box-shadow:
+    0 18px 26px rgba(7, 13, 19, 0.22),
+    0 0 0 2px rgba(255, 232, 194, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.94);
 }
 
 .expansion-card__art {
@@ -1787,6 +1831,8 @@ button:disabled {
   --hand-discard-collapse-duration: 340ms;
   --hand-discard-rise: 18px;
   --hand-discard-travel-x: 304px;
+  --hand-draw-duration: 420ms;
+  --hand-draw-travel-x: 238px;
   position: fixed;
   inset: auto 50% 24px;
   z-index: 5;
@@ -2042,6 +2088,7 @@ button:disabled {
   .game-hand {
     --hand-discard-rise: 14px;
     --hand-discard-travel-x: 184px;
+    --hand-draw-travel-x: 146px;
     inset: auto 50% 16px;
     width: min(calc(100vw - 24px), 1080px);
     padding: 0;
@@ -2051,6 +2098,10 @@ button:disabled {
     width: 106px;
     height: 148px;
     bottom: 6px;
+  }
+
+  .expansion-card--draw-proxy {
+    left: 18px;
   }
 
   .game-hand__fan {

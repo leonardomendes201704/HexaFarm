@@ -18,6 +18,7 @@ import {
   createDeckStateFromSelection,
   createStarterDeckSelection,
   DECK_SIZE,
+  HAND_SIZE,
   discardHandOnly,
   discardHandAndRefill,
   getCardComboTargetsLabel,
@@ -51,6 +52,7 @@ const HAND_DISCARD_ANIMATION_BASE_DURATION_MS = 640;
 const HAND_DISCARD_ANIMATION_DURATION_MS = Math.round(
   HAND_DISCARD_ANIMATION_BASE_DURATION_MS / HAND_DISCARD_ANIMATION_SPEED,
 );
+const HAND_DRAW_ANIMATION_DURATION_MS = 420;
 const WEEK_DAY_LABELS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"] as const;
 
 function getCardMetaLine(card: ReturnType<typeof getCardLibrary>[number]) {
@@ -123,6 +125,9 @@ export function NewGameScreen() {
   );
   const [armedCardId, setArmedCardId] = useState<string | null>(null);
   const [activeModal, setActiveModal] = useState<HudModalId>(null);
+  const [activeDrawCardIndex, setActiveDrawCardIndex] = useState<number | null>(null);
+  const [drawnHandCardCount, setDrawnHandCardCount] = useState(HAND_SIZE);
+  const [isDrawingHand, setIsDrawingHand] = useState(false);
   const [isDiscardingHand, setIsDiscardingHand] = useState(false);
   const [isResolvingDay, setIsResolvingDay] = useState(false);
   const [showHighlights, setShowHighlights] = useState(true);
@@ -130,6 +135,7 @@ export function NewGameScreen() {
   const [showTopPlateau, setShowTopPlateau] = useState(true);
   const [yieldBursts, setYieldBursts] = useState<Array<{ tileId: string; yieldValue: number }>>([]);
   const dayResolutionTimeoutRef = useRef<number | null>(null);
+  const handDrawTimeoutRef = useRef<number | null>(null);
   const handDiscardTimeoutRef = useRef<number | null>(null);
 
   const collectionCards = useMemo(() => getCardLibrary(), []);
@@ -194,7 +200,10 @@ export function NewGameScreen() {
     setSavedRun(nextSave);
     setDeckSelection(nextSave.activeRun.deckCardIds);
     setDeckState(createDeckStateFromSelection(nextSave.activeRun.deckCardIds));
+    setActiveDrawCardIndex(null);
     setArmedCardId(null);
+    setDrawnHandCardCount(HAND_SIZE);
+    setIsDrawingHand(false);
     applyBoardState(nextSave.activeRun.placedTiles);
   };
 
@@ -372,24 +381,78 @@ export function NewGameScreen() {
     setSavedRun(updatedSave);
   };
 
+  const finishHandDrawAnimation = () => {
+    setActiveDrawCardIndex(null);
+    setDrawnHandCardCount(HAND_SIZE);
+    setIsDrawingHand(false);
+    setIsResolvingDay(false);
+  };
+
+  const startHandDrawAnimation = (nextHandCount: number) => {
+    if (handDrawTimeoutRef.current !== null) {
+      window.clearTimeout(handDrawTimeoutRef.current);
+      handDrawTimeoutRef.current = null;
+    }
+
+    if (nextHandCount <= 0) {
+      finishHandDrawAnimation();
+      return;
+    }
+
+    setDrawnHandCardCount(0);
+    setIsDrawingHand(true);
+
+    const animateNextDraw = (index: number) => {
+      setActiveDrawCardIndex(index);
+      handDrawTimeoutRef.current = window.setTimeout(() => {
+        setDrawnHandCardCount(index + 1);
+
+        if (index + 1 >= nextHandCount) {
+          handDrawTimeoutRef.current = window.setTimeout(() => {
+            handDrawTimeoutRef.current = null;
+            finishHandDrawAnimation();
+          }, 70);
+
+          return;
+        }
+
+        animateNextDraw(index + 1);
+      }, HAND_DRAW_ANIMATION_DURATION_MS);
+    };
+
+    animateNextDraw(0);
+  };
+
   const finalizeEndDay = (shouldRefillHand: boolean) => {
+    let nextDeckState: PrototypeDeckState | null = null;
+
     if (shouldRefillHand) {
-      setDeckState((currentDeckState) => discardHandAndRefill(currentDeckState));
+      nextDeckState = discardHandAndRefill(deckState);
+      setDeckState(nextDeckState);
     }
 
     const updatedSave = advancePrototypeDay();
 
     setYieldBursts([]);
+    setActiveDrawCardIndex(null);
     setActiveModal(null);
     setArmedCardId(null);
+    setDrawnHandCardCount(shouldRefillHand ? 0 : HAND_SIZE);
     setIsDiscardingHand(false);
-    setIsResolvingDay(false);
     setSavedRun(updatedSave);
 
     if (dayResolutionTimeoutRef.current !== null) {
       window.clearTimeout(dayResolutionTimeoutRef.current);
       dayResolutionTimeoutRef.current = null;
     }
+
+    if (!shouldRefillHand) {
+      setIsDrawingHand(false);
+      setIsResolvingDay(false);
+      return;
+    }
+
+    startHandDrawAnimation(nextDeckState?.hand.length ?? 0);
   };
 
   const beginYieldResolution = (
@@ -471,6 +534,10 @@ export function NewGameScreen() {
     return () => {
       if (dayResolutionTimeoutRef.current !== null) {
         window.clearTimeout(dayResolutionTimeoutRef.current);
+      }
+
+      if (handDrawTimeoutRef.current !== null) {
+        window.clearTimeout(handDrawTimeoutRef.current);
       }
 
       if (handDiscardTimeoutRef.current !== null) {
@@ -583,12 +650,16 @@ export function NewGameScreen() {
 
       {canRunGameplay ? (
         <ExpansionHand
+          activeDrawCardIndex={activeDrawCardIndex}
           armedCardId={armedCardId}
           availableEnergy={availableEnergy}
           discardAnimationDurationMs={HAND_DISCARD_ANIMATION_DURATION_MS}
+          drawAnimationDurationMs={HAND_DRAW_ANIMATION_DURATION_MS}
+          drawnHandCardCount={drawnHandCardCount}
           discardCount={deckState.discardPile.length}
           drawCount={deckState.drawPile.length}
           hand={deckState.hand}
+          isDrawing={isDrawingHand}
           isDiscarding={isDiscardingHand}
           onSelectCard={handleSelectCard}
           playableCardInstanceIds={playableCardInstanceIds}

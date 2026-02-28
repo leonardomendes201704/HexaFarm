@@ -158,6 +158,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-061`: animar descarte da mao no fim do dia
 - `PBI-062`: refinar descarte da mao para stack unico no centro
 - `PBI-063`: reduzir velocidade da animacao de descarte da mao
+- `PBI-064`: animar compra sequencial da nova mao apos o fim do dia
 
 ## Convencao de Nomes
 

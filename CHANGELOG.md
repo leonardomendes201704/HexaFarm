@@ -18,6 +18,47 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-064 concluido
+
+### Resumo
+
+Foi adicionada uma animacao de compra sequencial da nova mao: apos o descarte e a resolucao do dia, as novas cartas saem da pilha de compra e entram na mao uma por uma.
+
+### Entregas realizadas
+
+- criacao do estado de animacao de compra para controlar carta ativa e quantidade ja revelada
+- bloqueio da interacao enquanto a nova mao esta sendo comprada
+- renderizacao de um proxy de carta saindo da pilha de compra para cada posicao do leque
+- revelacao sequencial das cartas da mao conforme cada animacao termina
+
+### Arquivos principais criados ou alterados
+
+- `src/screens/NewGameScreen.tsx`
+- `src/components/ExpansionHand.tsx`
+- `src/styles.css`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-064_ANIMAR_COMPRA_SEQUENCIAL_DA_NOVA_MAO_APOS_O_FIM_DO_DIA/*`
+
+### Vinculos de backlog
+
+- `EPICO-005 - Refinamento da Tela de Jogo e HUD`
+- `PBI-064 - Animar Compra Sequencial da Nova Mao apos o Fim do Dia`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- depois do descarte e da resolucao, 4 cartas entram da pilha de compra para a mao uma por uma
+- a mao so fica interativa de novo quando a compra termina
+
+### Commit e push
+
+- registrados no encerramento desta entrega
+
+---
+
 ## 2026-02-28 - PBI-063 concluido
 
 ### Resumo
