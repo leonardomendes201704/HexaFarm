@@ -140,6 +140,36 @@ Alta
 
 Support
 
+## Status de Execucao
+
+- Status: Implementado
+- Data da entrega base: 2026-02-28
+- Build validado: Sim
+
+## Implementacao Realizada
+
+Esta entrega implementou a base funcional do `PBI-001` com:
+
+- bootstrap do app web em `Vite + React + TypeScript`
+- tela inicial responsiva com identidade visual inicial de `HexaFarm`
+- acoes de `Novo Jogo`, `Continuar` e `Opcoes`
+- adaptador simples de save local em `localStorage`
+- habilitacao dinamica do botao `Continuar`
+- painel stub de `Opcoes`
+
+## Tasks Executadas Nesta Entrega
+
+- `TASK-001 - Criar Tela Raiz e Ponto de Entrada`
+- `TASK-002 - Montar Layout Base da Tela Inicial`
+- `TASK-003 - Implementar Titulo e Branding Base`
+- `TASK-004 - Implementar Menu Principal e Botoes`
+- `TASK-005 - Conectar Acao de Novo Jogo`
+- `TASK-006 - Criar Adaptador de Leitura de Save`
+- `TASK-007 - Implementar Estado do Botao Continuar`
+- `TASK-008 - Criar Acesso Stub de Configuracoes`
+- `TASK-009 - Ajustar Responsividade e Acessibilidade Inicial`
+- `TASK-010 - Aplicar Fundo Visual e Microanimacoes Leves`
+
 ## Valor Entregue
 
 Esse PBI entrega a primeira camada de identidade e navegacao do produto. Ele nao valida o core loop sozinho, mas cria a porta de entrada correta para o jogo e organiza a estrutura inicial da experiencia do usuario.
