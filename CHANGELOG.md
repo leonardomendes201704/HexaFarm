@@ -129,6 +129,42 @@ O canvas 3D passou a usar camera ortografica com enquadramento isometrico base.
 
 - esta entrada deve ser fechada com commit e push apos a validacao final desta task
 
+## 2026-02-28 - TASK-004 do PBI-048 concluida
+
+### Resumo
+
+Foi criada a base geometrica que converte o grid axial do jogo em coordenadas do mundo 3D.
+
+### Entregas realizadas
+
+- criacao do modulo `src/lib/hexGrid3d.ts`
+- definicao das constantes centrais do espacamento hexagonal 3D
+- implementacao da funcao de conversao axial para `[x, y, z]`
+
+### Arquivos principais criados ou alterados
+
+- `src/lib/hexGrid3d.ts`
+- `src/components/Stage3DCanvas.tsx`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/TASKS/DONE-TASK-004_IMPLEMENTAR_CONVERSAO_AXIAL_PARA_COORDENADAS_3D.md`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-048 - Migrar Stage Hexagonal para Renderizacao 3D Isometrica Real`
+- `TASK-004 - Implementar Conversao Axial para Coordenadas 3D`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- o projeto passa a ter a base unica de posicionamento para tiles e slots no mundo 3D
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta task
+
 ## 2026-02-28 - Planejamento do PBI-048 para migracao do stage para 3D isometrico real
 
 ### Resumo

@@ -1,11 +1,14 @@
 import { OrthographicCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import { projectAxialToWorld } from "../lib/hexGrid3d";
 
 const STAGE_3D_CAMERA_POSITION: [number, number, number] = [7.5, 7, 7.5];
 const STAGE_3D_CAMERA_LOOK_AT: [number, number, number] = [0, -0.5, 0];
 const STAGE_3D_CAMERA_ZOOM = 92;
 
 function Stage3DBackdrop() {
+  const [centerX, centerY, centerZ] = projectAxialToWorld({ q: 0, r: 0 }, -0.45);
+
   return (
     <>
       <ambientLight intensity={1.35} />
@@ -17,7 +20,7 @@ function Stage3DBackdrop() {
         <meshStandardMaterial color="#f5dfb8" opacity={0.2} transparent />
       </mesh>
 
-      <mesh position={[0, -0.45, 0.15]} rotation={[0, Math.PI / 6, 0]}>
+      <mesh position={[centerX, centerY, centerZ]} rotation={[0, Math.PI / 6, 0]}>
         <cylinderGeometry args={[0.95, 1.25, 0.85, 6]} />
         <meshStandardMaterial color="#f3b183" roughness={0.45} />
       </mesh>
