@@ -30,6 +30,10 @@ Todo artefato deve informar:
 - objetivo
 - criterios de conclusao
 
+As entregas executadas a partir desses itens tambem devem ser refletidas em:
+
+- `CHANGELOG.md`
+
 ## Estrutura Atual
 
 - `EPICO-001`: experiencia inicial e entrada no jogo

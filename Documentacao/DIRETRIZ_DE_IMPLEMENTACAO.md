@@ -3,6 +3,7 @@
 Este arquivo define como o projeto deve ser conduzido com base no documento principal:
 
 - `Documentacao/GDD_HEXAFARM.md`
+- `CHANGELOG.md`
 
 Esse GDD e a fonte principal de verdade para escopo, prioridades e validacao do conceito. Toda implementacao futura deve respeitar essa referencia antes de abrir novas frentes.
 
@@ -150,3 +151,112 @@ O projeto esta alinhado com a documentacao quando:
 Em caso de duvida, usar esta regra:
 
 `Se a ideia nao reforca o deckbuilder espacial cozy de fazenda hexagonal isometrica, ela nao e prioridade.`
+
+## 13. Regra de Documentacao Obrigatoria
+
+Toda solicitacao que gerar qualquer tipo de trabalho no projeto deve deixar rastros documentados no repositorio.
+
+Isso inclui:
+
+- implementacoes
+- alteracoes de comportamento
+- mudancas de escopo
+- criacao ou alteracao de backlog
+- ajustes de arquitetura
+- mudancas de processo
+
+Ao receber uma nova demanda, deve ser avaliado se ela exige atualizar:
+
+- documentacao funcional
+- backlog
+- diretrizes
+- changelog
+
+Se a mudanca nao for registrada, ela e considerada incompleta do ponto de vista de governanca.
+
+## 14. Regra de Rastreabilidade
+
+Toda entrega deve ter rastreabilidade explicita entre o que foi pedido e o que foi alterado.
+
+Sempre que aplicavel, relacionar a entrega com:
+
+- epico
+- PBI
+- historia
+- task
+- arquivo(s) alterado(s)
+
+Se a entrega for de governanca ou infraestrutura e nao existir item de backlog associado, isso deve ser declarado de forma explicita no registro da mudanca.
+
+## 15. Regra de Changelog
+
+Toda implementacao ou alteracao deve criar ou atualizar o arquivo:
+
+- `CHANGELOG.md`
+
+Cada entrada do changelog deve registrar, no minimo:
+
+- data da mudanca
+- titulo curto da entrega
+- resumo objetivo do que foi feito
+- arquivos principais criados ou alterados
+- vinculos de backlog quando existirem
+- validacao executada
+- status de commit e push
+
+O changelog deve servir como historico auditavel do projeto.
+
+## 16. Regra de Validacao Tecnica
+
+Ao final de cada implementacao ou alteracao, deve ser executada uma validacao tecnica antes de concluir a entrega.
+
+Ordem obrigatoria:
+
+1. Validar a integridade da mudanca.
+2. Executar o build do projeto, quando houver build configurado.
+3. Executar verificacoes adicionais relevantes, quando existirem.
+4. Registrar o resultado no changelog.
+
+Exemplos de validacao:
+
+- build
+- testes
+- lint
+- verificacao de arquivos gerados
+- checagem de estrutura ou navegacao
+
+Se o projeto ainda nao possuir build configurado, isso deve ser registrado como:
+
+- `Build nao aplicavel nesta entrega`
+
+Ausencia de build nao elimina a obrigacao de registrar a validacao executada.
+
+## 17. Regra de Fechamento de Entrega
+
+Nenhuma implementacao ou alteracao deve ser considerada finalizada sem passar pelo fluxo de fechamento abaixo:
+
+1. Atualizar a documentacao relevante.
+2. Atualizar ou criar a entrada correspondente no `CHANGELOG.md`.
+3. Executar a validacao tecnica aplicavel.
+4. Revisar os arquivos alterados.
+5. Criar commit com mensagem clara e coerente com a entrega.
+6. Fazer push para o repositorio remoto.
+
+Se algum passo nao puder ser executado, o motivo deve ser declarado explicitamente.
+
+## 18. Regra de Commit e Push
+
+Todo trabalho concluido deve terminar com:
+
+- commit
+- push
+
+O commit deve refletir a entrega real feita no repositorio, sem mensagens vagas.
+
+O ideal e que a mensagem:
+
+- identifique o objetivo da entrega
+- reflita o escopo principal alterado
+- facilite leitura futura do historico
+
+O push deve ocorrer ao final da entrega para manter o repositorio remoto atualizado e alinhado com o changelog.
