@@ -150,6 +150,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-053`: adicionar atalho para ocultar highlights 3d
 - `PBI-054`: resolver artes de cartas via json com import meta glob
 - `PBI-055`: ocultar cartas nao possuidas na montagem da run
+- `PBI-056`: adicionar bordas tematicas nas cartas
 
 ## Convencao de Nomes
 

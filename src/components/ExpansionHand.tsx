@@ -57,6 +57,8 @@ export function ExpansionHand({
             return (
               <button
                 className={`expansion-card expansion-card--${card.tileType} ${
+                  card.cardKind === "crop" ? "expansion-card--crop" : "expansion-card--tile"
+                } ${
                   armedCardId === card.instanceId ? "is-selected" : ""
                 } ${!canAffordCard ? "is-muted" : ""}`}
                 aria-label={`${card.name}. ${card.description}`}

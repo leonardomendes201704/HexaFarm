@@ -918,6 +918,9 @@ button:disabled {
 }
 
 .expansion-card {
+  --card-shell-border: rgba(196, 154, 92, 0.86);
+  --card-shell-glow: rgba(180, 136, 72, 0.22);
+  --card-art-border: rgba(238, 211, 168, 0.92);
   position: relative;
   width: min(18vw, 188px);
   min-width: 124px;
@@ -951,7 +954,7 @@ button:disabled {
 .expansion-card__frame {
   display: grid;
   gap: 10px;
-  border: 3px solid rgba(168, 130, 72, 0.76);
+  border: 5px solid var(--card-shell-border);
   border-radius: 24px;
   padding: 12px;
   background:
@@ -959,6 +962,7 @@ button:disabled {
     rgba(255, 249, 239, 0.95);
   box-shadow:
     0 22px 30px rgba(7, 13, 19, 0.24),
+    0 0 0 2px var(--card-shell-glow),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
@@ -975,7 +979,11 @@ button:disabled {
   border-radius: 18px;
   min-height: 150px;
   padding: 16px;
+  border: 3px solid var(--card-art-border);
   background: linear-gradient(180deg, rgba(255, 220, 191, 0.45), rgba(255, 244, 224, 0.92));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.24),
+    0 10px 18px rgba(82, 53, 31, 0.08);
 }
 
 .expansion-card__art-image {
@@ -1071,6 +1079,36 @@ button:disabled {
   background:
     radial-gradient(circle at 50% 14%, rgba(255, 249, 204, 0.92), transparent 24%),
     linear-gradient(180deg, rgba(226, 236, 214, 0.92), rgba(248, 240, 214, 0.95));
+}
+
+.expansion-card--field {
+  --card-shell-border: rgba(117, 170, 88, 0.94);
+  --card-shell-glow: rgba(106, 162, 79, 0.2);
+  --card-art-border: rgba(201, 234, 174, 0.96);
+}
+
+.expansion-card--garden {
+  --card-shell-border: rgba(225, 146, 125, 0.94);
+  --card-shell-glow: rgba(222, 145, 122, 0.2);
+  --card-art-border: rgba(255, 214, 196, 0.96);
+}
+
+.expansion-card--pond {
+  --card-shell-border: rgba(106, 165, 212, 0.96);
+  --card-shell-glow: rgba(91, 155, 211, 0.2);
+  --card-art-border: rgba(205, 233, 252, 0.96);
+}
+
+.expansion-card--wild {
+  --card-shell-border: rgba(138, 156, 96, 0.94);
+  --card-shell-glow: rgba(128, 148, 88, 0.2);
+  --card-art-border: rgba(217, 228, 187, 0.96);
+}
+
+.expansion-card--crop {
+  --card-shell-border: rgba(228, 171, 78, 0.96);
+  --card-shell-glow: rgba(214, 152, 55, 0.22);
+  --card-art-border: rgba(255, 230, 179, 0.98);
 }
 
 .expansion-card__spark {
@@ -2108,16 +2146,21 @@ button:disabled {
 }
 
 .collection-card {
+  --card-shell-border: rgba(196, 154, 92, 0.84);
+  --card-shell-glow: rgba(180, 136, 72, 0.16);
+  --card-art-border: rgba(238, 211, 168, 0.9);
   position: relative;
   display: grid;
   gap: 12px;
+  border: 4px solid var(--card-shell-border);
   border-radius: 24px;
-  padding: 14px;
+  padding: 12px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(255, 246, 232, 0.94)),
     rgba(255, 249, 239, 0.95);
   box-shadow:
     0 18px 28px rgba(61, 43, 34, 0.12),
+    0 0 0 2px var(--card-shell-glow),
     inset 0 0 0 1px rgba(172, 127, 77, 0.12);
 }
 
@@ -2136,9 +2179,13 @@ button:disabled {
   overflow: hidden;
   border-radius: 18px;
   min-height: 110px;
+  border: 3px solid var(--card-art-border);
   background:
     radial-gradient(circle at 50% 16%, rgba(255, 248, 200, 0.88), transparent 22%),
     linear-gradient(180deg, rgba(255, 214, 232, 0.82), rgba(255, 244, 214, 0.92));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.24),
+    0 8px 16px rgba(82, 53, 31, 0.06);
 }
 
 .collection-card__art--field {
@@ -2163,6 +2210,36 @@ button:disabled {
   background:
     radial-gradient(circle at 50% 16%, rgba(255, 248, 200, 0.88), transparent 22%),
     linear-gradient(180deg, rgba(226, 236, 214, 0.88), rgba(255, 244, 214, 0.92));
+}
+
+.collection-card--field {
+  --card-shell-border: rgba(117, 170, 88, 0.92);
+  --card-shell-glow: rgba(106, 162, 79, 0.14);
+  --card-art-border: rgba(201, 234, 174, 0.95);
+}
+
+.collection-card--garden {
+  --card-shell-border: rgba(225, 146, 125, 0.92);
+  --card-shell-glow: rgba(222, 145, 122, 0.14);
+  --card-art-border: rgba(255, 214, 196, 0.95);
+}
+
+.collection-card--pond {
+  --card-shell-border: rgba(106, 165, 212, 0.94);
+  --card-shell-glow: rgba(91, 155, 211, 0.14);
+  --card-art-border: rgba(205, 233, 252, 0.95);
+}
+
+.collection-card--wild {
+  --card-shell-border: rgba(138, 156, 96, 0.92);
+  --card-shell-glow: rgba(128, 148, 88, 0.14);
+  --card-art-border: rgba(217, 228, 187, 0.95);
+}
+
+.collection-card--crop {
+  --card-shell-border: rgba(228, 171, 78, 0.94);
+  --card-shell-glow: rgba(214, 152, 55, 0.16);
+  --card-art-border: rgba(255, 230, 179, 0.96);
 }
 
 .collection-card__art-image {

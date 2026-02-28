@@ -19,7 +19,9 @@ export function CollectionCard({
 }: CollectionCardProps) {
   return (
     <article
-      className={`collection-card collection-card--${card.tileType} ${locked ? "is-locked" : ""}`.trim()}
+      className={`collection-card collection-card--${card.tileType} collection-card--${card.cardKind} ${
+        locked ? "is-locked" : ""
+      }`.trim()}
     >
       <div className={`collection-card__art collection-card__art--${card.tileType}`}>
         {card.artAssetPath ? (

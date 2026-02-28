@@ -18,6 +18,47 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-056 concluido
+
+### Resumo
+
+As cartas ganharam borda na arte e uma moldura externa mais grossa, com cores variando conforme o tipo da carta.
+
+### Entregas realizadas
+
+- exposicao de classes de tipo mais claras nos componentes de carta
+- adicao de variaveis CSS para borda externa, glow e borda da arte
+- aumento da espessura da moldura externa dos cards
+- adicao de borda interna visivel na area de arte
+- definicao de paletas distintas para `field`, `garden`, `pond`, `wild` e `crop`
+
+### Arquivos principais criados ou alterados
+
+- `src/components/CollectionCard.tsx`
+- `src/components/ExpansionHand.tsx`
+- `src/styles.css`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-056_ADICIONAR_BORDAS_TEMATICAS_NAS_CARTAS/*`
+
+### Vinculos de backlog
+
+- `EPICO-032 - Integracao de Artes Reais nas Cartas`
+- `PBI-056 - Adicionar Bordas Tematicas nas Cartas`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- a arte dos cards fica delimitada por uma borda propria
+- a carta inteira passa a ter uma moldura mais forte
+- cartas de tipos diferentes passam a ter molduras com cores distintas
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - PBI-055 concluido
 
 ### Resumo
