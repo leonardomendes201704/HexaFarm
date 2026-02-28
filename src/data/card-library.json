@@ -99,7 +99,7 @@
     "energyCost": 2,
     "coinYield": 2,
     "purchaseCost": 10,
-    "imageAssetName": null,
+    "imageAssetName": "card-bosque-dourado.png",
     "targetSourceCardIds": [],
     "description": "Ergue um bosque valioso na borda. Brilha em runs mais longas, quando expandir sem perder rendimento faz diferenca."
   },
@@ -112,7 +112,7 @@
     "energyCost": 1,
     "coinYield": 1,
     "purchaseCost": 9,
-    "imageAssetName": null,
+    "imageAssetName": "card-terra-solta.png",
     "targetSourceCardIds": [],
     "description": "Adiciona um campo enxuto e barato. Ideal para fechar o deck com cartas leves e manter a curva de energia suave."
   },
@@ -125,7 +125,7 @@
     "energyCost": 2,
     "coinYield": 4,
     "purchaseCost": 11,
-    "imageAssetName": null,
+    "imageAssetName": "card-pomar-cute.png",
     "targetSourceCardIds": [],
     "description": "Planta um jardim premium de alto retorno. Uma carta de valor para quem quer explodir renda no meio e fim da run."
   },
@@ -138,7 +138,7 @@
     "energyCost": 1,
     "coinYield": 2,
     "purchaseCost": 6,
-    "imageAssetName": null,
+    "imageAssetName": "card-milho.png",
     "targetSourceCardIds": ["card-field-02"],
     "description": "Semeia milho em um solo fertil livre. E um cultivo leve, rapido e seguro para aumentar a renda do lote."
   },
@@ -151,7 +151,7 @@
     "energyCost": 2,
     "coinYield": 4,
     "purchaseCost": 9,
-    "imageAssetName": null,
+    "imageAssetName": "card-abobora.png",
     "targetSourceCardIds": ["card-field-02"],
     "description": "Planta abobora em um solo fertil livre. Exige mais energia, mas recompensa com uma colheita mais valiosa."
   },
@@ -164,7 +164,7 @@
     "energyCost": 1,
     "coinYield": 3,
     "purchaseCost": 8,
-    "imageAssetName": null,
+    "imageAssetName": "card-tomate.png",
     "targetSourceCardIds": ["card-field-02"],
     "description": "Cultiva tomates em um solo fertil livre. E um combo eficiente para transformar o lote em renda constante."
   }

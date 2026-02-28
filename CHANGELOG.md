@@ -18,6 +18,45 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Sincronizacao manual de novos assets de cartas e nomes de arquivos no catalogo
+
+### Resumo
+
+Foram adicionados novos arquivos de arte de cartas ao repositorio e o `card-library.json` foi atualizado para apontar para os novos nomes de arquivo.
+
+### Entregas realizadas
+
+- adicao manual dos assets `card-abobora.png`, `card-bosque-dourado.png`, `card-milho.png`, `card-pomar-cute.png`, `card-terra-solta.png` e `card-tomate.png`
+- atualizacao dos `imageAssetName` correspondentes em `src/data/card-library.json`
+- preparacao do repositorio para a futura conexao dessas artes ao mapeamento de assets
+
+### Arquivos principais criados ou alterados
+
+- `src/data/card-library.json`
+- `src/assets/cards/card-abobora.png`
+- `src/assets/cards/card-bosque-dourado.png`
+- `src/assets/cards/card-milho.png`
+- `src/assets/cards/card-pomar-cute.png`
+- `src/assets/cards/card-terra-solta.png`
+- `src/assets/cards/card-tomate.png`
+
+### Vinculos de backlog
+
+- nenhuma implementacao funcional nova foi executada nesta etapa; trata-se de sincronizacao de assets e catalogo antes do planejamento seguinte
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- os assets foram preservados no repositorio e o catalogo permaneceu valido
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push do snapshot de assets antes do planejamento 3D
+
 ## 2026-02-28 - Implementacao do PBI-047 de compensacao vertical ajustavel do centro do stage
 
 ### Resumo
