@@ -18,6 +18,43 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-047 de compensacao vertical ajustavel do centro do stage
+
+### Resumo
+
+O centro visual do mapa foi deslocado para cima em cerca de 50px para compensar a area ocupada pela mao, com o valor concentrado em uma variavel facil de ajustar.
+
+### Entregas realizadas
+
+- criacao do backlog do `PBI-047`
+- adicao da constante `HEX_BOARD_CENTER_OFFSET_Y`
+- deslocamento vertical do centro do `hex-board` para cima
+- preservacao do pan sobre o novo centro
+- conclusao do `PBI-047`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-047_COMPENSAR_CENTRO_VERTICAL_DO_STAGE_COM_VARIAVEL_AJUSTAVEL/DONE-PBI-047_COMPENSAR_CENTRO_VERTICAL_DO_STAGE_COM_VARIAVEL_AJUSTAVEL.md`
+- `src/components/HexMapPrototype.tsx`
+
+### Vinculos de backlog
+
+- `PBI-047 - Compensar Centro Vertical do Stage com Variavel Ajustavel`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- build deve concluir com sucesso
+- o mapa deve ficar visualmente mais alto e melhor centrado em relacao a mao
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - Implementacao do PBI-046 de limpeza das badges redundantes da mao
 
 ### Resumo

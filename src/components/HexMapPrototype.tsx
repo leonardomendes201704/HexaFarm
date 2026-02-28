@@ -26,6 +26,7 @@ const HEX_WIDTH = HEX_SIDE * 2;
 const HEX_HEIGHT = Math.sqrt(3) * HEX_SIDE;
 const HEX_HORIZONTAL_STEP = HEX_WIDTH * 0.75;
 const HEX_BOARD_PADDING = 72;
+const HEX_BOARD_CENTER_OFFSET_Y = -50;
 
 function projectHexCoord({ q, r }: HexCoord) {
   return {
@@ -148,7 +149,7 @@ export function HexMapPrototype({
             className="hex-board"
             style={{
               height: `${boardGeometry.height}px`,
-              transform: `translate(-50%, -50%) translate(${panOffset.x}px, ${panOffset.y}px)`,
+              transform: `translate(-50%, -50%) translate(${panOffset.x}px, ${panOffset.y + HEX_BOARD_CENTER_OFFSET_Y}px)`,
               width: `${boardGeometry.width}px`,
             }}
           >

@@ -140,6 +140,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-044`: implementar cartas de cultivo e combo com lote fertil
 - `PBI-045`: adicionar calendario semanal no hud e expandir stage fullscreen
 - `PBI-046`: remover badges redundantes de compra e descarte na mao
+- `PBI-047`: compensar centro vertical do stage com variavel ajustavel
 
 ## Convencao de Nomes
 
