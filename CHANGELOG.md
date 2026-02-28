@@ -18,6 +18,78 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-002 de navegacao base
+
+### Resumo
+
+Foi implementada a primeira estrutura real de navegacao do frontend, separando a home das rotas iniciais de `Novo Jogo`, `Continuar` e `Opcoes`.
+
+### Entregas realizadas
+
+- criacao do backlog do `PBI-002` com historias e tasks
+- fechamento do `EPICO-001` como concluido
+- adicao de `react-router-dom` ao frontend
+- configuracao de `BrowserRouter` e da arvore de rotas do app
+- extracao da home para uma screen dedicada
+- conexao dos botoes principais da home a rotas reais
+- criacao de telas placeholder para `Novo Jogo`, `Continuar` e `Opcoes`
+- protecao da rota `Continuar` quando nao existir save
+- reaproveitamento do save local stub para suportar navegacao
+
+### Arquivos principais criados ou alterados
+
+- `package.json`
+- `package-lock.json`
+- `src/main.tsx`
+- `src/App.tsx`
+- `src/components/TitleScreen.tsx`
+- `src/components/FlowScreen.tsx`
+- `src/screens/HomeScreen.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/screens/ContinueScreen.tsx`
+- `src/screens/OptionsScreen.tsx`
+- `src/lib/save.ts`
+- `src/styles.css`
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-001_EXPERIENCIA_INICIAL_E_ENTRADA_NO_JOGO.md`
+- `BACKLOGS/PBIS/PBI-002_ESTRUTURA_BASE_DE_NAVEGACAO/PBI-002_ESTRUTURA_BASE_DE_NAVEGACAO.md`
+- `BACKLOGS/PBIS/PBI-002_ESTRUTURA_BASE_DE_NAVEGACAO/HISTORIAS/*`
+- `BACKLOGS/PBIS/PBI-002_ESTRUTURA_BASE_DE_NAVEGACAO/TASKS/*`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-001 - Experiencia Inicial e Entrada no Jogo`
+- `PBI-002 - Estrutura Base de Navegacao Entre Telas`
+- `HISTORIA-001 - Configurar a Base de Roteamento do Aplicativo`
+- `HISTORIA-002 - Conectar a Home as Rotas Principais`
+- `HISTORIA-003 - Criar Telas Placeholder dos Fluxos Iniciais`
+
+### Tasks executadas
+
+- `TASK-001 - Adicionar Estrutura de Roteamento`
+- `TASK-002 - Estruturar Rotas Raiz do App`
+- `TASK-003 - Conectar Acoes da Home a Navegacao`
+- `TASK-004 - Criar Tela Placeholder de Novo Jogo`
+- `TASK-005 - Criar Tela Placeholder de Continuar`
+- `TASK-006 - Criar Tela Placeholder de Opcoes`
+
+### Validacao executada
+
+- `npm install react-router-dom`
+- `npm run build`
+- verificacao manual das rotas, arquivos e da rastreabilidade do backlog
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- rotas iniciais compiladas sem erros
+- `Continuar` permanece protegido por verificacao de save
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-002` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-001 da tela inicial
 
 ### Resumo

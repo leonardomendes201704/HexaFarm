@@ -3,8 +3,7 @@ type TitleScreenProps = {
   feedbackMessage: string;
   onContinue: () => void;
   onNewGame: () => void;
-  onToggleOptions: () => void;
-  showOptions: boolean;
+  onOpenOptions: () => void;
 };
 
 export function TitleScreen({
@@ -12,8 +11,7 @@ export function TitleScreen({
   feedbackMessage,
   onContinue,
   onNewGame,
-  onToggleOptions,
-  showOptions,
+  onOpenOptions,
 }: TitleScreenProps) {
   return (
     <div className="screen-shell">
@@ -75,7 +73,7 @@ export function TitleScreen({
               Continuar
             </button>
 
-            <button className="button button--ghost" onClick={onToggleOptions} type="button">
+            <button className="button button--ghost" onClick={onOpenOptions} type="button">
               Opcoes
             </button>
           </div>
@@ -84,30 +82,12 @@ export function TitleScreen({
             {feedbackMessage}
           </p>
 
-          {showOptions ? (
-            <div className="options-card">
-              <div className="options-card__row">
-                <span>Musica ambiente</span>
-                <span className="pill">Stub</span>
-              </div>
-              <div className="options-card__row">
-                <span>Efeitos de interface</span>
-                <span className="pill">Ativo</span>
-              </div>
-              <div className="options-card__row">
-                <span>Qualidade visual</span>
-                <span className="pill">Leve</span>
-              </div>
-            </div>
-          ) : null}
-
           <div className="menu-panel__footer">
-            <span>PBI-001 em execucao</span>
-            <span>Tela inicial pronta para integrar com as proximas rotas</span>
+            <span>PBI-001 concluido</span>
+            <span>PBI-002: navegacao base conectada</span>
           </div>
         </section>
       </main>
     </div>
   );
 }
-

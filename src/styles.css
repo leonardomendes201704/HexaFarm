@@ -404,6 +404,146 @@ button:disabled {
   font-size: 0.84rem;
 }
 
+.route-layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 360px);
+  gap: 24px;
+  align-items: stretch;
+  min-height: calc(100vh - 64px);
+}
+
+.route-card,
+.route-aside {
+  border: 1px solid rgba(250, 244, 230, 0.12);
+  border-radius: 32px;
+  background: linear-gradient(180deg, rgba(10, 26, 35, 0.74), rgba(10, 21, 30, 0.92));
+  box-shadow:
+    0 24px 80px rgba(5, 14, 20, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+}
+
+.route-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 36px;
+}
+
+.route-card__title {
+  margin: 0;
+  color: #fff7ef;
+  font-family: "Baloo 2", "Trebuchet MS", sans-serif;
+  font-size: clamp(2.6rem, 8vw, 5rem);
+  line-height: 0.95;
+}
+
+.route-card__description,
+.route-aside__description {
+  margin: 0;
+  color: rgba(250, 244, 236, 0.82);
+}
+
+.route-card__highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.route-card__highlights span {
+  border: 1px solid rgba(255, 241, 219, 0.1);
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(248, 230, 198, 0.08);
+  color: #f9e7cd;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.route-note {
+  border-radius: 24px;
+  padding: 18px;
+  background:
+    linear-gradient(180deg, rgba(84, 181, 155, 0.14), rgba(84, 181, 155, 0.04)),
+    rgba(13, 28, 36, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(169, 230, 218, 0.08);
+}
+
+.route-note__label {
+  margin: 0 0 8px;
+  color: #f7c07b;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.route-note__text {
+  margin: 0;
+  color: rgba(248, 240, 228, 0.88);
+}
+
+.route-actions {
+  display: flex;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.nav-link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  padding: 14px 18px;
+  text-decoration: none;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    background-color 0.22s ease;
+}
+
+.nav-link-button:hover {
+  transform: translateY(-2px);
+}
+
+.nav-link-button--primary {
+  background: linear-gradient(135deg, #ffd280 0%, #f39973 100%);
+  box-shadow: 0 14px 28px rgba(237, 156, 112, 0.28);
+  color: #312010;
+  font-weight: 800;
+}
+
+.route-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 28px;
+}
+
+.route-aside__title {
+  margin: 0;
+  color: #fff6ec;
+  font-size: 1.5rem;
+}
+
+.route-list {
+  display: grid;
+  gap: 12px;
+}
+
+.route-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(248, 241, 229, 0.05);
+  color: rgba(248, 240, 228, 0.92);
+}
+
 @keyframes float-scene {
   0%,
   100% {
@@ -417,6 +557,10 @@ button:disabled {
 
 @media (max-width: 1080px) {
   .landing-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .route-layout {
     grid-template-columns: 1fr;
   }
 
@@ -445,6 +589,8 @@ button:disabled {
   }
 
   .hero-panel,
+  .route-card,
+  .route-aside,
   .menu-panel {
     border-radius: 26px;
     padding: 22px;

@@ -23,13 +23,13 @@ Sem uma tela de entrada clara e bem estruturada, o jogo perde identidade logo no
 
 Ao abrir o jogo, o usuario deve visualizar imediatamente uma tela inicial clara, estilizada e navegavel, com acoes para iniciar uma nova partida, continuar uma sessao salva e acessar opcoes basicas.
 
-## PBI Vinculado
+## PBIs Vinculados
 
 - `PBI-001 - Tela Inicial do Jogo HexaFarm`
+- `PBI-002 - Estrutura Base de Navegacao Entre Telas`
 
 ## PBIs Futuros Naturais
 
-- `PBI-002 - Estrutura base de navegacao entre telas`
 - `PBI-003 - Sistema minimo de save local`
 
 ## Criterios de Sucesso do Epico
@@ -47,4 +47,9 @@ Ao abrir o jogo, o usuario deve visualizar imediatamente uma tela inicial clara,
 
 ## Definicao de Pronto
 
-Este epico estara concluido quando o `PBI-001` estiver entregue e validado conforme seus criterios de aceitacao.
+Este epico estara concluido quando `PBI-001` e `PBI-002` estiverem entregues e a entrada inicial do jogo estiver funcional e navegavel.
+
+## Status
+
+- Status: Concluido
+- Data de fechamento base: 2026-02-28

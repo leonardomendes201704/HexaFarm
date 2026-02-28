@@ -50,6 +50,10 @@ function writeSaveSnapshot(snapshot: SaveSnapshot) {
   window.localStorage.setItem(SAVE_KEY, JSON.stringify(snapshot));
 }
 
+export function getSavedRun() {
+  return readSaveSnapshot();
+}
+
 export function hasSavedRun() {
   return readSaveSnapshot() !== null;
 }
@@ -84,4 +88,3 @@ export function touchSave() {
 
   return updatedSave;
 }
-

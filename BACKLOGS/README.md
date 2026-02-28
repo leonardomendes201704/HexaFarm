@@ -38,6 +38,7 @@ As entregas executadas a partir desses itens tambem devem ser refletidas em:
 
 - `EPICO-001`: experiencia inicial e entrada no jogo
 - `PBI-001`: tela inicial do jogo HexaFarm
+- `PBI-002`: estrutura base de navegacao entre telas
 
 ## Convencao de Nomes
 
