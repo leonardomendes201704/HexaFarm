@@ -18,6 +18,47 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-065 concluido
+
+### Resumo
+
+Foi adicionada uma resolucao visual global de moedas no fim do dia, com explosao de moedinhas, contador animado no centro da tela e voo do total ate a badge de moedas no HUD.
+
+### Entregas realizadas
+
+- criacao de um overlay central de resolucao de moedas
+- explosao de particulas de moeda proporcional ao total ganho no dia
+- contador animado no centro da tela que conta ate o total do dia
+- animacao do contador final voando em direcao a badge de moedas no topo
+- sincronizacao desse fluxo com a resolucao do turno e o refill da nova mao
+
+### Arquivos principais criados ou alterados
+
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-065_ANIMAR_EXPLOSAO_E_CONTADOR_DE_MOEDAS_NO_FIM_DO_DIA/*`
+
+### Vinculos de backlog
+
+- `EPICO-005 - Refinamento da Tela de Jogo e HUD`
+- `PBI-065 - Animar Explosao e Contador de Moedas no Fim do Dia`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- no fim do dia, o centro da tela recebe um burst de moedas e um contador crescente
+- ao fim da contagem, o total voa para a badge de moedas
+
+### Commit e push
+
+- registrados no encerramento desta entrega
+
+---
+
 ## 2026-02-28 - PBI-064 concluido
 
 ### Resumo

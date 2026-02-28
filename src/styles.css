@@ -1722,6 +1722,136 @@ button:disabled {
   font-size: 0.78rem;
 }
 
+@keyframes day-coin-particle-burst {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(var(--coin-particle-rotation, 0deg))
+      scale(calc(var(--coin-particle-scale, 1) * 0.4));
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(var(--coin-particle-x, 0px), var(--coin-particle-y, 0px))
+      rotate(calc(var(--coin-particle-rotation, 0deg) + 30deg))
+      scale(var(--coin-particle-scale, 1));
+  }
+}
+
+@keyframes day-coin-counter-fly {
+  0%,
+  64% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(
+        calc(-50% + var(--coin-counter-fly-x, 0px)),
+        calc(-50% + var(--coin-counter-fly-y, 0px))
+      )
+      scale(0.44);
+  }
+}
+
+.day-coin-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.day-coin-overlay__burst,
+.day-coin-overlay__counter {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.day-coin-overlay__burst {
+  width: 0;
+  height: 0;
+}
+
+.day-coin-overlay__particle {
+  position: absolute;
+  left: -9px;
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, #fff8c7, #f4c84f 58%, #d79218 100%);
+  box-shadow:
+    0 0 16px rgba(255, 216, 108, 0.34),
+    inset 0 1px 0 rgba(255, 251, 220, 0.84);
+  animation: day-coin-particle-burst 1s ease-out forwards;
+}
+
+.day-coin-overlay.is-negative .day-coin-overlay__particle {
+  background:
+    radial-gradient(circle at 30% 30%, #ffe3d8, #f5a06f 58%, #cf5d38 100%);
+  box-shadow:
+    0 0 16px rgba(239, 134, 94, 0.32),
+    inset 0 1px 0 rgba(255, 239, 231, 0.82);
+}
+
+.day-coin-overlay__counter {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  min-width: 176px;
+  padding: 20px 24px;
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at top center, rgba(255, 244, 203, 0.5), transparent 46%),
+    linear-gradient(180deg, rgba(255, 252, 242, 0.94), rgba(255, 236, 203, 0.9));
+  box-shadow:
+    0 24px 42px rgba(70, 44, 28, 0.22),
+    0 0 0 4px rgba(255, 226, 171, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+  transform: translate(-50%, -50%);
+}
+
+.day-coin-overlay.is-negative .day-coin-overlay__counter {
+  background:
+    radial-gradient(circle at top center, rgba(255, 225, 207, 0.46), transparent 46%),
+    linear-gradient(180deg, rgba(255, 247, 241, 0.94), rgba(255, 223, 208, 0.9));
+  box-shadow:
+    0 24px 42px rgba(92, 41, 35, 0.22),
+    0 0 0 4px rgba(245, 178, 150, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.day-coin-overlay.is-flying .day-coin-overlay__counter {
+  animation: day-coin-counter-fly 0.52s cubic-bezier(0.22, 0.8, 0.2, 1) forwards;
+}
+
+.day-coin-overlay__counter-label {
+  color: #9a6634;
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.day-coin-overlay__counter-value {
+  color: #6c3c14;
+  font-family: "Baloo 2", "Trebuchet MS", sans-serif;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  line-height: 0.9;
+}
+
+.day-coin-overlay.is-negative .day-coin-overlay__counter-label,
+.day-coin-overlay.is-negative .day-coin-overlay__counter-value {
+  color: #9c4a38;
+}
+
 .gameplay-stage {
   position: absolute;
   inset: 0;

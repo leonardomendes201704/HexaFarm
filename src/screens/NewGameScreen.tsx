@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { CollectionCard } from "../components/CollectionCard";
 import { ExpansionHand } from "../components/ExpansionHand";
@@ -46,7 +46,9 @@ import {
 } from "../lib/save";
 
 type HudModalId = "help" | "menu" | "status" | null;
-const DAY_RESOLUTION_DURATION_MS = 980;
+const COIN_COUNTER_COUNT_DURATION_MS = 980;
+const COIN_COUNTER_FLY_DURATION_MS = 520;
+const DAY_RESOLUTION_DURATION_MS = COIN_COUNTER_COUNT_DURATION_MS + COIN_COUNTER_FLY_DURATION_MS;
 const HAND_DISCARD_ANIMATION_SPEED = 0.5;
 const HAND_DISCARD_ANIMATION_BASE_DURATION_MS = 640;
 const HAND_DISCARD_ANIMATION_DURATION_MS = Math.round(
@@ -54,6 +56,11 @@ const HAND_DISCARD_ANIMATION_DURATION_MS = Math.round(
 );
 const HAND_DRAW_ANIMATION_DURATION_MS = 420;
 const WEEK_DAY_LABELS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"] as const;
+
+type CoinCounterFlyOffset = {
+  x: number;
+  y: number;
+};
 
 function getCardMetaLine(card: ReturnType<typeof getCardLibrary>[number]) {
   if (card.cardKind === "crop") {
@@ -126,14 +133,22 @@ export function NewGameScreen() {
   const [armedCardId, setArmedCardId] = useState<string | null>(null);
   const [activeModal, setActiveModal] = useState<HudModalId>(null);
   const [activeDrawCardIndex, setActiveDrawCardIndex] = useState<number | null>(null);
+  const [coinCounterDisplayValue, setCoinCounterDisplayValue] = useState(0);
+  const [coinCounterFlyOffset, setCoinCounterFlyOffset] = useState<CoinCounterFlyOffset>({
+    x: 0,
+    y: 0,
+  });
+  const [coinResolutionDelta, setCoinResolutionDelta] = useState<number | null>(null);
   const [drawnHandCardCount, setDrawnHandCardCount] = useState(HAND_SIZE);
+  const [isCoinCounterFlying, setIsCoinCounterFlying] = useState(false);
   const [isDrawingHand, setIsDrawingHand] = useState(false);
   const [isDiscardingHand, setIsDiscardingHand] = useState(false);
   const [isResolvingDay, setIsResolvingDay] = useState(false);
   const [showHighlights, setShowHighlights] = useState(true);
   const [showSurfaceAccents, setShowSurfaceAccents] = useState(true);
   const [showTopPlateau, setShowTopPlateau] = useState(true);
-  const [yieldBursts, setYieldBursts] = useState<Array<{ tileId: string; yieldValue: number }>>([]);
+  const coinBadgeRef = useRef<HTMLSpanElement | null>(null);
+  const coinCounterAnimationFrameRef = useRef<number | null>(null);
   const dayResolutionTimeoutRef = useRef<number | null>(null);
   const handDrawTimeoutRef = useRef<number | null>(null);
   const handDiscardTimeoutRef = useRef<number | null>(null);
@@ -160,6 +175,26 @@ export function NewGameScreen() {
   const canStartRun = selectedDeckCount === DECK_SIZE;
   const shopOffers = getShopOffers(savedRun.meta.completedRuns);
   const dailyCoinYieldLabel = getRunDailyCoinYieldLabel(savedRun.activeRun);
+  const coinBurstParticles = useMemo(() => {
+    if (coinResolutionDelta === null) {
+      return [];
+    }
+
+    const particleCount = Math.max(8, Math.min(28, Math.abs(coinResolutionDelta) * 3));
+
+    return Array.from({ length: particleCount }, (_, index) => {
+      const angle = (Math.PI * 2 * index) / particleCount;
+      const distance = 54 + ((index * 11) % 66);
+
+      return {
+        id: `coin-particle-${index}`,
+        offsetX: Math.cos(angle) * distance,
+        offsetY: Math.sin(angle) * distance,
+        rotation: (index * 37) % 360,
+        scale: 0.76 + ((index % 5) * 0.08),
+      };
+    });
+  }, [coinResolutionDelta]);
   const currentWeekDayIndex = Math.min(
     Math.max(savedRun.activeRun.day - 1, 0),
     WEEK_DAY_LABELS.length - 1,
@@ -202,7 +237,10 @@ export function NewGameScreen() {
     setDeckState(createDeckStateFromSelection(nextSave.activeRun.deckCardIds));
     setActiveDrawCardIndex(null);
     setArmedCardId(null);
+    setCoinCounterDisplayValue(0);
+    setCoinResolutionDelta(null);
     setDrawnHandCardCount(HAND_SIZE);
+    setIsCoinCounterFlying(false);
     setIsDrawingHand(false);
     applyBoardState(nextSave.activeRun.placedTiles);
   };
@@ -388,6 +426,13 @@ export function NewGameScreen() {
     setIsResolvingDay(false);
   };
 
+  const clearCoinResolutionAnimation = () => {
+    if (coinCounterAnimationFrameRef.current !== null) {
+      window.cancelAnimationFrame(coinCounterAnimationFrameRef.current);
+      coinCounterAnimationFrameRef.current = null;
+    }
+  };
+
   const startHandDrawAnimation = (nextHandCount: number) => {
     if (handDrawTimeoutRef.current !== null) {
       window.clearTimeout(handDrawTimeoutRef.current);
@@ -433,11 +478,13 @@ export function NewGameScreen() {
 
     const updatedSave = advancePrototypeDay();
 
-    setYieldBursts([]);
     setActiveDrawCardIndex(null);
     setActiveModal(null);
     setArmedCardId(null);
+    setCoinCounterDisplayValue(0);
+    setCoinResolutionDelta(null);
     setDrawnHandCardCount(shouldRefillHand ? 0 : HAND_SIZE);
+    setIsCoinCounterFlying(false);
     setIsDiscardingHand(false);
     setSavedRun(updatedSave);
 
@@ -445,6 +492,8 @@ export function NewGameScreen() {
       window.clearTimeout(dayResolutionTimeoutRef.current);
       dayResolutionTimeoutRef.current = null;
     }
+
+    clearCoinResolutionAnimation();
 
     if (!shouldRefillHand) {
       setIsDrawingHand(false);
@@ -457,14 +506,48 @@ export function NewGameScreen() {
 
   const beginYieldResolution = (
     shouldRefillHand: boolean,
-    nextYieldBursts: Array<{ tileId: string; yieldValue: number }>,
+    dayCoinDelta: number,
   ) => {
-    if (nextYieldBursts.length === 0) {
+    if (dayCoinDelta === 0) {
       finalizeEndDay(shouldRefillHand);
       return;
     }
 
-    setYieldBursts(nextYieldBursts);
+    clearCoinResolutionAnimation();
+    setCoinCounterDisplayValue(0);
+    setCoinResolutionDelta(dayCoinDelta);
+    setIsCoinCounterFlying(false);
+
+    const badgeBounds = coinBadgeRef.current?.getBoundingClientRect();
+    const viewportCenterX = window.innerWidth / 2;
+    const viewportCenterY = window.innerHeight / 2;
+
+    setCoinCounterFlyOffset({
+      x: badgeBounds ? badgeBounds.left + badgeBounds.width / 2 - viewportCenterX : 320,
+      y: badgeBounds ? badgeBounds.top + badgeBounds.height / 2 - viewportCenterY : -220,
+    });
+
+    const animationStartTime = performance.now();
+
+    const animateCoinCounter = (frameTime: number) => {
+      const progress = Math.min(
+        1,
+        (frameTime - animationStartTime) / COIN_COUNTER_COUNT_DURATION_MS,
+      );
+
+      setCoinCounterDisplayValue(Math.round(dayCoinDelta * progress));
+
+      if (progress < 1) {
+        coinCounterAnimationFrameRef.current = window.requestAnimationFrame(animateCoinCounter);
+        return;
+      }
+
+      setCoinCounterDisplayValue(dayCoinDelta);
+      setIsCoinCounterFlying(true);
+      coinCounterAnimationFrameRef.current = null;
+    };
+
+    coinCounterAnimationFrameRef.current = window.requestAnimationFrame(animateCoinCounter);
     dayResolutionTimeoutRef.current = window.setTimeout(() => {
       finalizeEndDay(shouldRefillHand);
     }, DAY_RESOLUTION_DURATION_MS);
@@ -477,12 +560,10 @@ export function NewGameScreen() {
 
     const isRunEnding = savedRun.activeRun.day >= PROTOTYPE_RUN_LENGTH_DAYS;
     const shouldRefillHand = !isRunEnding;
-    const nextYieldBursts = savedRun.activeRun.placedTiles
-      .filter((tile) => tile.dailyCoinYield !== 0)
-      .map((tile) => ({
-        tileId: `${tile.q}:${tile.r}`,
-        yieldValue: tile.dailyCoinYield,
-      }));
+    const dayCoinDelta = savedRun.activeRun.placedTiles.reduce(
+      (totalCoins, tile) => totalCoins + tile.dailyCoinYield,
+      0,
+    );
 
     if (dayResolutionTimeoutRef.current !== null) {
       window.clearTimeout(dayResolutionTimeoutRef.current);
@@ -499,7 +580,7 @@ export function NewGameScreen() {
     setIsResolvingDay(true);
 
     if (deckState.hand.length === 0) {
-      beginYieldResolution(shouldRefillHand, nextYieldBursts);
+      beginYieldResolution(shouldRefillHand, dayCoinDelta);
       return;
     }
 
@@ -508,7 +589,7 @@ export function NewGameScreen() {
       setDeckState((currentDeckState) => discardHandOnly(currentDeckState));
       setIsDiscardingHand(false);
       handDiscardTimeoutRef.current = null;
-      beginYieldResolution(shouldRefillHand, nextYieldBursts);
+      beginYieldResolution(shouldRefillHand, dayCoinDelta);
     }, HAND_DISCARD_ANIMATION_DURATION_MS);
   };
 
@@ -535,6 +616,8 @@ export function NewGameScreen() {
       if (dayResolutionTimeoutRef.current !== null) {
         window.clearTimeout(dayResolutionTimeoutRef.current);
       }
+
+      clearCoinResolutionAnimation();
 
       if (handDrawTimeoutRef.current !== null) {
         window.clearTimeout(handDrawTimeoutRef.current);
@@ -601,7 +684,9 @@ export function NewGameScreen() {
 
         <div className="gameplay-hud__cluster gameplay-hud__cluster--right">
           <span className="hud-pill">Aluguel {savedRun.activeRun.rentDue}</span>
-          <span className="hud-pill">Moedas {savedRun.activeRun.resources.coins}</span>
+          <span className="hud-pill" ref={coinBadgeRef}>
+            Moedas {savedRun.activeRun.resources.coins}
+          </span>
           <span className="hud-pill">Energia {availableEnergy}</span>
           <button
             className="hud-button hud-button--action"
@@ -614,6 +699,48 @@ export function NewGameScreen() {
           </button>
         </div>
       </header>
+
+      {coinResolutionDelta !== null ? (
+        <div
+          aria-hidden="true"
+          className={`day-coin-overlay ${
+            coinResolutionDelta < 0 ? "is-negative" : "is-positive"
+          } ${isCoinCounterFlying ? "is-flying" : ""}`}
+        >
+          <div className="day-coin-overlay__burst">
+            {coinBurstParticles.map((particle) => (
+              <span
+                className="day-coin-overlay__particle"
+                key={particle.id}
+                style={
+                  {
+                    "--coin-particle-rotation": `${particle.rotation}deg`,
+                    "--coin-particle-scale": particle.scale,
+                    "--coin-particle-x": `${particle.offsetX}px`,
+                    "--coin-particle-y": `${particle.offsetY}px`,
+                  } as CSSProperties
+                }
+              />
+            ))}
+          </div>
+
+          <div
+            className="day-coin-overlay__counter"
+            style={
+              {
+                "--coin-counter-fly-x": `${coinCounterFlyOffset.x}px`,
+                "--coin-counter-fly-y": `${coinCounterFlyOffset.y}px`,
+              } as CSSProperties
+            }
+          >
+            <span className="day-coin-overlay__counter-label">Moedas do Dia</span>
+            <strong className="day-coin-overlay__counter-value">
+              {coinResolutionDelta >= 0 ? "+" : ""}
+              {coinCounterDisplayValue}
+            </strong>
+          </div>
+        </div>
+      ) : null}
 
       <div className="gameplay-stage">
         <div className="gameplay-stage__status">
