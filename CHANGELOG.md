@@ -273,6 +273,41 @@ Os tiles 3D passaram a ter variacoes de material e relevo por tipo de terreno.
 
 - esta entrada deve ser fechada com commit e push apos a validacao final desta task
 
+## 2026-02-28 - TASK-008 do PBI-048 concluida
+
+### Resumo
+
+O stage 3D passou a representar os cultivos plantados com props 3D leves.
+
+### Entregas realizadas
+
+- criacao de props 3D estilizados para `Milho`, `Abobora` e `Tomate`
+- exibicao visual de cultivo diretamente sobre o tile plantado
+- fallback visual simples para futuras culturas ainda nao especializadas
+
+### Arquivos principais criados ou alterados
+
+- `src/components/Stage3DCanvas.tsx`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/TASKS/DONE-TASK-008_REPRESENTAR_CULTIVOS_COM_PROPS_3D_OU_BILLBOARDS.md`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-048 - Migrar Stage Hexagonal para Renderizacao 3D Isometrica Real`
+- `TASK-008 - Representar Cultivos com Props 3D ou Billboards`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- tiles plantados passam a exibir um marcador 3D claro para a cultura atual
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta task
+
 ## 2026-02-28 - Planejamento do PBI-048 para migracao do stage para 3D isometrico real
 
 ### Resumo

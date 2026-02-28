@@ -75,6 +75,69 @@ function TileSurfaceAccent({ tileType }: { tileType: PrototypeTileType }) {
   }
 }
 
+function CropProp3D({ cropName }: { cropName: string | null }) {
+  if (!cropName) {
+    return null;
+  }
+
+  switch (cropName) {
+    case "Milho":
+      return (
+        <>
+          <mesh position={[-0.1, 0.9, 0]}>
+            <cylinderGeometry args={[0.05, 0.07, 0.34, 6]} />
+            <meshStandardMaterial color="#6cb25d" roughness={0.76} />
+          </mesh>
+          <mesh position={[-0.1, 1.08, 0]}>
+            <sphereGeometry args={[0.1, 10, 10]} />
+            <meshStandardMaterial color="#ffd468" roughness={0.42} />
+          </mesh>
+          <mesh position={[0.14, 0.84, -0.06]} rotation={[0, 0, 0.2]}>
+            <cylinderGeometry args={[0.04, 0.06, 0.24, 6]} />
+            <meshStandardMaterial color="#72bc61" roughness={0.78} />
+          </mesh>
+        </>
+      );
+    case "Abobora":
+      return (
+        <>
+          <mesh position={[0, 0.92, 0]}>
+            <sphereGeometry args={[0.18, 14, 14]} />
+            <meshStandardMaterial color="#f49a3b" roughness={0.5} />
+          </mesh>
+          <mesh position={[0, 1.08, 0]}>
+            <cylinderGeometry args={[0.03, 0.04, 0.12, 6]} />
+            <meshStandardMaterial color="#6b9b4f" roughness={0.72} />
+          </mesh>
+        </>
+      );
+    case "Tomate":
+      return (
+        <>
+          <mesh position={[0, 0.95, 0]}>
+            <cylinderGeometry args={[0.04, 0.06, 0.28, 6]} />
+            <meshStandardMaterial color="#62a35c" roughness={0.76} />
+          </mesh>
+          <mesh position={[-0.1, 0.84, 0.08]}>
+            <sphereGeometry args={[0.1, 12, 12]} />
+            <meshStandardMaterial color="#e95a4f" roughness={0.44} />
+          </mesh>
+          <mesh position={[0.12, 0.86, -0.02]}>
+            <sphereGeometry args={[0.1, 12, 12]} />
+            <meshStandardMaterial color="#ef6a5d" roughness={0.42} />
+          </mesh>
+        </>
+      );
+    default:
+      return (
+        <mesh position={[0, 0.92, 0]}>
+          <sphereGeometry args={[0.12, 12, 12]} />
+          <meshStandardMaterial color="#fff2c2" roughness={0.4} />
+        </mesh>
+      );
+  }
+}
+
 function Stage3DBackdrop({ frontierSlots, tiles }: Stage3DCanvasProps) {
   const worldCoords = [...tiles, ...frontierSlots];
   const planeSize = Math.max(22, worldCoords.length * 1.8);
@@ -120,6 +183,7 @@ function Stage3DBackdrop({ frontierSlots, tiles }: Stage3DCanvasProps) {
             topColor={tileColors.top}
           >
             <TileSurfaceAccent tileType={tile.tileType} />
+            <CropProp3D cropName={tile.plantedCropName} />
           </HexPrismMesh3D>
         );
       })}
