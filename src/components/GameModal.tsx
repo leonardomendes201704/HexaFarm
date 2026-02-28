@@ -1,22 +1,39 @@
 import type { MouseEvent, PropsWithChildren } from "react";
 
 type GameModalProps = PropsWithChildren<{
+  dismissible?: boolean;
   onClose: () => void;
+  size?: "regular" | "wide";
   shortcut: string;
   title: string;
 }>;
 
-export function GameModal({ children, onClose, shortcut, title }: GameModalProps) {
+export function GameModal({
+  children,
+  dismissible = true,
+  onClose,
+  shortcut,
+  size = "regular",
+  title,
+}: GameModalProps) {
   const handlePanelClick = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
   };
 
+  const handleBackdropClick = () => {
+    if (!dismissible) {
+      return;
+    }
+
+    onClose();
+  };
+
   return (
-    <div className="game-modal-backdrop" onClick={onClose} role="presentation">
+    <div className="game-modal-backdrop" onClick={handleBackdropClick} role="presentation">
       <section
         aria-label={title}
         aria-modal="true"
-        className="game-modal"
+        className={`game-modal ${size === "wide" ? "game-modal--wide" : ""}`}
         onClick={handlePanelClick}
         role="dialog"
       >
@@ -26,9 +43,11 @@ export function GameModal({ children, onClose, shortcut, title }: GameModalProps
             <h2 className="game-modal__title">{title}</h2>
           </div>
 
-          <button className="game-modal__close" onClick={onClose} type="button">
-            Fechar
-          </button>
+          {dismissible ? (
+            <button className="game-modal__close" onClick={onClose} type="button">
+              Fechar
+            </button>
+          ) : null}
         </header>
 
         <div className="game-modal__body">{children}</div>

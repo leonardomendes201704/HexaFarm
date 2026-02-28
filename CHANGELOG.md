@@ -18,6 +18,80 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-008 de deck da run, loja e aluguel progressivo
+
+### Resumo
+
+Foi implementado o primeiro loop completo de deckbuilder roguelite do prototipo: deck de 24 cartas montado no inicio da run, pilhas visiveis de compra e descarte, run fechada de 7 dias, aluguel progressivo e loja ao fim da run.
+
+### Entregas realizadas
+
+- criacao do `EPICO-007` e do backlog completo do `PBI-008`
+- definicao de um catalogo maior de cartas e de uma colecao persistente
+- migracao do save para um contrato mais rico, com colecao, aluguel e fase da run
+- criacao da etapa de montagem do deck com selecao obrigatoria de 24 cartas
+- consumo da run a partir do deck configurado
+- exibicao visual de pilha de compra e pilha de descarte no mesmo padrao visual da tela
+- encerramento automatico da run no dia 7
+- validacao de aluguel ao fim da run e aumento do proximo aluguel
+- criacao da loja de fim de run para compra de novas cartas da colecao
+- unificacao da tela de `Continuar` com a tela principal de jogo
+- conclusao do `PBI-008` e do `EPICO-007`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-007_DECKBUILDING_PERSISTENTE_E_ECONOMIA_DA_RUN.md`
+- `BACKLOGS/PBIS/PBI-008_DECK_DA_RUN_LOJA_E_ALUGUEL_PROGRESSIVO/DONE-PBI-008_DECK_DA_RUN_LOJA_E_ALUGUEL_PROGRESSIVO.md`
+- `BACKLOGS/PBIS/PBI-008_DECK_DA_RUN_LOJA_E_ALUGUEL_PROGRESSIVO/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-008_DECK_DA_RUN_LOJA_E_ALUGUEL_PROGRESSIVO/TASKS/DONE-*`
+- `src/lib/prototypeDeck.ts`
+- `src/lib/save.ts`
+- `src/components/ExpansionHand.tsx`
+- `src/components/GameModal.tsx`
+- `src/components/SaveSummaryCard.tsx`
+- `src/screens/HomeScreen.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/screens/ContinueScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-007 - Deckbuilding Persistente e Economia da Run`
+- `PBI-008 - Deck da Run, Loja e Aluguel Progressivo`
+- `HISTORIA-001 - Montar Deck Persistente de 24 Cartas no Inicio da Run`
+- `HISTORIA-002 - Exibir Pilhas Reais e Consumir o Deck Configurado`
+- `HISTORIA-003 - Encerrar a Run com Aluguel e Abrir a Loja`
+
+### Tasks executadas
+
+- `TASK-001 - Criar Catalogo de Cartas e Colecao Persistente`
+- `TASK-002 - Implementar Montagem de Deck com 24 Cartas`
+- `TASK-003 - Persistir Deck da Run no Save`
+- `TASK-004 - Exibir Pilha de Compra na Interface`
+- `TASK-005 - Exibir Pilha de Descarte e Consumir Cartas da Run`
+- `TASK-006 - Encerrar Run no Dia 7`
+- `TASK-007 - Validar Aluguel Progressivo`
+- `TASK-008 - Abrir Loja e Comprar Novas Cartas`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da montagem de deck, fluxo de 7 dias e loja de fim de run
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- a run agora comeca com montagem de 24 cartas
+- a mao consome um deck real com compra e descarte visiveis
+- o dia 7 resolve o aluguel e leva para a loja
+- novas cartas compradas passam a integrar a colecao para a proxima run
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-008` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-007 de energia e ciclo minimo de dia
 
 ### Resumo

@@ -1666,3 +1666,272 @@ button:disabled {
     grid-template-columns: 1fr;
   }
 }
+
+.gameplay-screen.is-overlayed .gameplay-stage {
+  filter: saturate(0.85) blur(1.5px);
+  transform: scale(0.992);
+  transform-origin: center;
+}
+
+.game-modal--wide {
+  width: min(100%, 1040px);
+}
+
+.game-hand__layout {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 18px;
+}
+
+.card-pile {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+
+.card-pile__stack {
+  position: relative;
+  width: 112px;
+  height: 148px;
+}
+
+.card-pile__card {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22px;
+  border: 3px solid rgba(170, 128, 73, 0.7);
+  box-shadow:
+    0 18px 24px rgba(25, 17, 22, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.68);
+}
+
+.card-pile__card--back {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 244, 210, 0.18), transparent 16%),
+    linear-gradient(135deg, rgba(255, 201, 161, 0.78), rgba(241, 138, 134, 0.92));
+}
+
+.card-pile__card--back:first-child {
+  transform: translate(-7px, 9px) rotate(-6deg);
+}
+
+.card-pile__card--back:nth-child(2) {
+  transform: translate(5px, 5px) rotate(4deg);
+}
+
+.card-pile__card--front {
+  background:
+    linear-gradient(180deg, rgba(255, 251, 242, 0.96), rgba(252, 239, 217, 0.94)),
+    rgba(255, 249, 239, 0.95);
+  color: #8f5d30;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.card-pile__count {
+  border-radius: 999px;
+  padding: 7px 11px;
+  background: rgba(70, 42, 28, 0.16);
+  color: #fff7e7;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.builder-panel {
+  display: grid;
+  gap: 18px;
+}
+
+.builder-panel__summary {
+  display: grid;
+  gap: 12px;
+}
+
+.builder-panel__hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.builder-chip {
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.58);
+  color: #6c4322;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.builder-panel__text {
+  margin: 0;
+  color: #6c4322;
+}
+
+.collection-grid,
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+}
+
+.collection-card {
+  display: grid;
+  gap: 12px;
+  border-radius: 24px;
+  padding: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(255, 246, 232, 0.94)),
+    rgba(255, 249, 239, 0.95);
+  box-shadow:
+    0 18px 28px rgba(61, 43, 34, 0.12),
+    inset 0 0 0 1px rgba(172, 127, 77, 0.12);
+}
+
+.collection-card.is-locked {
+  opacity: 0.58;
+  filter: saturate(0.7);
+}
+
+.collection-card__art {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  min-height: 110px;
+  background:
+    radial-gradient(circle at 50% 16%, rgba(255, 248, 200, 0.88), transparent 22%),
+    linear-gradient(180deg, rgba(255, 214, 232, 0.82), rgba(255, 244, 214, 0.92));
+}
+
+.collection-card__art--field {
+  background:
+    radial-gradient(circle at 50% 16%, rgba(255, 248, 200, 0.88), transparent 22%),
+    linear-gradient(180deg, rgba(230, 244, 209, 0.88), rgba(255, 244, 214, 0.92));
+}
+
+.collection-card__art--garden {
+  background:
+    radial-gradient(circle at 50% 16%, rgba(255, 248, 200, 0.88), transparent 22%),
+    linear-gradient(180deg, rgba(255, 214, 232, 0.88), rgba(255, 244, 214, 0.92));
+}
+
+.collection-card__art--pond {
+  background:
+    radial-gradient(circle at 50% 16%, rgba(255, 248, 200, 0.88), transparent 22%),
+    linear-gradient(180deg, rgba(214, 236, 255, 0.88), rgba(255, 244, 214, 0.92));
+}
+
+.collection-card__art--wild {
+  background:
+    radial-gradient(circle at 50% 16%, rgba(255, 248, 200, 0.88), transparent 22%),
+    linear-gradient(180deg, rgba(226, 236, 214, 0.88), rgba(255, 244, 214, 0.92));
+}
+
+.collection-card__cost {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 252, 240, 0.94);
+  color: #925a21;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.collection-card__copy {
+  display: grid;
+  gap: 4px;
+}
+
+.collection-card__title {
+  color: #5f361d;
+  font-size: 0.95rem;
+}
+
+.collection-card__meta {
+  color: rgba(111, 75, 46, 0.82);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.collection-card__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.collection-card__button {
+  border-radius: 16px;
+  padding: 10px 12px;
+  background: rgba(104, 71, 48, 0.08);
+  color: #694227;
+  font-weight: 900;
+}
+
+.collection-card__button--primary {
+  background: linear-gradient(135deg, #ffd07c 0%, #f39973 100%);
+  color: #4d2d12;
+}
+
+.collection-card__button:disabled {
+  opacity: 0.45;
+}
+
+.builder-panel__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.builder-panel__counter {
+  color: #6c4322;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .game-hand__layout {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 12px;
+  }
+
+  .card-pile {
+    width: 100%;
+  }
+
+  .card-pile__stack {
+    width: 96px;
+    height: 130px;
+  }
+}
+
+@media (max-width: 720px) {
+  .game-modal--wide {
+    width: min(100%, 680px);
+  }
+
+  .collection-grid,
+  .shop-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .builder-panel__footer {
+    align-items: stretch;
+  }
+}

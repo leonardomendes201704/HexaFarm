@@ -35,10 +35,10 @@ export function HomeScreen() {
 
   const canContinue = savedRun !== null;
   const feedbackMessage = savedRun
-    ? `Run salva em ${savedRun.activeRun.seasonLabel}, dia ${savedRun.activeRun.day}. ${savedRun.activeRun.tilesPlaced} tile(s) ja preparados para a proxima sessao.`
+    ? `Save em fase ${savedRun.activeRun.phase}, dia ${savedRun.activeRun.day}/${savedRun.activeRun.runLengthDays}. Aluguel atual: ${savedRun.activeRun.rentDue}.`
     : "Nenhum save ativo. Use Novo Jogo para criar a primeira run persistida no navegador.";
   const saveSummaryLabel = savedRun
-    ? `Perfil ${savedRun.profileName} | ${savedRun.activeRun.resources.coins} moedas | ${savedRun.activeRun.resources.seeds} sementes`
+    ? `Perfil ${savedRun.profileName} | ${savedRun.activeRun.resources.coins} moedas | Loja ${savedRun.meta.collectionCoins}`
     : null;
 
   return (
