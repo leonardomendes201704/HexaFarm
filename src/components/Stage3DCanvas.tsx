@@ -21,6 +21,60 @@ const TILE_COLOR_BY_TYPE: Record<PrototypeTileType, { body: string; top: string 
   wild: { body: "#75895b", top: "#9fbd7e" },
 };
 
+function TileSurfaceAccent({ tileType }: { tileType: PrototypeTileType }) {
+  switch (tileType) {
+    case "field":
+      return (
+        <mesh position={[0, 0.66, 0]}>
+          <cylinderGeometry args={[0.46, 0.58, 0.14, 10]} />
+          <meshStandardMaterial color="#7ac86a" roughness={0.86} />
+        </mesh>
+      );
+    case "garden":
+      return (
+        <>
+          <mesh position={[0, 0.66, 0]}>
+            <cylinderGeometry args={[0.42, 0.54, 0.14, 10]} />
+            <meshStandardMaterial color="#f0b48f" roughness={0.82} />
+          </mesh>
+          <mesh position={[0, 0.78, 0]}>
+            <sphereGeometry args={[0.12, 12, 12]} />
+            <meshStandardMaterial color="#ffd8a8" roughness={0.5} />
+          </mesh>
+        </>
+      );
+    case "pond":
+      return (
+        <mesh position={[0, 0.63, 0]}>
+          <cylinderGeometry args={[0.5, 0.62, 0.12, 10]} />
+          <meshStandardMaterial color="#8fe2ff" metalness={0.12} roughness={0.22} />
+        </mesh>
+      );
+    case "wild":
+      return (
+        <>
+          <mesh position={[-0.18, 0.7, -0.08]}>
+            <cylinderGeometry args={[0.12, 0.18, 0.32, 6]} />
+            <meshStandardMaterial color="#93b46e" roughness={0.72} />
+          </mesh>
+          <mesh position={[0.16, 0.67, 0.1]}>
+            <cylinderGeometry args={[0.1, 0.16, 0.26, 6]} />
+            <meshStandardMaterial color="#89a865" roughness={0.74} />
+          </mesh>
+        </>
+      );
+    case "home":
+      return (
+        <mesh position={[0, 0.78, 0]}>
+          <cylinderGeometry args={[0.22, 0.28, 0.26, 8]} />
+          <meshStandardMaterial color="#f6d9b9" roughness={0.52} />
+        </mesh>
+      );
+    default:
+      return null;
+  }
+}
+
 function Stage3DBackdrop({ frontierSlots, tiles }: Stage3DCanvasProps) {
   const worldCoords = [...tiles, ...frontierSlots];
   const planeSize = Math.max(22, worldCoords.length * 1.8);
@@ -64,7 +118,9 @@ function Stage3DBackdrop({ frontierSlots, tiles }: Stage3DCanvasProps) {
             position={[x, y, z]}
             radius={1}
             topColor={tileColors.top}
-          />
+          >
+            <TileSurfaceAccent tileType={tile.tileType} />
+          </HexPrismMesh3D>
         );
       })}
     </>

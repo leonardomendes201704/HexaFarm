@@ -1,5 +1,8 @@
+import type { ReactNode } from "react";
+
 type HexPrismMesh3DProps = {
   bodyColor: string;
+  children?: ReactNode;
   height?: number;
   opacity?: number;
   position: [number, number, number];
@@ -12,6 +15,7 @@ const DEFAULT_HEX_HEIGHT = 0.72;
 
 export function HexPrismMesh3D({
   bodyColor,
+  children,
   height = DEFAULT_HEX_HEIGHT,
   opacity = 1,
   position,
@@ -45,6 +49,8 @@ export function HexPrismMesh3D({
           transparent={opacity < 1}
         />
       </mesh>
+
+      {children}
     </group>
   );
 }

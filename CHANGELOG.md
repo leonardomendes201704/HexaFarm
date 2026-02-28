@@ -237,6 +237,42 @@ O stage 3D passou a espelhar os tiles e os slots de expansao reais da run atual.
 
 - esta entrada deve ser fechada com commit e push apos a validacao final desta task
 
+## 2026-02-28 - TASK-007 do PBI-048 concluida
+
+### Resumo
+
+Os tiles 3D passaram a ter variacoes de material e relevo por tipo de terreno.
+
+### Entregas realizadas
+
+- extensao do `HexPrismMesh3D` para composicao com elementos filhos
+- adicao de acentos de superficie por tipo de tile
+- melhora da leitura visual dos terrenos no stage 3D
+
+### Arquivos principais criados ou alterados
+
+- `src/components/HexPrismMesh3D.tsx`
+- `src/components/Stage3DCanvas.tsx`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/TASKS/DONE-TASK-007_APLICAR_MATERIAIS_E_VARIACOES_POR_TIPO_DE_TILE.md`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-048 - Migrar Stage Hexagonal para Renderizacao 3D Isometrica Real`
+- `TASK-007 - Aplicar Materiais e Variacoes por Tipo de Tile`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- o mapa 3D deve apresentar leitura material mais distinta entre os tipos de terreno
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta task
+
 ## 2026-02-28 - Planejamento do PBI-048 para migracao do stage para 3D isometrico real
 
 ### Resumo
