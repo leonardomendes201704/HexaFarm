@@ -143,6 +143,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-046`: remover badges redundantes de compra e descarte na mao
 - `PBI-047`: compensar centro vertical do stage com variavel ajustavel
 - `PBI-048`: migrar stage hexagonal para renderizacao 3d isometrica real
+- `PBI-049`: ajustar espessura dos tiles 3d
 
 ## Convencao de Nomes
 

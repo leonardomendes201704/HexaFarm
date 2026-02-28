@@ -18,6 +18,43 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-049 concluido
+
+### Resumo
+
+As meshes dos tiles 3D do stage foram afinadas para cerca de um terco da espessura anterior.
+
+### Entregas realizadas
+
+- introducao de uma escala explicita de espessura para o stage 3D
+- reducao proporcional da altura dos tiles ocupados, da base e dos slots
+- reposicionamento dos detalhes de superficie e dos props de cultivo para acompanhar a nova altura
+
+### Arquivos principais criados ou alterados
+
+- `src/components/HexPrismMesh3D.tsx`
+- `src/components/Stage3DCanvas.tsx`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-049_AJUSTAR_ESPESSURA_DOS_TILES_3D/*`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-049 - Ajustar Espessura dos Tiles 3D`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- o stage 3D passa a exibir tiles visivelmente mais finos
+- os detalhes continuam assentados sobre a malha sem perder leitura
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - TASK-001 do PBI-048 concluida
 
 ### Resumo

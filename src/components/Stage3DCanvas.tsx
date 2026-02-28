@@ -11,6 +11,12 @@ const STAGE_3D_CAMERA_LOOK_AT: [number, number, number] = [0, -0.5, 0];
 const STAGE_3D_CAMERA_ZOOM = 92;
 const STAGE_3D_PAN_SCALE = 0.012;
 const STAGE_3D_REDUCED_DETAIL_THRESHOLD = 28;
+const STAGE_3D_TILE_THICKNESS_SCALE = 1 / 3;
+const STAGE_3D_TILE_HEIGHT_STANDARD = 0.72 * STAGE_3D_TILE_THICKNESS_SCALE;
+const STAGE_3D_TILE_HEIGHT_HOME = 0.82 * STAGE_3D_TILE_THICKNESS_SCALE;
+const STAGE_3D_SLOT_HEIGHT = 0.22 * STAGE_3D_TILE_THICKNESS_SCALE;
+const STAGE_3D_TILE_TOP_Y = STAGE_3D_TILE_HEIGHT_STANDARD;
+const STAGE_3D_HOME_TOP_Y = STAGE_3D_TILE_HEIGHT_HOME;
 
 type Stage3DCanvasProps = {
   cropArmed: boolean;
@@ -37,19 +43,19 @@ function TileSurfaceAccent({ tileType }: { tileType: PrototypeTileType }) {
   switch (tileType) {
     case "field":
       return (
-        <mesh position={[0, 0.66, 0]}>
-          <cylinderGeometry args={[0.46, 0.58, 0.14, 10]} />
+        <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.02, 0]}>
+          <cylinderGeometry args={[0.46, 0.58, 0.06, 10]} />
           <meshStandardMaterial color="#7ac86a" roughness={0.86} />
         </mesh>
       );
     case "garden":
       return (
         <>
-          <mesh position={[0, 0.66, 0]}>
-            <cylinderGeometry args={[0.42, 0.54, 0.14, 10]} />
+          <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.02, 0]}>
+            <cylinderGeometry args={[0.42, 0.54, 0.06, 10]} />
             <meshStandardMaterial color="#f0b48f" roughness={0.82} />
           </mesh>
-          <mesh position={[0, 0.78, 0]}>
+          <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.08, 0]}>
             <sphereGeometry args={[0.12, 12, 12]} />
             <meshStandardMaterial color="#ffd8a8" roughness={0.5} />
           </mesh>
@@ -57,28 +63,28 @@ function TileSurfaceAccent({ tileType }: { tileType: PrototypeTileType }) {
       );
     case "pond":
       return (
-        <mesh position={[0, 0.63, 0]}>
-          <cylinderGeometry args={[0.5, 0.62, 0.12, 10]} />
+        <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.016, 0]}>
+          <cylinderGeometry args={[0.5, 0.62, 0.04, 10]} />
           <meshStandardMaterial color="#8fe2ff" metalness={0.12} roughness={0.22} />
         </mesh>
       );
     case "wild":
       return (
         <>
-          <mesh position={[-0.18, 0.7, -0.08]}>
-            <cylinderGeometry args={[0.12, 0.18, 0.32, 6]} />
+          <mesh position={[-0.18, STAGE_3D_TILE_TOP_Y + 0.06, -0.08]}>
+            <cylinderGeometry args={[0.12, 0.18, 0.12, 6]} />
             <meshStandardMaterial color="#93b46e" roughness={0.72} />
           </mesh>
-          <mesh position={[0.16, 0.67, 0.1]}>
-            <cylinderGeometry args={[0.1, 0.16, 0.26, 6]} />
+          <mesh position={[0.16, STAGE_3D_TILE_TOP_Y + 0.05, 0.1]}>
+            <cylinderGeometry args={[0.1, 0.16, 0.1, 6]} />
             <meshStandardMaterial color="#89a865" roughness={0.74} />
           </mesh>
         </>
       );
     case "home":
       return (
-        <mesh position={[0, 0.78, 0]}>
-          <cylinderGeometry args={[0.22, 0.28, 0.26, 8]} />
+        <mesh position={[0, STAGE_3D_HOME_TOP_Y + 0.05, 0]}>
+          <cylinderGeometry args={[0.22, 0.28, 0.12, 8]} />
           <meshStandardMaterial color="#f6d9b9" roughness={0.52} />
         </mesh>
       );
@@ -96,16 +102,16 @@ function CropProp3D({ cropName }: { cropName: string | null }) {
     case "Milho":
       return (
         <>
-          <mesh position={[-0.1, 0.9, 0]}>
-            <cylinderGeometry args={[0.05, 0.07, 0.34, 6]} />
+          <mesh position={[-0.1, STAGE_3D_TILE_TOP_Y + 0.1, 0]}>
+            <cylinderGeometry args={[0.05, 0.07, 0.18, 6]} />
             <meshStandardMaterial color="#6cb25d" roughness={0.76} />
           </mesh>
-          <mesh position={[-0.1, 1.08, 0]}>
+          <mesh position={[-0.1, STAGE_3D_TILE_TOP_Y + 0.2, 0]}>
             <sphereGeometry args={[0.1, 10, 10]} />
             <meshStandardMaterial color="#ffd468" roughness={0.42} />
           </mesh>
-          <mesh position={[0.14, 0.84, -0.06]} rotation={[0, 0, 0.2]}>
-            <cylinderGeometry args={[0.04, 0.06, 0.24, 6]} />
+          <mesh position={[0.14, STAGE_3D_TILE_TOP_Y + 0.08, -0.06]} rotation={[0, 0, 0.2]}>
+            <cylinderGeometry args={[0.04, 0.06, 0.14, 6]} />
             <meshStandardMaterial color="#72bc61" roughness={0.78} />
           </mesh>
         </>
@@ -113,11 +119,11 @@ function CropProp3D({ cropName }: { cropName: string | null }) {
     case "Abobora":
       return (
         <>
-          <mesh position={[0, 0.92, 0]}>
-            <sphereGeometry args={[0.18, 14, 14]} />
+          <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.1, 0]}>
+            <sphereGeometry args={[0.14, 14, 14]} />
             <meshStandardMaterial color="#f49a3b" roughness={0.5} />
           </mesh>
-          <mesh position={[0, 1.08, 0]}>
+          <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.2, 0]}>
             <cylinderGeometry args={[0.03, 0.04, 0.12, 6]} />
             <meshStandardMaterial color="#6b9b4f" roughness={0.72} />
           </mesh>
@@ -126,23 +132,23 @@ function CropProp3D({ cropName }: { cropName: string | null }) {
     case "Tomate":
       return (
         <>
-          <mesh position={[0, 0.95, 0]}>
-            <cylinderGeometry args={[0.04, 0.06, 0.28, 6]} />
+          <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.11, 0]}>
+            <cylinderGeometry args={[0.04, 0.06, 0.18, 6]} />
             <meshStandardMaterial color="#62a35c" roughness={0.76} />
           </mesh>
-          <mesh position={[-0.1, 0.84, 0.08]}>
-            <sphereGeometry args={[0.1, 12, 12]} />
+          <mesh position={[-0.1, STAGE_3D_TILE_TOP_Y + 0.05, 0.08]}>
+            <sphereGeometry args={[0.08, 12, 12]} />
             <meshStandardMaterial color="#e95a4f" roughness={0.44} />
           </mesh>
-          <mesh position={[0.12, 0.86, -0.02]}>
-            <sphereGeometry args={[0.1, 12, 12]} />
+          <mesh position={[0.12, STAGE_3D_TILE_TOP_Y + 0.07, -0.02]}>
+            <sphereGeometry args={[0.08, 12, 12]} />
             <meshStandardMaterial color="#ef6a5d" roughness={0.42} />
           </mesh>
         </>
       );
     default:
       return (
-        <mesh position={[0, 0.92, 0]}>
+        <mesh position={[0, STAGE_3D_TILE_TOP_Y + 0.08, 0]}>
           <sphereGeometry args={[0.12, 12, 12]} />
           <meshStandardMaterial color="#fff2c2" roughness={0.4} />
         </mesh>
@@ -246,7 +252,7 @@ function Stage3DScene({
         return (
           <HexPrismMesh3D
             bodyColor="#e9d6b0"
-            height={0.22}
+            height={STAGE_3D_SLOT_HEIGHT}
             key={`slot-3d-${slot.q}-${slot.r}`}
             highlightColor={highlightColor}
             opacity={0.34}
@@ -295,7 +301,7 @@ function Stage3DScene({
         return (
           <HexPrismMesh3D
             bodyColor={tileColors.body}
-            height={tile.tileType === "home" ? 0.82 : 0.72}
+            height={tile.tileType === "home" ? STAGE_3D_TILE_HEIGHT_HOME : STAGE_3D_TILE_HEIGHT_STANDARD}
             highlightColor={highlightColor}
             key={`tile-3d-${tile.id}`}
             onClick={(event) => {

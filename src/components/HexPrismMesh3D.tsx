@@ -16,7 +16,7 @@ type HexPrismMesh3DProps = {
 };
 
 const DEFAULT_HEX_RADIUS = 1;
-const DEFAULT_HEX_HEIGHT = 0.72;
+const DEFAULT_HEX_HEIGHT = 0.24;
 
 export function HexPrismMesh3D({
   bodyColor,
@@ -33,7 +33,8 @@ export function HexPrismMesh3D({
 }: HexPrismMesh3DProps) {
   const [x, y, z] = position;
   const hexRotation: [number, number, number] = [0, Math.PI / 6, 0];
-  const plateauHeight = Math.max(height * 0.32, 0.14);
+  const plateauHeight = Math.max(height * 0.32, 0.04);
+  const highlightHeight = Math.max(height * 0.12, 0.02);
 
   return (
     <group
@@ -65,8 +66,8 @@ export function HexPrismMesh3D({
       </mesh>
 
       {highlightColor ? (
-        <mesh position={[0, height + 0.03, 0]} rotation={hexRotation}>
-          <cylinderGeometry args={[radius * 1.06, radius * 1.06, 0.08, 6]} />
+        <mesh position={[0, height + highlightHeight / 2, 0]} rotation={hexRotation}>
+          <cylinderGeometry args={[radius * 1.06, radius * 1.06, highlightHeight, 6]} />
           <meshStandardMaterial
             color={highlightColor}
             emissive={highlightColor}
