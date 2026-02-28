@@ -1736,7 +1736,7 @@ button:disabled {
   100% {
     opacity: 0;
     transform: translate(var(--coin-particle-x, 0px), var(--coin-particle-y, 0px))
-      rotate(calc(var(--coin-particle-rotation, 0deg) + 30deg))
+      rotate(calc(var(--coin-particle-rotation, 0deg) + 90deg))
       scale(var(--coin-particle-scale, 1));
   }
 }
@@ -1773,23 +1773,24 @@ button:disabled {
 }
 
 .day-coin-overlay__burst {
+  z-index: 0;
   width: 0;
   height: 0;
 }
 
 .day-coin-overlay__particle {
   position: absolute;
-  left: -9px;
-  top: -9px;
-  width: 18px;
-  height: 18px;
+  left: calc(var(--coin-particle-size, 18px) * -0.5);
+  top: calc(var(--coin-particle-size, 18px) * -0.5);
+  width: var(--coin-particle-size, 18px);
+  height: var(--coin-particle-size, 18px);
   border-radius: 50%;
   background:
     radial-gradient(circle at 30% 30%, #fff8c7, #f4c84f 58%, #d79218 100%);
   box-shadow:
-    0 0 16px rgba(255, 216, 108, 0.34),
+    0 0 22px rgba(255, 216, 108, 0.42),
     inset 0 1px 0 rgba(255, 251, 220, 0.84);
-  animation: day-coin-particle-burst 1s ease-out forwards;
+  animation: day-coin-particle-burst 1.28s cubic-bezier(0.14, 0.8, 0.2, 1) forwards;
 }
 
 .day-coin-overlay.is-negative .day-coin-overlay__particle {
@@ -1801,6 +1802,7 @@ button:disabled {
 }
 
 .day-coin-overlay__counter {
+  z-index: 2;
   display: grid;
   justify-items: center;
   gap: 8px;

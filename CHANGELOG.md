@@ -18,6 +18,47 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-066 concluido
+
+### Resumo
+
+A explosao global de moedas foi reforcada: as moedas ficaram maiores, passaram a sair de tras do card de contagem e agora se espalham por uma area muito maior da tela.
+
+### Entregas realizadas
+
+- aumento do raio de espalhamento com base no tamanho da viewport
+- aumento do numero maximo de particulas e do tamanho individual das moedas
+- definicao explicita da camada do burst atras do card de contagem
+- aumento da duracao e do impacto visual da animacao das particulas
+
+### Arquivos principais criados ou alterados
+
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-066_AMPLIAR_E_DESTACAR_A_EXPLOSAO_GLOBAL_DE_MOEDAS/*`
+
+### Vinculos de backlog
+
+- `EPICO-005 - Refinamento da Tela de Jogo e HUD`
+- `PBI-066 - Ampliar e Destacar a Explosao Global de Moedas`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- as moedas ficam visivelmente maiores
+- o burst se espalha por uma area muito maior da tela
+- as particulas passam a emergir de tras do card central e aparecer ao redor dele
+
+### Commit e push
+
+- registrados no encerramento desta entrega
+
+---
+
 ## 2026-02-28 - PBI-065 concluido
 
 ### Resumo

@@ -180,18 +180,26 @@ export function NewGameScreen() {
       return [];
     }
 
-    const particleCount = Math.max(8, Math.min(28, Math.abs(coinResolutionDelta) * 3));
+    const viewportWidth = typeof window === "undefined" ? 1440 : window.innerWidth;
+    const viewportHeight = typeof window === "undefined" ? 900 : window.innerHeight;
+    const spreadRadius = Math.min(viewportWidth, viewportHeight);
+    const particleCount = Math.max(14, Math.min(40, Math.abs(coinResolutionDelta) * 4));
 
     return Array.from({ length: particleCount }, (_, index) => {
       const angle = (Math.PI * 2 * index) / particleCount;
-      const distance = 54 + ((index * 11) % 66);
+      const distance =
+        spreadRadius * 0.26 +
+        (index % 5) * 36 +
+        ((index * 17) % Math.max(120, Math.round(spreadRadius * 0.12)));
+      const size = 24 + (index % 4) * 5;
 
       return {
         id: `coin-particle-${index}`,
         offsetX: Math.cos(angle) * distance,
         offsetY: Math.sin(angle) * distance,
         rotation: (index * 37) % 360,
-        scale: 0.76 + ((index % 5) * 0.08),
+        scale: 0.94 + ((index % 5) * 0.1),
+        size,
       };
     });
   }, [coinResolutionDelta]);
@@ -716,6 +724,7 @@ export function NewGameScreen() {
                   {
                     "--coin-particle-rotation": `${particle.rotation}deg`,
                     "--coin-particle-scale": particle.scale,
+                    "--coin-particle-size": `${particle.size}px`,
                     "--coin-particle-x": `${particle.offsetX}px`,
                     "--coin-particle-y": `${particle.offsetY}px`,
                   } as CSSProperties
