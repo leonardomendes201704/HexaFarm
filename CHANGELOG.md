@@ -18,6 +18,57 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-012 de ocultar a badge de tile selecionado
+
+### Resumo
+
+Foi removida da superficie principal a badge `Tile selecionado`, mantendo apenas a badge de `Carta armada` quando ela for relevante.
+
+### Entregas realizadas
+
+- criacao do `EPICO-011` e do backlog completo do `PBI-012`
+- remocao da renderizacao da badge `Tile selecionado`
+- preservacao da logica interna de selecao do mapa
+- manutencao da badge `Carta armada`
+- conclusao do `PBI-012` e do `EPICO-011`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-011_REFINAMENTO_DE_VISIBILIDADE_DO_HUD.md`
+- `BACKLOGS/PBIS/PBI-012_OCULTAR_BADGE_DE_TILE_SELECIONADO/DONE-PBI-012_OCULTAR_BADGE_DE_TILE_SELECIONADO.md`
+- `BACKLOGS/PBIS/PBI-012_OCULTAR_BADGE_DE_TILE_SELECIONADO/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-012_OCULTAR_BADGE_DE_TILE_SELECIONADO/TASKS/DONE-*`
+- `src/screens/NewGameScreen.tsx`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-011 - Refinamento de Visibilidade do HUD`
+- `PBI-012 - Ocultar Badge de Tile Selecionado`
+- `HISTORIA-001 - Reduzir Ruido Visual do HUD Contextual`
+
+### Tasks executadas
+
+- `TASK-001 - Remover Renderizacao da Badge de Tile Selecionado`
+- `TASK-002 - Manter Estado Interno de Selecao Intacto`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da ausencia da badge na tela principal
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- a badge `Tile selecionado` nao aparece mais
+- a badge `Carta armada` continua aparecendo quando aplicavel
+- a selecao de tiles continua funcionando para o mapa
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-012` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-011 de pan do stage e rodape fixo da mao
 
 ### Resumo

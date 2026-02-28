@@ -8,7 +8,6 @@ import {
   createExpandedTile,
   createInitialPrototypeTiles,
   getFrontierSlots,
-  getTileLabel,
   type HexCoord,
   type HexTile,
 } from "../lib/hexGrid";
@@ -66,7 +65,6 @@ export function NewGameScreen() {
 
   const collectionCards = useMemo(() => getCardLibrary(), []);
   const frontierSlots = getFrontierSlots(tiles);
-  const selectedTile = tiles.find((tile) => tile.id === selectedTileId) ?? tiles[0] ?? null;
   const armedCard = deckState.hand.find((card) => card.instanceId === armedCardId) ?? null;
 
   if (!savedRun) {
@@ -303,13 +301,6 @@ export function NewGameScreen() {
             <div className="status-orb status-orb--active">
               <span className="status-orb__label">Carta armada</span>
               <strong className="status-orb__value">{armedCard.name}</strong>
-            </div>
-          ) : selectedTile ? (
-            <div className="status-orb">
-              <span className="status-orb__label">Tile selecionado</span>
-              <strong className="status-orb__value">
-                {getTileLabel(selectedTile.tileType)} ({selectedTile.q}, {selectedTile.r})
-              </strong>
             </div>
           ) : null}
 
