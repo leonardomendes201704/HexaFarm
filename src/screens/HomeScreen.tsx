@@ -86,22 +86,14 @@ export function HomeScreen() {
   };
 
   const canContinue = savedRun !== null;
-  const feedbackMessage = savedRun
-    ? `Save em fase ${savedRun.activeRun.phase}, dia ${savedRun.activeRun.day}/${savedRun.activeRun.runLengthDays}. Aluguel atual: ${savedRun.activeRun.rentDue}.`
-    : "Nenhum save ativo. Use Novo Jogo para criar a primeira run persistida no navegador.";
-  const saveSummaryLabel = savedRun
-    ? `Perfil ${savedRun.profileName} | ${savedRun.activeRun.resources.coins} moedas | Loja ${savedRun.meta.collectionCoins}`
-    : null;
 
   return (
     <>
       <TitleScreen
         canContinue={canContinue}
-        feedbackMessage={feedbackMessage}
         onContinue={handleContinue}
         onNewGame={handleNewGame}
         onOpenOptions={handleOpenOptions}
-        saveSummaryLabel={saveSummaryLabel}
       />
 
       {isWelcomeModalOpen ? (

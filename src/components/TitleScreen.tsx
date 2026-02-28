@@ -2,20 +2,16 @@ import menuBackgroundImage from "../assets/background-menu-hexafarm.png";
 
 type TitleScreenProps = {
   canContinue: boolean;
-  feedbackMessage: string;
   onContinue: () => void;
   onNewGame: () => void;
   onOpenOptions: () => void;
-  saveSummaryLabel: string | null;
 };
 
 export function TitleScreen({
   canContinue,
-  feedbackMessage,
   onContinue,
   onNewGame,
   onOpenOptions,
-  saveSummaryLabel,
 }: TitleScreenProps) {
   return (
     <div className="screen-shell">
@@ -36,13 +32,6 @@ export function TitleScreen({
               Expanda uma fazenda hexagonal, compre cartas, cultive afinidades e construa uma run
               acolhedora tile por tile.
             </p>
-
-            <div className="hero-panel__highlights">
-              <span>Hexagonal</span>
-              <span>Isometrico</span>
-              <span>Cozy</span>
-              <span>Browser-first</span>
-            </div>
           </div>
         </section>
 
@@ -72,12 +61,6 @@ export function TitleScreen({
               Opcoes
             </button>
           </div>
-
-          <p className="menu-panel__feedback" role="status">
-            {feedbackMessage}
-          </p>
-
-          {saveSummaryLabel ? <p className="menu-panel__save-summary">{saveSummaryLabel}</p> : null}
 
           <div className="menu-panel__footer">
             <span>PBI-001 concluido</span>

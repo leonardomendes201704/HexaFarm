@@ -81,6 +81,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `EPICO-021`: audio de ambientacao da home
 - `EPICO-022`: imersao no fechamento do modal inicial
 - `EPICO-023`: ajuste de volume da trilha da home
+- `EPICO-024`: limpeza de informacao da home
 - `PBI-001`: tela inicial do jogo HexaFarm
 - `PBI-002`: estrutura base de navegacao entre telas
 - `PBI-003`: sistema minimo de save local
@@ -105,6 +106,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-022`: adicionar BGM no menu com modal de boas-vindas
 - `PBI-023`: entrar em fullscreen ao fechar modal de boas-vindas
 - `PBI-024`: ajustar volume padrao do BGM da home
+- `PBI-025`: remover info redundante da home
 
 ## Convencao de Nomes
 

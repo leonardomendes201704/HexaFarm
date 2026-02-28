@@ -18,6 +18,59 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-025 de remocao de informacao redundante da home
+
+### Resumo
+
+Foram removidos da home o feedback detalhado de save, o resumo de perfil/loja e os chips descritivos do card esquerdo.
+
+### Entregas realizadas
+
+- criacao do `EPICO-024` e do backlog completo do `PBI-025`
+- remocao dos chips `Hexagonal`, `Isometrico`, `Cozy` e `Browser-first`
+- remocao do texto detalhado de estado do save na home
+- remocao do resumo de perfil, moedas e loja na home
+- simplificacao das props entre `HomeScreen` e `TitleScreen`
+- conclusao do `PBI-025` e do `EPICO-024`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-024_LIMPEZA_DE_INFORMACAO_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-025_REMOVER_INFO_REDUNDANTE_DA_HOME/DONE-PBI-025_REMOVER_INFO_REDUNDANTE_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-025_REMOVER_INFO_REDUNDANTE_DA_HOME/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-025_REMOVER_INFO_REDUNDANTE_DA_HOME/TASKS/DONE-*`
+- `src/components/TitleScreen.tsx`
+- `src/screens/HomeScreen.tsx`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-024 - Limpeza de Informacao da Home`
+- `PBI-025 - Remover Info Redundante da Home`
+- `HISTORIA-001 - Remover Elementos Textuais Secundarios da Home`
+
+### Tasks executadas
+
+- `TASK-001 - Remover Chips Descritivos do Card Hero`
+- `TASK-002 - Remover Feedback Detalhado de Save do Menu`
+- `TASK-003 - Simplificar Props da Home e da TitleScreen`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da home mais limpa e direta
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- a home nao exibe mais informacoes detalhadas de save
+- os chips descritivos tambem nao aparecem mais
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-025` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-024 de ajuste do volume padrao do BGM da home
 
 ### Resumo
