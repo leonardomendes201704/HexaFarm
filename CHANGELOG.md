@@ -18,6 +18,51 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-041 de artes iniciais e componentizacao das cartas da grade
+
+### Resumo
+
+As cartas `Jardim Macio`, `Canal Raso` e `Trilha Selvagem` passaram a usar artes reais, e a renderizacao das cartas da colecao/loja foi extraida para um componente reutilizavel.
+
+### Entregas realizadas
+
+- criacao do backlog do `PBI-041`, vinculado ao `EPICO-032`
+- copia dos assets `card-jardim-macio.png`, `card-canal-raso.png` e `card-trilha-selvagem.png` para `src/assets/cards/`
+- vinculacao das novas artes no catalogo de cartas
+- criacao do componente reutilizavel `CollectionCard`
+- refatoracao da grade de montagem de baralho para usar `CollectionCard`
+- refatoracao da loja para usar `CollectionCard`
+- conclusao do `PBI-041`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-041_APLICAR_ARTES_NAS_CARTAS_INICIAIS_E_COMPONENTIZAR_CARTAS_DA_GRADE/DONE-PBI-041_APLICAR_ARTES_NAS_CARTAS_INICIAIS_E_COMPONENTIZAR_CARTAS_DA_GRADE.md`
+- `src/assets/cards/card-jardim-macio.png`
+- `src/assets/cards/card-canal-raso.png`
+- `src/assets/cards/card-trilha-selvagem.png`
+- `src/components/CollectionCard.tsx`
+- `src/lib/prototypeDeck.ts`
+- `src/screens/NewGameScreen.tsx`
+
+### Vinculos de backlog
+
+- `EPICO-032 - Integracao de Artes Reais nas Cartas`
+- `PBI-041 - Aplicar Artes nas Cartas Iniciais e Componentizar Cartas da Grade`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- build deve concluir com sucesso
+- as tres cartas devem exibir as artes reais nas superficies da grade e na mao
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - Implementacao do PBI-040 de integracao da arte real da carta Abrir Clareira
 
 ### Resumo

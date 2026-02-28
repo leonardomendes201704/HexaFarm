@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
+import { CollectionCard } from "../components/CollectionCard";
 import { ExpansionHand } from "../components/ExpansionHand";
-import { CardTooltip } from "../components/CardTooltip";
 import { GameModal } from "../components/GameModal";
 import { HexMapPrototype, type TileYieldBurst } from "../components/HexMapPrototype";
 import { SaveSummaryCard } from "../components/SaveSummaryCard";
@@ -437,63 +437,35 @@ export function NewGameScreen() {
                 const canAddMore = selectedDeckCount < DECK_SIZE && selectedQuantity < ownedQuantity;
 
                 return (
-                  <article
-                    className={`collection-card collection-card--${card.tileType} ${
-                      ownedQuantity === 0 ? "is-locked" : ""
-                    }`}
+                  <CollectionCard
+                    actions={
+                      <div className="collection-card__actions">
+                        <button
+                          className="collection-card__button"
+                          disabled={selectedQuantity === 0}
+                          onClick={() => handleRemoveDeckCard(card.id)}
+                          type="button"
+                        >
+                          -
+                        </button>
+                        <button
+                          className="collection-card__button collection-card__button--primary"
+                          disabled={!canAddMore}
+                          onClick={() => handleAddDeckCard(card.id)}
+                          type="button"
+                        >
+                          +
+                        </button>
+                      </div>
+                    }
+                    card={card}
                     key={card.id}
-                  >
-                    <div className={`collection-card__art collection-card__art--${card.tileType}`}>
-                      {card.artAssetPath ? (
-                        <img
-                          alt=""
-                          aria-hidden="true"
-                          className="collection-card__art-image"
-                          src={card.artAssetPath}
-                        />
-                      ) : null}
-                      <span className="collection-card__cost">{card.energyCost}</span>
-                      <span
-                        className={`collection-card__yield ${
-                          card.coinYield < 0 ? "is-negative" : "is-positive"
-                        }`}
-                      >
-                        {card.coinYield >= 0 ? "+" : ""}
-                        {card.coinYield}/dia
-                      </span>
-                    </div>
-
-                    <div className="collection-card__copy">
-                      <strong className="collection-card__title">{card.name}</strong>
-                      <span className="collection-card__meta">
-                        Possui {ownedQuantity} | No deck {selectedQuantity}
-                      </span>
-                      <span className="collection-card__meta">
-                        Rendimento {card.coinYield >= 0 ? "+" : ""}
-                        {card.coinYield}/dia
-                      </span>
-                    </div>
-
-                    <div className="collection-card__actions">
-                      <button
-                        className="collection-card__button"
-                        disabled={selectedQuantity === 0}
-                        onClick={() => handleRemoveDeckCard(card.id)}
-                        type="button"
-                      >
-                        -
-                      </button>
-                      <button
-                        className="collection-card__button collection-card__button--primary"
-                        disabled={!canAddMore}
-                        onClick={() => handleAddDeckCard(card.id)}
-                        type="button"
-                      >
-                        +
-                      </button>
-                    </div>
-                    <CardTooltip card={card} placement="side-auto" />
-                  </article>
+                    locked={ownedQuantity === 0}
+                    metaLines={[
+                      `Possui ${ownedQuantity} | No deck ${selectedQuantity}`,
+                      `Rendimento ${card.coinYield >= 0 ? "+" : ""}${card.coinYield}/dia`,
+                    ]}
+                  />
                 );
               })}
             </div>
@@ -539,48 +511,24 @@ export function NewGameScreen() {
                 const ownedQuantity = getOwnedQuantity(savedRun.meta.ownedCards, card.id);
 
                 return (
-                  <article className={`collection-card collection-card--${card.tileType}`} key={`shop-${card.id}`}>
-                    <div className={`collection-card__art collection-card__art--${card.tileType}`}>
-                      {card.artAssetPath ? (
-                        <img
-                          alt=""
-                          aria-hidden="true"
-                          className="collection-card__art-image"
-                          src={card.artAssetPath}
-                        />
-                      ) : null}
-                      <span className="collection-card__cost">{card.energyCost}</span>
-                      <span
-                        className={`collection-card__yield ${
-                          card.coinYield < 0 ? "is-negative" : "is-positive"
-                        }`}
+                  <CollectionCard
+                    actions={
+                      <button
+                        className="collection-card__button collection-card__button--primary"
+                        disabled={!canBuy}
+                        onClick={() => handleBuyCard(card.id)}
+                        type="button"
                       >
-                        {card.coinYield >= 0 ? "+" : ""}
-                        {card.coinYield}/dia
-                      </span>
-                    </div>
-
-                    <div className="collection-card__copy">
-                      <strong className="collection-card__title">{card.name}</strong>
-                      <span className="collection-card__meta">
-                        Preco {card.purchaseCost} | Possui {ownedQuantity}
-                      </span>
-                      <span className="collection-card__meta">
-                        Rendimento {card.coinYield >= 0 ? "+" : ""}
-                        {card.coinYield}/dia
-                      </span>
-                    </div>
-
-                    <button
-                      className="collection-card__button collection-card__button--primary"
-                      disabled={!canBuy}
-                      onClick={() => handleBuyCard(card.id)}
-                      type="button"
-                    >
-                      Comprar
-                    </button>
-                    <CardTooltip card={card} placement="side-auto" />
-                  </article>
+                        Comprar
+                      </button>
+                    }
+                    card={card}
+                    key={`shop-${card.id}`}
+                    metaLines={[
+                      `Preco ${card.purchaseCost} | Possui ${ownedQuantity}`,
+                      `Rendimento ${card.coinYield >= 0 ? "+" : ""}${card.coinYield}/dia`,
+                    ]}
+                  />
                 );
               })}
             </div>

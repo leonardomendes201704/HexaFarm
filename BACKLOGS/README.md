@@ -130,6 +130,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-038`: regras laterais para tooltips das cartas da grade
 - `PBI-039`: refinar cores do tooltip das cartas
 - `PBI-040`: aplicar arte real na carta Abrir Clareira
+- `PBI-041`: aplicar artes nas cartas iniciais e componentizar cartas da grade
 
 ## Convencao de Nomes
 

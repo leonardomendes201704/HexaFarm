@@ -1,4 +1,7 @@
 import cardAbrirClareiraArt from "../assets/cards/card-abrir-clareira.png";
+import cardCanalRasoArt from "../assets/cards/card-canal-raso.png";
+import cardJardimMacioArt from "../assets/cards/card-jardim-macio.png";
+import cardTrilhaSelvagemArt from "../assets/cards/card-trilha-selvagem.png";
 import type { ExpansionTileType } from "./hexGrid";
 
 export const DECK_SIZE = 24;
@@ -43,7 +46,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "field",
   },
   {
-    artAssetPath: null,
+    artAssetPath: cardJardimMacioArt,
     coinYield: 1,
     description:
       "Cria um jardim acolhedor e barato. Serve para expandir com seguranca e manter lucro positivo desde cedo.",
@@ -54,7 +57,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "garden",
   },
   {
-    artAssetPath: null,
+    artAssetPath: cardCanalRasoArt,
     coinYield: -1,
     description:
       "Abre um lago raso na borda. Ele custa manutencao diaria, mas prepara espaco para uma malha de agua e futuras sinergias.",
@@ -65,7 +68,7 @@ const CARD_LIBRARY: CardDefinition[] = [
     tileType: "pond",
   },
   {
-    artAssetPath: null,
+    artAssetPath: cardTrilhaSelvagemArt,
     coinYield: 1,
     description:
       "Expande a fronteira com um bosque leve. Boa carta de preenchimento para crescer o mapa sem travar sua energia.",
