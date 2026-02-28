@@ -31,7 +31,8 @@ export type PrototypeDeckState = {
 const CARD_LIBRARY: CardDefinition[] = [
   {
     coinYield: 2,
-    description: "Cria um campo basico para expandir sua producao inicial.",
+    description:
+      "Abre um campo simples e confiavel. Excelente para comecar a run com renda estavel sem gastar muita energia.",
     energyCost: 1,
     id: "card-field-01",
     name: "Abrir Clareira",
@@ -40,7 +41,8 @@ const CARD_LIBRARY: CardDefinition[] = [
   },
   {
     coinYield: 1,
-    description: "Adiciona um jardim acolhedor e aumenta a afinidade visual da run.",
+    description:
+      "Cria um jardim acolhedor e barato. Serve para expandir com seguranca e manter lucro positivo desde cedo.",
     energyCost: 1,
     id: "card-garden-01",
     name: "Jardim Macio",
@@ -49,7 +51,8 @@ const CARD_LIBRARY: CardDefinition[] = [
   },
   {
     coinYield: -1,
-    description: "Abre um lago raso para apoiar irrigacao e rotas futuras.",
+    description:
+      "Abre um lago raso na borda. Ele custa manutencao diaria, mas prepara espaco para uma malha de agua e futuras sinergias.",
     energyCost: 2,
     id: "card-pond-01",
     name: "Canal Raso",
@@ -58,7 +61,8 @@ const CARD_LIBRARY: CardDefinition[] = [
   },
   {
     coinYield: 1,
-    description: "Expande a borda com um bosque leve e utilitario.",
+    description:
+      "Expande a fronteira com um bosque leve. Boa carta de preenchimento para crescer o mapa sem travar sua energia.",
     energyCost: 1,
     id: "card-wild-01",
     name: "Trilha Selvagem",
@@ -67,7 +71,8 @@ const CARD_LIBRARY: CardDefinition[] = [
   },
   {
     coinYield: 3,
-    description: "Adiciona mais espaco fertil para cultivar cedo.",
+    description:
+      "Abre um lote de campo mais rentavel. Custa mais energia, mas acelera a corrida por moedas e ajuda no aluguel.",
     energyCost: 2,
     id: "card-field-02",
     name: "Lote Fertil",
@@ -76,7 +81,8 @@ const CARD_LIBRARY: CardDefinition[] = [
   },
   {
     coinYield: 2,
-    description: "Transforma a borda em uma area floral mais charmosa.",
+    description:
+      "Transforma a borda em um canteiro mais lucrativo. Uma melhora natural para runs que querem valor constante.",
     energyCost: 1,
     id: "card-garden-02",
     name: "Canteiro Fofo",
@@ -85,7 +91,8 @@ const CARD_LIBRARY: CardDefinition[] = [
   },
   {
     coinYield: 1,
-    description: "Cria um lago mais amplo, caro mas muito eficiente.",
+    description:
+      "Cria um lago mais amplo e refinado. E mais caro de jogar, mas ja se paga melhor que os lagos iniciais.",
     energyCost: 2,
     id: "card-pond-02",
     name: "Lago Espelhado",
@@ -94,7 +101,8 @@ const CARD_LIBRARY: CardDefinition[] = [
   },
   {
     coinYield: 2,
-    description: "Expansao silvestre rara, util para runs longas.",
+    description:
+      "Ergue um bosque valioso na borda. Brilha em runs mais longas, quando expandir sem perder rendimento faz diferenca.",
     energyCost: 2,
     id: "card-wild-02",
     name: "Bosque Dourado",
@@ -103,7 +111,8 @@ const CARD_LIBRARY: CardDefinition[] = [
   },
   {
     coinYield: 1,
-    description: "Campo barato para acelerar curvas de abertura.",
+    description:
+      "Adiciona um campo enxuto e barato. Ideal para fechar o deck com cartas leves e manter a curva de energia suave.",
     energyCost: 1,
     id: "card-field-03",
     name: "Terra Solta",
@@ -112,7 +121,8 @@ const CARD_LIBRARY: CardDefinition[] = [
   },
   {
     coinYield: 4,
-    description: "Jardim premium, perfeito para runs de valor.",
+    description:
+      "Planta um jardim premium de alto retorno. Uma carta de valor para quem quer explodir renda no meio e fim da run.",
     energyCost: 2,
     id: "card-garden-03",
     name: "Pomar Cute",

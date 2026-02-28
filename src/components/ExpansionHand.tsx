@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { CardTooltip } from "./CardTooltip";
 import { getTileLabel } from "../lib/hexGrid";
 import { getCoinYieldLabel, type ExpansionCard } from "../lib/prototypeDeck";
 
@@ -64,7 +65,6 @@ export function ExpansionHand({
                     "--card-vertical-offset": `${verticalLift}px`,
                   } as CSSProperties
                 }
-                title={card.description}
                 type="button"
               >
                 <span className="expansion-card__frame">
@@ -92,6 +92,7 @@ export function ExpansionHand({
                     </span>
                   </span>
                 </span>
+                <CardTooltip card={card} />
               </button>
             );
           })}

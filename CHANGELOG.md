@@ -18,6 +18,63 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-035 de tooltip estilizado com explicacao nas cartas
+
+### Resumo
+
+As cartas agora exibem um tooltip em formato de card estilizado ao passar o mouse, com explicacoes mais claras sobre o papel de cada carta.
+
+### Entregas realizadas
+
+- criacao do `EPICO-030` e do backlog completo do `PBI-035`
+- revisao das descricoes do catalogo de cartas
+- criacao do componente reutilizavel `CardTooltip`
+- adicao do tooltip nas cartas da mao
+- adicao do tooltip nas cartas da colecao
+- adicao do tooltip nas cartas da loja
+- conclusao do `PBI-035` e do `EPICO-030`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-030_FEEDBACK_INFORMATIVO_DAS_CARTAS.md`
+- `BACKLOGS/PBIS/PBI-035_ADICIONAR_TOOLTIP_ESTILIZADO_COM_EXPLICACAO_NAS_CARTAS/DONE-PBI-035_ADICIONAR_TOOLTIP_ESTILIZADO_COM_EXPLICACAO_NAS_CARTAS.md`
+- `BACKLOGS/PBIS/PBI-035_ADICIONAR_TOOLTIP_ESTILIZADO_COM_EXPLICACAO_NAS_CARTAS/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-035_ADICIONAR_TOOLTIP_ESTILIZADO_COM_EXPLICACAO_NAS_CARTAS/TASKS/DONE-*`
+- `src/components/CardTooltip.tsx`
+- `src/components/ExpansionHand.tsx`
+- `src/lib/prototypeDeck.ts`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-030 - Feedback Informativo das Cartas`
+- `PBI-035 - Adicionar Tooltip Estilizado com Explicacao nas Cartas`
+- `HISTORIA-001 - Exibir Explicacoes de Carta em Hover`
+
+### Tasks executadas
+
+- `TASK-001 - Revisar as Explicacoes Individuais do Catalogo de Cartas`
+- `TASK-002 - Criar um Componente de Tooltip Estilizado para Cartas`
+- `TASK-003 - Aplicar o Tooltip nas Cartas da Mao, Colecao e Loja`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual do hover das cartas nos principais contextos
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- cartas passaram a explicar melhor o proprio papel
+- tooltip estilizado aparece ao hover
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-035` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-034 de limpeza e fixacao da modal de montagem de baralho
 
 ### Resumo

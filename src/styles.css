@@ -909,6 +909,13 @@ button:disabled {
   z-index: 3;
 }
 
+.expansion-card:hover .card-tooltip,
+.expansion-card:focus-visible .card-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
 .expansion-card.is-selected {
   z-index: 4;
   transform: translateY(calc(var(--card-vertical-offset, 0) - 22px))
@@ -1193,6 +1200,88 @@ button:disabled {
   color: rgba(111, 75, 46, 0.88);
   font-size: 0.74rem;
   font-weight: 800;
+}
+
+.card-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 14px);
+  z-index: 12;
+  display: grid;
+  gap: 6px;
+  width: min(300px, calc(100vw - 48px));
+  border: 1px solid rgba(186, 145, 95, 0.44);
+  border-radius: 22px;
+  padding: 14px 16px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 241, 210, 0.78), transparent 34%),
+    linear-gradient(180deg, rgba(255, 252, 245, 0.98), rgba(255, 242, 224, 0.96));
+  box-shadow:
+    0 22px 34px rgba(48, 31, 24, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  text-align: left;
+  transform: translate(-50%, 12px);
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease,
+    visibility 0.18s ease;
+}
+
+.card-tooltip::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  border-right: 1px solid rgba(186, 145, 95, 0.44);
+  border-bottom: 1px solid rgba(186, 145, 95, 0.44);
+  background: rgba(255, 245, 229, 0.98);
+  content: "";
+  transform: translate(-50%, -8px) rotate(45deg);
+}
+
+.card-tooltip__eyebrow {
+  color: #9a6535;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.card-tooltip__title {
+  color: #5e3418;
+  font-size: 0.98rem;
+}
+
+.card-tooltip__text,
+.card-tooltip__effect {
+  color: rgba(101, 65, 38, 0.9);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.card-tooltip__effect {
+  color: rgba(118, 76, 43, 0.86);
+}
+
+.card-tooltip__yield {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: rgba(104, 184, 119, 0.14);
+  color: #377246;
+  font-size: 0.74rem;
+  font-weight: 900;
+}
+
+.card-tooltip__yield.is-negative {
+  background: rgba(226, 133, 106, 0.14);
+  color: #974638;
 }
 
 .hex-board {
@@ -1844,6 +1933,7 @@ button:disabled {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 14px;
+  padding-bottom: 24px;
 }
 
 .builder-panel--deck .collection-grid {
@@ -1854,6 +1944,7 @@ button:disabled {
 }
 
 .collection-card {
+  position: relative;
   display: grid;
   gap: 12px;
   border-radius: 24px;
@@ -1864,6 +1955,33 @@ button:disabled {
   box-shadow:
     0 18px 28px rgba(61, 43, 34, 0.12),
     inset 0 0 0 1px rgba(172, 127, 77, 0.12);
+}
+
+.collection-card:hover,
+.collection-card:focus-within {
+  z-index: 3;
+}
+
+.collection-card .card-tooltip {
+  top: calc(100% + 14px);
+  bottom: auto;
+}
+
+.collection-card .card-tooltip::after {
+  top: auto;
+  bottom: 100%;
+  border-top: 1px solid rgba(186, 145, 95, 0.44);
+  border-left: 1px solid rgba(186, 145, 95, 0.44);
+  border-right: 0;
+  border-bottom: 0;
+  transform: translate(-50%, 8px) rotate(45deg);
+}
+
+.collection-card:hover .card-tooltip,
+.collection-card:focus-within .card-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
 }
 
 .collection-card.is-locked {

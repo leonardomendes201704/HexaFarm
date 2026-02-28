@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { ExpansionHand } from "../components/ExpansionHand";
+import { CardTooltip } from "../components/CardTooltip";
 import { GameModal } from "../components/GameModal";
 import { HexMapPrototype, type TileYieldBurst } from "../components/HexMapPrototype";
 import { SaveSummaryCard } from "../components/SaveSummaryCard";
@@ -483,6 +484,7 @@ export function NewGameScreen() {
                         +
                       </button>
                     </div>
+                    <CardTooltip card={card} />
                   </article>
                 );
               })}
@@ -561,6 +563,7 @@ export function NewGameScreen() {
                     >
                       Comprar
                     </button>
+                    <CardTooltip card={card} />
                   </article>
                 );
               })}
