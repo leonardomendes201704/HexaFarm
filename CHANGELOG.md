@@ -18,6 +18,64 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-014 de animacao de moedas no fim do dia
+
+### Resumo
+
+Foi adicionado um feedback visual de coleta no fechamento do dia: cada tile com rendimento agora exibe moedas subindo no mapa, e so depois o saldo de moedas da run e atualizado.
+
+### Entregas realizadas
+
+- criacao do `EPICO-013` e do backlog completo do `PBI-014`
+- renderizacao de bursts de moedas por tile com rendimento diferente de zero
+- adicao de animacao visual para ganhos e perdas diarias
+- sincronizacao do `Fim do Dia` para aplicar o saldo somente apos a animacao
+- bloqueio temporario das interacoes principais da run durante a resolucao visual
+- atualizacao da dica de ajuda para refletir a nova leitura do fechamento do dia
+- conclusao do `PBI-014` e do `EPICO-013`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-013_FEEDBACK_VISUAL_DE_COLETA_NO_FIM_DO_DIA.md`
+- `BACKLOGS/PBIS/PBI-014_ANIMAR_MOEDAS_DE_RENDIMENTO_NO_FIM_DO_DIA/DONE-PBI-014_ANIMAR_MOEDAS_DE_RENDIMENTO_NO_FIM_DO_DIA.md`
+- `BACKLOGS/PBIS/PBI-014_ANIMAR_MOEDAS_DE_RENDIMENTO_NO_FIM_DO_DIA/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-014_ANIMAR_MOEDAS_DE_RENDIMENTO_NO_FIM_DO_DIA/TASKS/DONE-*`
+- `src/components/HexMapPrototype.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-013 - Feedback Visual de Coleta no Fim do Dia`
+- `PBI-014 - Animar Moedas de Rendimento no Fim do Dia`
+- `HISTORIA-001 - Exibir Feedback Visual de Rendimento por Tile`
+- `HISTORIA-002 - Sincronizar Animacao com a Resolucao do Dia`
+
+### Tasks executadas
+
+- `TASK-001 - Criar Bursts Visuais de Moeda por Tile`
+- `TASK-002 - Estilizar Animacao de Subida das Moedas`
+- `TASK-003 - Atrasar Aplicacao do Fim do Dia ate o Termino da Animacao`
+- `TASK-004 - Bloquear Interacao Durante a Resolucao do Dia`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual do fechamento do dia com tiles de rendimento positivo e negativo
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- o mapa agora mostra moedas subindo em cada tile com rendimento no fim do dia
+- o saldo da run so muda apos a resolucao visual da coleta
+- as acoes principais ficam bloqueadas enquanto a animacao estiver ativa
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-014` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-013 de rendimento diario por carta e tile
 
 ### Resumo

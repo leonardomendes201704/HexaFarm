@@ -2,13 +2,20 @@ import { useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEven
 import type { HexCoord, HexTile } from "../lib/hexGrid";
 import { getTileLabel } from "../lib/hexGrid";
 
+export type TileYieldBurst = {
+  tileId: string;
+  yieldValue: number;
+};
+
 type HexMapPrototypeProps = {
   expansionArmed: boolean;
   frontierSlots: HexCoord[];
+  interactionLocked?: boolean;
   onPlaceTile: (slot: HexCoord) => void;
   onSelectTile: (tileId: string) => void;
   selectedTileId: string | null;
   tiles: HexTile[];
+  yieldBursts: TileYieldBurst[];
 };
 
 const HEX_SIDE = 60;
@@ -27,10 +34,12 @@ function projectHexCoord({ q, r }: HexCoord) {
 export function HexMapPrototype({
   expansionArmed,
   frontierSlots,
+  interactionLocked = false,
   onPlaceTile,
   onSelectTile,
   selectedTileId,
   tiles,
+  yieldBursts,
 }: HexMapPrototypeProps) {
   const dragOriginRef = useRef<{ x: number; y: number } | null>(null);
   const [isPanning, setIsPanning] = useState(false);
@@ -102,6 +111,10 @@ export function HexMapPrototype({
   }, []);
 
   const handlePanStart = (event: ReactMouseEvent<HTMLDivElement>) => {
+    if (interactionLocked) {
+      return;
+    }
+
     if (event.button !== 2) {
       return;
     }
@@ -119,7 +132,7 @@ export function HexMapPrototype({
   return (
     <section className="hex-prototype">
       <div
-        className={`hex-board-shell ${isPanning ? "is-panning" : ""}`}
+        className={`hex-board-shell ${isPanning ? "is-panning" : ""} ${interactionLocked ? "is-locked" : ""}`}
         onContextMenu={(event) => event.preventDefault()}
         onMouseDown={handlePanStart}
         title="Arraste com o botao direito do mouse para mover o mapa."
@@ -139,7 +152,7 @@ export function HexMapPrototype({
               return (
                 <button
                   className={`hex-node hex-node--slot ${expansionArmed ? "is-armed" : ""}`}
-                  disabled={!expansionArmed}
+                  disabled={!expansionArmed || interactionLocked}
                   key={`slot-${slot.q}-${slot.r}`}
                   onClick={() => onPlaceTile(slot)}
                   style={{
@@ -162,6 +175,7 @@ export function HexMapPrototype({
                   className={`hex-node hex-node--tile hex-node--${tile.tileType} ${
                     selectedTileId === tile.id ? "is-selected" : ""
                   }`}
+                  disabled={interactionLocked}
                   key={tile.id}
                   onClick={() => onSelectTile(tile.id)}
                   style={{
@@ -173,6 +187,43 @@ export function HexMapPrototype({
                     <span className="hex-node__label">{getTileLabel(tile.tileType)}</span>
                   </span>
                 </button>
+              );
+            })}
+
+            {yieldBursts.map((burst) => {
+              const tile = tiles.find((candidateTile) => candidateTile.id === burst.tileId);
+
+              if (!tile) {
+                return null;
+              }
+
+              const position = projectHexCoord(tile);
+              const coinCount = Math.max(1, Math.min(Math.abs(burst.yieldValue), 5));
+              const isNegative = burst.yieldValue < 0;
+
+              return (
+                <div
+                  className={`tile-yield-burst ${isNegative ? "is-negative" : "is-positive"}`}
+                  key={`yield-${burst.tileId}`}
+                  style={{
+                    left: `${position.x + boardGeometry.offsetX + HEX_WIDTH / 2}px`,
+                    top: `${position.y + boardGeometry.offsetY + HEX_HEIGHT / 2}px`,
+                  }}
+                >
+                  <div className="tile-yield-burst__coins">
+                    {Array.from({ length: coinCount }, (_, index) => (
+                      <span
+                        className="tile-yield-burst__coin"
+                        key={`${burst.tileId}-coin-${index}`}
+                        style={{ animationDelay: `${index * 80}ms` }}
+                      />
+                    ))}
+                  </div>
+                  <span className="tile-yield-burst__label">
+                    {burst.yieldValue >= 0 ? "+" : ""}
+                    {burst.yieldValue}
+                  </span>
+                </div>
               );
             })}
           </div>

@@ -741,6 +741,55 @@ button:disabled {
   cursor: default;
 }
 
+.tile-yield-burst {
+  position: absolute;
+  z-index: 7;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: tile-yield-burst-rise 920ms ease-out forwards;
+}
+
+.tile-yield-burst__coins {
+  display: flex;
+  gap: 6px;
+}
+
+.tile-yield-burst__coin {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff8cf, #f5b94b 58%, #d58a20 100%);
+  box-shadow:
+    0 6px 10px rgba(181, 117, 35, 0.22),
+    inset 0 1px 0 rgba(255, 253, 231, 0.84);
+  animation: tile-yield-coin-pop 560ms ease-out forwards;
+}
+
+.tile-yield-burst__label {
+  border-radius: 999px;
+  padding: 4px 10px;
+  background: rgba(255, 249, 237, 0.92);
+  color: #865224;
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+}
+
+.tile-yield-burst.is-negative .tile-yield-burst__coin {
+  background: radial-gradient(circle at 30% 30%, #ffe2d6, #f19367 58%, #d85d47 100%);
+  box-shadow:
+    0 6px 10px rgba(189, 92, 55, 0.2),
+    inset 0 1px 0 rgba(255, 239, 232, 0.82);
+}
+
+.tile-yield-burst.is-negative .tile-yield-burst__label {
+  background: rgba(255, 239, 234, 0.94);
+  color: #a2473a;
+}
+
 .route-actions {
   display: flex;
   margin-top: auto;
@@ -808,6 +857,45 @@ button:disabled {
 
   50% {
     transform: translateY(-8px);
+  }
+}
+
+@keyframes tile-yield-burst-rise {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -36%);
+  }
+
+  14% {
+    opacity: 1;
+    transform: translate(-50%, -52%);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(-50%, -118%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -146%);
+  }
+}
+
+@keyframes tile-yield-coin-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.55);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.05);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(-14px) scale(1);
   }
 }
 
@@ -902,6 +990,10 @@ button:disabled {
 
 .hex-board-shell.is-panning {
   cursor: grabbing;
+}
+
+.hex-board-shell.is-locked {
+  cursor: default;
 }
 
 .hex-board-viewport {

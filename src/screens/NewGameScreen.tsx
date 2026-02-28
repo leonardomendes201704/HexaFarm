@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { ExpansionHand } from "../components/ExpansionHand";
 import { GameModal } from "../components/GameModal";
-import { HexMapPrototype } from "../components/HexMapPrototype";
+import { HexMapPrototype, type TileYieldBurst } from "../components/HexMapPrototype";
 import { SaveSummaryCard } from "../components/SaveSummaryCard";
 import {
   createExpandedTile,
@@ -39,6 +39,7 @@ import {
 } from "../lib/save";
 
 type HudModalId = "help" | "menu" | "status" | null;
+const DAY_RESOLUTION_DURATION_MS = 980;
 
 function createBoardState(placedTiles: SavePlacedTileState[] = []) {
   const boardTiles: HexTile[] = [
@@ -80,6 +81,9 @@ export function NewGameScreen() {
   );
   const [armedCardId, setArmedCardId] = useState<string | null>(null);
   const [activeModal, setActiveModal] = useState<HudModalId>(null);
+  const [isResolvingDay, setIsResolvingDay] = useState(false);
+  const [yieldBursts, setYieldBursts] = useState<TileYieldBurst[]>([]);
+  const dayResolutionTimeoutRef = useRef<number | null>(null);
 
   const collectionCards = useMemo(() => getCardLibrary(), []);
   const frontierSlots = getFrontierSlots(tiles);
@@ -158,7 +162,7 @@ export function NewGameScreen() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [phase, savedRun, deckState]);
+  }, [phase, savedRun, deckState, isResolvingDay]);
 
   const handleAddDeckCard = (cardId: string) => {
     if (phase !== "deckbuilding") {
@@ -190,7 +194,7 @@ export function NewGameScreen() {
   };
 
   const handleSelectCard = (cardId: string) => {
-    if (!canRunGameplay || frontierSlots.length === 0) {
+    if (!canRunGameplay || isResolvingDay || frontierSlots.length === 0) {
       return;
     }
 
@@ -204,7 +208,7 @@ export function NewGameScreen() {
   };
 
   const handlePlaceTile = (slot: HexCoord) => {
-    if (!canRunGameplay || !armedCard || armedCard.energyCost > availableEnergy) {
+    if (!canRunGameplay || isResolvingDay || !armedCard || armedCard.energyCost > availableEnergy) {
       return;
     }
 
@@ -232,22 +236,56 @@ export function NewGameScreen() {
     setSavedRun(updatedSave);
   };
 
-  const handleEndDay = () => {
-    if (!canRunGameplay) {
-      return;
-    }
-
-    const isRunEnding = savedRun.activeRun.day >= PROTOTYPE_RUN_LENGTH_DAYS;
-
-    if (!isRunEnding) {
+  const finalizeEndDay = (shouldRefillHand: boolean) => {
+    if (shouldRefillHand) {
       setDeckState((currentDeckState) => discardHandAndRefill(currentDeckState));
     }
 
     const updatedSave = advancePrototypeDay();
 
+    setYieldBursts([]);
     setActiveModal(null);
     setArmedCardId(null);
+    setIsResolvingDay(false);
     setSavedRun(updatedSave);
+
+    if (dayResolutionTimeoutRef.current !== null) {
+      window.clearTimeout(dayResolutionTimeoutRef.current);
+      dayResolutionTimeoutRef.current = null;
+    }
+  };
+
+  const handleEndDay = () => {
+    if (!canRunGameplay || isResolvingDay) {
+      return;
+    }
+
+    const isRunEnding = savedRun.activeRun.day >= PROTOTYPE_RUN_LENGTH_DAYS;
+    const nextYieldBursts = savedRun.activeRun.placedTiles
+      .filter((tile) => tile.dailyCoinYield !== 0)
+      .map((tile) => ({
+        tileId: `${tile.q}:${tile.r}`,
+        yieldValue: tile.dailyCoinYield,
+      }));
+
+    if (dayResolutionTimeoutRef.current !== null) {
+      window.clearTimeout(dayResolutionTimeoutRef.current);
+      dayResolutionTimeoutRef.current = null;
+    }
+
+    setActiveModal(null);
+    setArmedCardId(null);
+
+    if (nextYieldBursts.length === 0) {
+      finalizeEndDay(!isRunEnding);
+      return;
+    }
+
+    setIsResolvingDay(true);
+    setYieldBursts(nextYieldBursts);
+    dayResolutionTimeoutRef.current = window.setTimeout(() => {
+      finalizeEndDay(!isRunEnding);
+    }, DAY_RESOLUTION_DURATION_MS);
   };
 
   const handleBuyCard = (cardId: string) => {
@@ -268,6 +306,14 @@ export function NewGameScreen() {
     syncRunFromSave(updatedSave);
   };
 
+  useEffect(() => {
+    return () => {
+      if (dayResolutionTimeoutRef.current !== null) {
+        window.clearTimeout(dayResolutionTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section className={`gameplay-screen ${phase !== "running" ? "is-overlayed" : ""}`}>
       <div className="gameplay-screen__sky" />
@@ -278,7 +324,7 @@ export function NewGameScreen() {
         <div className="gameplay-hud__cluster">
           <button
             className="hud-button"
-            disabled={!canRunGameplay}
+            disabled={!canRunGameplay || isResolvingDay}
             onClick={() => setActiveModal((currentModal) => (currentModal === "menu" ? null : "menu"))}
             type="button"
           >
@@ -288,7 +334,7 @@ export function NewGameScreen() {
 
           <button
             className="hud-button"
-            disabled={!canRunGameplay}
+            disabled={!canRunGameplay || isResolvingDay}
             onClick={() =>
               setActiveModal((currentModal) => (currentModal === "status" ? null : "status"))
             }
@@ -300,7 +346,7 @@ export function NewGameScreen() {
 
           <button
             className="hud-button"
-            disabled={!canRunGameplay}
+            disabled={!canRunGameplay || isResolvingDay}
             onClick={() => setActiveModal((currentModal) => (currentModal === "help" ? null : "help"))}
             type="button"
           >
@@ -318,12 +364,12 @@ export function NewGameScreen() {
           <span className="hud-pill">Rend. {dailyCoinYieldLabel}</span>
           <button
             className="hud-button hud-button--action"
-            disabled={!canRunGameplay}
+            disabled={!canRunGameplay || isResolvingDay}
             onClick={handleEndDay}
             type="button"
           >
             <span className="hud-button__key">E</span>
-            <span>Fim do Dia</span>
+            <span>{isResolvingDay ? "Resolvendo..." : "Fim do Dia"}</span>
           </button>
         </div>
       </header>
@@ -347,12 +393,14 @@ export function NewGameScreen() {
         </div>
 
         <HexMapPrototype
-          expansionArmed={canRunGameplay && armedCard !== null}
+          expansionArmed={canRunGameplay && !isResolvingDay && armedCard !== null}
           frontierSlots={frontierSlots}
+          interactionLocked={isResolvingDay}
           onPlaceTile={handlePlaceTile}
           onSelectTile={setSelectedTileId}
           selectedTileId={selectedTileId}
           tiles={tiles}
+          yieldBursts={yieldBursts}
         />
       </div>
 
@@ -360,7 +408,7 @@ export function NewGameScreen() {
         <ExpansionHand
           armedCardId={armedCardId}
           availableEnergy={availableEnergy}
-          canPlayCards={frontierSlots.length > 0}
+          canPlayCards={frontierSlots.length > 0 && !isResolvingDay}
           discardCount={deckState.discardPile.length}
           drawCount={deckState.drawPile.length}
           hand={deckState.hand}
@@ -617,7 +665,7 @@ export function NewGameScreen() {
               </div>
               <div className="game-modal__tip">
                 <span className="game-modal__tip-key">E</span>
-                <p className="game-modal__tip-text">Fecha o dia, aplica o rendimento dos tiles e, no dia 7, resolve o aluguel.</p>
+                <p className="game-modal__tip-text">Fecha o dia, sobe moedinhas por tile e, no dia 7, resolve o aluguel.</p>
               </div>
               <div className="game-modal__tip">
                 <span className="game-modal__tip-key">M</span>
