@@ -346,6 +346,41 @@ O stage 3D passou a comandar diretamente a selecao, o hover e o clique do mapa.
 
 - esta entrada deve ser fechada com commit e push apos a validacao final desta task
 
+## 2026-02-28 - TASK-010 do PBI-048 concluida
+
+### Resumo
+
+O pan com botao direito passou a deslocar a camera ortografica do stage 3D.
+
+### Entregas realizadas
+
+- implementacao do offset de camera no stage 3D
+- traducao de arraste em tela para deslocamento no mundo 3D
+- reaproveitamento do RMB como controle principal de pan
+
+### Arquivos principais criados ou alterados
+
+- `src/components/Stage3DCanvas.tsx`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/TASKS/DONE-TASK-010_REIMPLEMENTAR_PAN_DA_CAMERA_NO_STAGE_3D.md`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-048 - Migrar Stage Hexagonal para Renderizacao 3D Isometrica Real`
+- `TASK-010 - Reimplementar Pan da Camera no Stage 3D`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- o mapa 3D volta a poder ser deslocado com RMB por movimentacao da camera
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta task
+
 ## 2026-02-28 - Planejamento do PBI-048 para migracao do stage para 3D isometrico real
 
 ### Resumo

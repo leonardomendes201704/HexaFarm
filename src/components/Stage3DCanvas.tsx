@@ -1,6 +1,7 @@
 import { OrthographicCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react";
+import type { OrthographicCamera as ThreeOrthographicCamera } from "three";
 import { HexPrismMesh3D } from "./HexPrismMesh3D";
 import type { HexCoord, HexTile, PrototypeTileType } from "../lib/hexGrid";
 import { projectAxialToWorld } from "../lib/hexGrid3d";
@@ -8,6 +9,7 @@ import { projectAxialToWorld } from "../lib/hexGrid3d";
 const STAGE_3D_CAMERA_POSITION: [number, number, number] = [7.5, 7, 7.5];
 const STAGE_3D_CAMERA_LOOK_AT: [number, number, number] = [0, -0.5, 0];
 const STAGE_3D_CAMERA_ZOOM = 92;
+const STAGE_3D_PAN_SCALE = 0.012;
 
 type Stage3DCanvasProps = {
   cropArmed: boolean;
@@ -145,6 +147,39 @@ function CropProp3D({ cropName }: { cropName: string | null }) {
         </mesh>
       );
   }
+}
+
+function Stage3DCamera({ panOffset }: { panOffset: { x: number; z: number } }) {
+  const cameraRef = useRef<ThreeOrthographicCamera>(null);
+
+  useEffect(() => {
+    if (!cameraRef.current) {
+      return;
+    }
+
+    cameraRef.current.position.set(
+      STAGE_3D_CAMERA_POSITION[0] + panOffset.x,
+      STAGE_3D_CAMERA_POSITION[1],
+      STAGE_3D_CAMERA_POSITION[2] + panOffset.z,
+    );
+    cameraRef.current.lookAt(
+      STAGE_3D_CAMERA_LOOK_AT[0] + panOffset.x,
+      STAGE_3D_CAMERA_LOOK_AT[1],
+      STAGE_3D_CAMERA_LOOK_AT[2] + panOffset.z,
+    );
+    cameraRef.current.updateProjectionMatrix();
+  }, [panOffset.x, panOffset.z]);
+
+  return (
+    <OrthographicCamera
+      far={100}
+      makeDefault
+      near={0.1}
+      position={STAGE_3D_CAMERA_POSITION}
+      ref={cameraRef}
+      zoom={STAGE_3D_CAMERA_ZOOM}
+    />
+  );
 }
 
 type Stage3DSceneProps = {
@@ -316,8 +351,26 @@ export function Stage3DCanvas({
   const [hoveredSlotKey, setHoveredSlotKey] = useState<string | null>(null);
   const [hoveredTileId, setHoveredTileId] = useState<string | null>(null);
   const [isPanning, setIsPanning] = useState(false);
+  const [panOffset, setPanOffset] = useState({ x: 0, z: 0 });
 
   useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      const dragOrigin = dragOriginRef.current;
+
+      if (!dragOrigin) {
+        return;
+      }
+
+      const deltaX = event.clientX - dragOrigin.x;
+      const deltaY = event.clientY - dragOrigin.y;
+
+      dragOriginRef.current = { x: event.clientX, y: event.clientY };
+      setPanOffset((currentOffset) => ({
+        x: currentOffset.x - deltaX * STAGE_3D_PAN_SCALE,
+        z: currentOffset.z - deltaY * STAGE_3D_PAN_SCALE,
+      }));
+    };
+
     const handleMouseUp = () => {
       if (!dragOriginRef.current) {
         return;
@@ -327,9 +380,11 @@ export function Stage3DCanvas({
       setIsPanning(false);
     };
 
+    window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
 
     return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
     };
   }, []);
@@ -356,17 +411,7 @@ export function Stage3DCanvas({
         frameloop="demand"
         gl={{ alpha: true, antialias: true }}
       >
-        <OrthographicCamera
-          far={100}
-          makeDefault
-          near={0.1}
-          onUpdate={(camera) => {
-            camera.lookAt(...STAGE_3D_CAMERA_LOOK_AT);
-            camera.updateProjectionMatrix();
-          }}
-          position={STAGE_3D_CAMERA_POSITION}
-          zoom={STAGE_3D_CAMERA_ZOOM}
-        />
+        <Stage3DCamera panOffset={panOffset} />
         <Stage3DScene
           cropArmed={cropArmed}
           frontierSlots={frontierSlots}
