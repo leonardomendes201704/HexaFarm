@@ -169,10 +169,13 @@ button:disabled {
 
 .hero-panel h1 {
   margin: 0;
-  color: #6a3b1a;
+  color: #fffdf8;
   font-family: "Baloo 2", "Trebuchet MS", sans-serif;
   font-size: clamp(3.8rem, 11vw, 7rem);
   line-height: 0.92;
+  -webkit-text-stroke: 2px rgba(241, 174, 120, 0.88);
+  paint-order: stroke fill;
+  text-shadow: 0 8px 22px rgba(145, 101, 64, 0.16);
 }
 
 .hero-panel__description {

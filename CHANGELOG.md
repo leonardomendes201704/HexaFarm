@@ -18,6 +18,58 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-028 de ajuste da cor e stroke do titulo HexaFarm
+
+### Resumo
+
+O titulo principal da home foi refinado para usar preenchimento branco com contorno pastel alaranjado, aumentando o destaque do branding sobre o fundo em video.
+
+### Entregas realizadas
+
+- criacao do `EPICO-027` e do backlog completo do `PBI-028`
+- alteracao da cor base do titulo `HexaFarm` para branco
+- aplicacao de `-webkit-text-stroke` em tom pastel alaranjado
+- adicao de sombra leve para preservar leitura sobre o fundo
+- conclusao do `PBI-028` e do `EPICO-027`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-027_REFINAMENTO_TIPOGRAFICO_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-028_AJUSTAR_COR_E_STROKE_DO_TITULO_HEXAFARM/DONE-PBI-028_AJUSTAR_COR_E_STROKE_DO_TITULO_HEXAFARM.md`
+- `BACKLOGS/PBIS/PBI-028_AJUSTAR_COR_E_STROKE_DO_TITULO_HEXAFARM/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-028_AJUSTAR_COR_E_STROKE_DO_TITULO_HEXAFARM/TASKS/DONE-*`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-027 - Refinamento Tipografico da Home`
+- `PBI-028 - Ajustar Cor e Stroke do Titulo HexaFarm`
+- `HISTORIA-001 - Refinar o Tratamento Visual do Titulo Principal`
+
+### Tasks executadas
+
+- `TASK-001 - Trocar a Cor de Preenchimento do Titulo para Branco`
+- `TASK-002 - Aplicar Stroke Pastel Alaranjado no Titulo`
+- `TASK-003 - Preservar Legibilidade com Sombra Leve`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual do titulo da home sobre o video de fundo
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- o titulo principal ficou branco
+- o titulo principal ganhou stroke pastel em tom laranja
+- a leitura do branding melhorou sobre o fundo em movimento
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-028` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-027 de altura auto-fit e alinhamento inferior dos cards da home
 
 ### Resumo
