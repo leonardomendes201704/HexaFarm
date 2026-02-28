@@ -18,6 +18,58 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-018 de cards brancos translucidos na home
+
+### Resumo
+
+Os dois paineis da home foram convertidos para um visual branco translúcido, permitindo que a arte de background fique mais visivel atras deles.
+
+### Entregas realizadas
+
+- criacao do `EPICO-017` e do backlog completo do `PBI-018`
+- clareamento do fundo e da borda dos paineis `hero` e `menu`
+- ajuste das cores do titulo, subtitulos, textos e chips para a nova base clara
+- ajuste dos botoes secundarios e ghost para melhor contraste
+- ajuste dos blocos de feedback, resumo e rodape do menu
+- conclusao do `PBI-018` e do `EPICO-017`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-017_REFINAMENTO_DOS_PANEIS_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-018_TORNAR_OS_CARDS_DA_HOME_BRANCOS_TRANSLUCIDOS/DONE-PBI-018_TORNAR_OS_CARDS_DA_HOME_BRANCOS_TRANSLUCIDOS.md`
+- `BACKLOGS/PBIS/PBI-018_TORNAR_OS_CARDS_DA_HOME_BRANCOS_TRANSLUCIDOS/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-018_TORNAR_OS_CARDS_DA_HOME_BRANCOS_TRANSLUCIDOS/TASKS/DONE-*`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-017 - Refinamento dos Paineis da Home`
+- `PBI-018 - Tornar os Cards da Home Brancos Translúcidos`
+- `HISTORIA-001 - Clarear os Paineis da Home sem Perder Leitura`
+
+### Tasks executadas
+
+- `TASK-001 - Clarear Fundo e Borda dos Dois Paineis`
+- `TASK-002 - Ajustar Tipografia e Chips para Base Clara`
+- `TASK-003 - Ajustar Botoes e Blocos de Texto do Menu`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da home com os dois cards em branco translúcido sobre a arte de fundo
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- os dois paineis da home agora deixam mais da arte de fundo aparecer
+- os textos e botoes permanecem legiveis sobre a nova base clara
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-018` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-017 de background fullscreen na tela inicial
 
 ### Resumo

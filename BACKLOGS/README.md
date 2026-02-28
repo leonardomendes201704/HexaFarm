@@ -74,6 +74,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `EPICO-014`: imersao de entrada da run
 - `EPICO-015`: reducao de ruido visual do HUD principal
 - `EPICO-016`: ambientacao visual da tela inicial
+- `EPICO-017`: refinamento dos paineis da home
 - `PBI-001`: tela inicial do jogo HexaFarm
 - `PBI-002`: estrutura base de navegacao entre telas
 - `PBI-003`: sistema minimo de save local
@@ -91,6 +92,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-015`: entrar em fullscreen ao iniciar novo jogo
 - `PBI-016`: ocultar badges auxiliares do HUD principal
 - `PBI-017`: aplicar background fullscreen na tela inicial
+- `PBI-018`: tornar os cards da home brancos translucidos
 
 ## Convencao de Nomes
 
