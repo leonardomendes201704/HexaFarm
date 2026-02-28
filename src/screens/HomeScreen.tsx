@@ -1,18 +1,64 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { GameModal } from "../components/GameModal";
 import { TitleScreen } from "../components/TitleScreen";
+import homeMenuBgmTrack from "../assets/home-bgm-blocklight-horizon.mp3";
 import { requestGameFullscreen } from "../lib/browserFullscreen";
 import { createNewSave, getSavedRun, type SaveSnapshot, continueSavedRun } from "../lib/save";
 
 export function HomeScreen() {
   const navigate = useNavigate();
   const [savedRun, setSavedRun] = useState<SaveSnapshot | null>(null);
+  const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(true);
+  const homeBgmRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     setSavedRun(getSavedRun());
   }, []);
 
+  useEffect(() => {
+    const homeBgm = new Audio(homeMenuBgmTrack);
+
+    homeBgm.loop = true;
+    homeBgm.volume = 0.32;
+    homeBgmRef.current = homeBgm;
+
+    return () => {
+      homeBgm.pause();
+      homeBgm.currentTime = 0;
+
+      if (homeBgmRef.current === homeBgm) {
+        homeBgmRef.current = null;
+      }
+    };
+  }, []);
+
+  const stopHomeBgm = () => {
+    const homeBgm = homeBgmRef.current;
+
+    if (!homeBgm) {
+      return;
+    }
+
+    homeBgm.pause();
+    homeBgm.currentTime = 0;
+  };
+
+  const handleDismissWelcomeModal = () => {
+    setIsWelcomeModalOpen(false);
+
+    const homeBgm = homeBgmRef.current;
+
+    if (!homeBgm) {
+      return;
+    }
+
+    homeBgm.currentTime = 0;
+    void homeBgm.play().catch(() => undefined);
+  };
+
   const handleNewGame = async () => {
+    stopHomeBgm();
     await requestGameFullscreen();
 
     const freshSave = createNewSave();
@@ -26,6 +72,7 @@ export function HomeScreen() {
       return;
     }
 
+    stopHomeBgm();
     const updatedSave = continueSavedRun();
 
     setSavedRun(updatedSave);
@@ -33,6 +80,7 @@ export function HomeScreen() {
   };
 
   const handleOpenOptions = () => {
+    stopHomeBgm();
     navigate("/options");
   };
 
@@ -45,13 +93,39 @@ export function HomeScreen() {
     : null;
 
   return (
-    <TitleScreen
-      canContinue={canContinue}
-      feedbackMessage={feedbackMessage}
-      onContinue={handleContinue}
-      onNewGame={handleNewGame}
-      onOpenOptions={handleOpenOptions}
-      saveSummaryLabel={saveSummaryLabel}
-    />
+    <>
+      <TitleScreen
+        canContinue={canContinue}
+        feedbackMessage={feedbackMessage}
+        onContinue={handleContinue}
+        onNewGame={handleNewGame}
+        onOpenOptions={handleOpenOptions}
+        saveSummaryLabel={saveSummaryLabel}
+      />
+
+      {isWelcomeModalOpen ? (
+        <GameModal onClose={handleDismissWelcomeModal} shortcut="BGM" title="Bem-vindo a HexaFarm">
+          <div className="game-modal__stack">
+            <div className="route-note">
+              <p className="route-note__label">Boas-vindas</p>
+              <p className="route-note__text">
+                Feche este modal para iniciar a musica ambiente do menu e entrar na home com a trilha ativa.
+              </p>
+            </div>
+
+            <div className="game-modal__stats">
+              <div className="game-modal__stat-card">
+                <span className="game-modal__stat-label">Trilha</span>
+                <strong className="game-modal__stat-value">Blocklight Horizon</strong>
+              </div>
+              <div className="game-modal__stat-card">
+                <span className="game-modal__stat-label">Acao</span>
+                <strong className="game-modal__stat-value">Fechar para tocar</strong>
+              </div>
+            </div>
+          </div>
+        </GameModal>
+      ) : null}
+    </>
   );
 }

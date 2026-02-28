@@ -18,6 +18,63 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-022 de BGM no menu com modal de boas-vindas
+
+### Resumo
+
+Foi adicionada uma trilha MP3 ao menu inicial. A home agora abre com um modal de boas-vindas, e a musica comeca a tocar quando esse modal e fechado.
+
+### Entregas realizadas
+
+- criacao do `EPICO-021` e do backlog completo do `PBI-022`
+- copia do MP3 do menu para os assets do projeto
+- criacao de um `HTMLAudioElement` dedicado para a home
+- configuracao da trilha em loop com volume inicial controlado
+- exibicao de um modal de boas-vindas ao entrar na home
+- reproducao da trilha ao fechar o modal
+- parada da trilha ao sair da home
+- conclusao do `PBI-022` e do `EPICO-021`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-021_AUDIO_DE_AMBIENTACAO_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-022_ADICIONAR_BGM_NO_MENU_COM_MODAL_DE_BOAS_VINDAS/DONE-PBI-022_ADICIONAR_BGM_NO_MENU_COM_MODAL_DE_BOAS_VINDAS.md`
+- `BACKLOGS/PBIS/PBI-022_ADICIONAR_BGM_NO_MENU_COM_MODAL_DE_BOAS_VINDAS/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-022_ADICIONAR_BGM_NO_MENU_COM_MODAL_DE_BOAS_VINDAS/TASKS/DONE-*`
+- `src/assets/home-bgm-blocklight-horizon.mp3`
+- `src/screens/HomeScreen.tsx`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-021 - Audio de Ambientacao da Home`
+- `PBI-022 - Adicionar BGM no Menu com Modal de Boas-Vindas`
+- `HISTORIA-001 - Integrar Trilha de Menu com Gatilho Manual`
+
+### Tasks executadas
+
+- `TASK-001 - Adicionar o MP3 da Home como Asset`
+- `TASK-002 - Criar Estado de Audio da Home`
+- `TASK-003 - Exibir Modal de Boas-Vindas na Entrada`
+- `TASK-004 - Tocar e Parar a Trilha no Momento Correto`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da home com modal inicial e reproducao de audio ao fechar
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- a home abre com modal de boas-vindas
+- ao fechar o modal, a trilha do menu comeca a tocar
+- ao sair da home, a musica para
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-022` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-021 de remocao da ilustracao interna e reducao da largura dos cards da home
 
 ### Resumo
