@@ -917,7 +917,7 @@ button:disabled {
   overflow: hidden;
 }
 
-@keyframes expansion-card-discard {
+@keyframes expansion-card-collapse {
   0% {
     opacity: 1;
     transform: translateY(var(--card-vertical-offset, 0))
@@ -925,24 +925,47 @@ button:disabled {
       scale(1);
   }
 
-  42% {
+  62% {
     opacity: 1;
     transform: translate(
         var(--discard-collapse-x, 0px),
-        calc(var(--card-vertical-offset, 0px) - 10px)
+        calc(var(--card-vertical-offset, 0px) - 8px)
       )
       rotate(0deg)
-      scale(0.97);
+      scale(0.96);
   }
 
   100% {
     opacity: 0;
     transform: translate(
-        calc(var(--hand-discard-travel-x, 300px) + var(--discard-travel-adjust, 0px)),
-        calc(var(--card-vertical-offset, 0px) - var(--hand-discard-rise, 18px))
+        var(--discard-collapse-x, 0px),
+        calc(var(--card-vertical-offset, 0px) - 8px)
       )
-      rotate(10deg)
-      scale(0.68);
+      rotate(0deg)
+      scale(0.92);
+  }
+}
+
+@keyframes hand-discard-stack-travel {
+  0%,
+  22% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.88) rotate(0deg);
+  }
+
+  34% {
+    opacity: 1;
+    transform: translate(-50%, -2px) scale(0.98) rotate(0deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(
+        calc(-50% + var(--hand-discard-travel-x, 300px)),
+        calc(-1 * var(--hand-discard-rise, 18px))
+      )
+      scale(0.72)
+      rotate(8deg);
   }
 }
 
@@ -983,8 +1006,7 @@ button:disabled {
 .expansion-card.is-discarding.is-selected {
   pointer-events: none;
   z-index: 8;
-  animation: expansion-card-discard 0.64s cubic-bezier(0.24, 0.8, 0.22, 1) forwards;
-  animation-delay: var(--discard-stagger, 0ms);
+  animation: expansion-card-collapse 0.34s cubic-bezier(0.24, 0.8, 0.22, 1) forwards;
 }
 
 .expansion-card.is-muted {
@@ -2022,6 +2044,12 @@ button:disabled {
     padding: 0;
   }
 
+  .game-hand__discard-proxy {
+    width: 106px;
+    height: 148px;
+    bottom: 6px;
+  }
+
   .game-hand__fan {
     justify-content: flex-start;
     overflow-x: auto;
@@ -2085,6 +2113,7 @@ button:disabled {
 }
 
 .game-hand__layout {
+  position: relative;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: end;
@@ -2093,6 +2122,45 @@ button:disabled {
 
 .game-hand.is-discarding .game-hand__fan {
   pointer-events: none;
+}
+
+.game-hand__discard-proxy {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 132px;
+  height: 176px;
+  pointer-events: none;
+  z-index: 9;
+  opacity: 0;
+  animation: hand-discard-stack-travel 0.64s cubic-bezier(0.24, 0.8, 0.22, 1) forwards;
+}
+
+.game-hand__discard-proxy-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  border: 5px solid rgba(196, 154, 92, 0.86);
+  background:
+    linear-gradient(180deg, rgba(255, 248, 236, 0.98), rgba(244, 227, 198, 0.95)),
+    rgba(255, 249, 239, 0.95);
+  box-shadow:
+    0 18px 26px rgba(22, 16, 18, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+}
+
+.game-hand__discard-proxy-card--back {
+  transform: translate(-7px, 7px) rotate(-5deg);
+  opacity: 0.78;
+}
+
+.game-hand__discard-proxy-card--back-secondary {
+  transform: translate(6px, 3px) rotate(4deg);
+  opacity: 0.86;
+}
+
+.game-hand__discard-proxy-card--front {
+  transform: translate(0, 0) rotate(0deg);
 }
 
 .card-pile {

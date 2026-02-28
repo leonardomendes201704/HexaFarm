@@ -29,6 +29,13 @@ export function ExpansionHand({
 }: ExpansionHandProps) {
   const handCenter = (hand.length - 1) / 2;
   const playableCardIdSet = new Set(playableCardInstanceIds);
+  const viewportWidth = typeof window === "undefined" ? 1440 : window.innerWidth;
+  const isCompactLayout = viewportWidth <= 720;
+  const estimatedCardWidth = isCompactLayout
+    ? Math.max(viewportWidth * 0.42, 150)
+    : Math.min(viewportWidth * 0.18, 188);
+  const overlapOffset = isCompactLayout ? 16 : 28;
+  const collapseStep = Math.max(Math.round(estimatedCardWidth - overlapOffset), 0);
 
   return (
     <section
@@ -52,9 +59,7 @@ export function ExpansionHand({
             const verticalLift = Math.abs(offsetFromCenter) * 12;
             const canAffordCard = availableEnergy >= card.energyCost;
             const canPlayCard = playableCardIdSet.has(card.instanceId) && canAffordCard;
-            const discardCollapseX = Math.round(-offsetFromCenter * 34);
-            const discardTravelAdjust = Math.round(-offsetFromCenter * 22);
-            const discardStaggerMs = Math.round(Math.abs(offsetFromCenter) * 28);
+            const discardCollapseX = Math.round(-offsetFromCenter * collapseStep);
 
             return (
               <button
@@ -72,8 +77,6 @@ export function ExpansionHand({
                     "--card-rotation": `${rotation}deg`,
                     "--card-vertical-offset": `${verticalLift}px`,
                     "--discard-collapse-x": `${discardCollapseX}px`,
-                    "--discard-stagger": `${discardStaggerMs}ms`,
-                    "--discard-travel-adjust": `${discardTravelAdjust}px`,
                   } as CSSProperties
                 }
                 type="button"
@@ -122,6 +125,14 @@ export function ExpansionHand({
             );
           })}
         </div>
+
+        {isDiscarding && hand.length > 0 ? (
+          <div aria-hidden="true" className="game-hand__discard-proxy">
+            <span className="game-hand__discard-proxy-card game-hand__discard-proxy-card--back" />
+            <span className="game-hand__discard-proxy-card game-hand__discard-proxy-card--back-secondary" />
+            <span className="game-hand__discard-proxy-card game-hand__discard-proxy-card--front" />
+          </div>
+        ) : null}
 
         <div className="card-pile">
           <div className="card-pile__stack card-pile__stack--discard">

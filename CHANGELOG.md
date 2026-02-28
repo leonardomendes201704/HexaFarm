@@ -18,6 +18,46 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-062 concluido
+
+### Resumo
+
+A animacao de descarte da mao foi refinada para que as cartas colapsem completamente no centro, se fundam visualmente em um unico stack e somente esse stack siga para a pilha de descarte.
+
+### Entregas realizadas
+
+- ajuste do colapso horizontal das cartas para convergirem integralmente no centro do leque
+- remocao do deslocamento individual para a pilha de descarte
+- adicao de um stack-proxy unico que aparece no centro e anima ate a pilha de descarte
+- refinamento responsivo do deslocamento do stack em desktop e mobile
+
+### Arquivos principais criados ou alterados
+
+- `src/components/ExpansionHand.tsx`
+- `src/styles.css`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-062_REFINAR_DESCARTE_DA_MAO_PARA_STACK_UNICO_NO_CENTRO/*`
+
+### Vinculos de backlog
+
+- `EPICO-005 - Refinamento da Tela de Jogo e HUD`
+- `PBI-062 - Refinar Descarte da Mao para Stack Unico no Centro`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- as cartas convergem para um unico ponto no centro
+- um stack unico segue visualmente para a pilha de descarte
+
+### Commit e push
+
+- registrados no encerramento desta entrega
+
+---
+
 ## 2026-02-28 - PBI-061 concluido
 
 ### Resumo
