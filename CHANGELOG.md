@@ -18,6 +18,62 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-036 de refinamento da modal de deckbuilding e camada dos tooltips
+
+### Resumo
+
+A modal `Montar Baralho da Run` passou a ocupar mais altura, e os tooltips das cartas foram desacoplados do container rolavel para aparecerem acima de tudo sem gerar scroll horizontal.
+
+### Entregas realizadas
+
+- criacao do `EPICO-031` e do backlog completo do `PBI-036`
+- aumento da altura maxima da modal de deckbuilding
+- ampliacao da altura interna util da grade de deckbuilding
+- migracao do `CardTooltip` para portal em camada fixa global
+- aumento do `z-index` do tooltip
+- bloqueio do scroll horizontal na grade de cartas da montagem de baralho
+- conclusao do `PBI-036` e do `EPICO-031`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-031_REFINAMENTO_DE_CAMADAS_E_ESPACO_UTIL_DA_INTERFACE.md`
+- `BACKLOGS/PBIS/PBI-036_REFINAR_ALTURA_DA_MODAL_DECKBUILDING_E_CAMADA_DOS_TOOLTIPS/DONE-PBI-036_REFINAR_ALTURA_DA_MODAL_DECKBUILDING_E_CAMADA_DOS_TOOLTIPS.md`
+- `BACKLOGS/PBIS/PBI-036_REFINAR_ALTURA_DA_MODAL_DECKBUILDING_E_CAMADA_DOS_TOOLTIPS/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-036_REFINAR_ALTURA_DA_MODAL_DECKBUILDING_E_CAMADA_DOS_TOOLTIPS/TASKS/DONE-*`
+- `src/components/CardTooltip.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-031 - Refinamento de Camadas e Espaco Util da Interface`
+- `PBI-036 - Refinar Altura da Modal Deckbuilding e Camada dos Tooltips`
+- `HISTORIA-001 - Expandir a Modal de Deckbuilding e Desacoplar os Tooltips do Container`
+
+### Tasks executadas
+
+- `TASK-001 - Aumentar a Altura Util da Modal de Deckbuilding`
+- `TASK-002 - Migrar o Tooltip para uma Camada Fixa Global`
+- `TASK-003 - Bloquear Scroll Horizontal na Grade de Cartas`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da modal de deckbuilding e do hover das cartas
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- modal ficou mais alta
+- tooltip ficou acima de toda a interface
+- grade deixou de induzir scroll horizontal
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-036` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-035 de tooltip estilizado com explicacao nas cartas
 
 ### Resumo

@@ -416,7 +416,7 @@ export function NewGameScreen() {
           bodyClassName="game-modal__body--deckbuilder"
           dismissible={false}
           onClose={() => undefined}
-          panelClassName="game-modal--fixed-body"
+          panelClassName="game-modal--fixed-body game-modal--deckbuilder-panel"
           showShortcut={false}
           size="wide"
           shortcut="Deck"
@@ -484,7 +484,7 @@ export function NewGameScreen() {
                         +
                       </button>
                     </div>
-                    <CardTooltip card={card} />
+                    <CardTooltip card={card} placement="bottom" />
                   </article>
                 );
               })}
@@ -563,7 +563,7 @@ export function NewGameScreen() {
                     >
                       Comprar
                     </button>
-                    <CardTooltip card={card} />
+                    <CardTooltip card={card} placement="bottom" />
                   </article>
                 );
               })}

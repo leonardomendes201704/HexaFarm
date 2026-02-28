@@ -88,6 +88,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `EPICO-028`: leitura e exposicao visual da home
 - `EPICO-029`: refinamento da modal de montagem de baralho
 - `EPICO-030`: feedback informativo das cartas
+- `EPICO-031`: refinamento de camadas e espaco util da interface
 - `PBI-001`: tela inicial do jogo HexaFarm
 - `PBI-002`: estrutura base de navegacao entre telas
 - `PBI-003`: sistema minimo de save local
@@ -123,6 +124,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-033`: remover filtro do video e aplicar sombra branca nos textos da home
 - `PBI-034`: limpar e fixar a modal de montagem de baralho da run
 - `PBI-035`: adicionar tooltip estilizado com explicacao nas cartas
+- `PBI-036`: refinar altura da modal deckbuilding e camada dos tooltips
 
 ## Convencao de Nomes
 
