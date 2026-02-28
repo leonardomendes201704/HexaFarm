@@ -18,6 +18,59 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-027 de altura auto-fit e alinhamento inferior dos cards da home
+
+### Resumo
+
+Os cards principais da home foram reposicionados para a base da viewport e deixaram de usar altura forcada, abrindo mais visibilidade para a arte de fundo.
+
+### Entregas realizadas
+
+- criacao do `EPICO-026` e do backlog completo do `PBI-027`
+- ajuste do `landing-layout` para alinhar o grid principal na base da tela
+- remocao da altura minima forcada do card esquerdo
+- configuracao dos cards para respeitarem altura por conteudo
+- ajuste do card de menu para parar de distribuir espaco vertical artificialmente
+- conclusao do `PBI-027` e do `EPICO-026`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-026_AJUSTE_DE_POSICIONAMENTO_DOS_CARDS_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-027_ALTURA_AUTOFIT_E_ALINHAMENTO_INFERIOR_DOS_CARDS_DA_HOME/DONE-PBI-027_ALTURA_AUTOFIT_E_ALINHAMENTO_INFERIOR_DOS_CARDS_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-027_ALTURA_AUTOFIT_E_ALINHAMENTO_INFERIOR_DOS_CARDS_DA_HOME/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-027_ALTURA_AUTOFIT_E_ALINHAMENTO_INFERIOR_DOS_CARDS_DA_HOME/TASKS/DONE-*`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-026 - Ajuste de Posicionamento dos Cards da Home`
+- `PBI-027 - Altura Auto-Fit e Alinhamento Inferior dos Cards da Home`
+- `HISTORIA-001 - Reposicionar e Enxugar a Composicao Vertical da Home`
+
+### Tasks executadas
+
+- `TASK-001 - Alinhar o Grid da Home na Base da Viewport`
+- `TASK-002 - Remover a Altura Minima Forcada do Hero Card`
+- `TASK-003 - Ajustar o Menu Card para Altura de Conteudo`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da home com cards mais baixos e ancorados embaixo
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- cards da home usam altura de conteudo
+- cards aparecem mais baixos na tela
+- mais area do video de fundo fica visivel acima da composicao
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-027` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-026 de video MP4 como background da home
 
 ### Resumo

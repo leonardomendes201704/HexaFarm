@@ -109,13 +109,16 @@ button:disabled {
   margin: 0 auto;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
   gap: 22px;
-  align-items: stretch;
+  align-items: end;
+  align-content: end;
   min-height: calc(100vh - 64px);
 }
 
 .hero-panel,
 .menu-panel {
   position: relative;
+  align-self: end;
+  height: fit-content;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 32px;
@@ -129,7 +132,6 @@ button:disabled {
 .hero-panel {
   display: flex;
   align-items: flex-end;
-  min-height: clamp(360px, 58vh, 620px);
   padding: 42px;
 }
 
@@ -200,7 +202,7 @@ button:disabled {
 .menu-panel {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 20px;
   padding: 32px;
 }
@@ -317,6 +319,7 @@ button:disabled {
 }
 
 .menu-panel__footer {
+  margin-top: 8px;
   color: rgba(106, 73, 49, 0.82);
   font-size: 0.84rem;
 }

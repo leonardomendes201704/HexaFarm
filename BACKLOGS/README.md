@@ -83,6 +83,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `EPICO-023`: ajuste de volume da trilha da home
 - `EPICO-024`: limpeza de informacao da home
 - `EPICO-025`: video de background da home
+- `EPICO-026`: ajuste de posicionamento dos cards da home
 - `PBI-001`: tela inicial do jogo HexaFarm
 - `PBI-002`: estrutura base de navegacao entre telas
 - `PBI-003`: sistema minimo de save local
@@ -109,6 +110,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-024`: ajustar volume padrao do BGM da home
 - `PBI-025`: remover info redundante da home
 - `PBI-026`: trocar background da home por video mp4
+- `PBI-027`: altura auto-fit e alinhamento inferior dos cards da home
 
 ## Convencao de Nomes
 
