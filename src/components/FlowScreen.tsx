@@ -1,6 +1,11 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
+type FlowStatusItem = {
+  label: string;
+  value: string;
+};
+
 type FlowScreenProps = {
   eyebrow: string;
   title: string;
@@ -9,7 +14,14 @@ type FlowScreenProps = {
   highlights: string[];
   backLabel?: string;
   children?: ReactNode;
+  statusItems?: FlowStatusItem[];
 };
+
+const DEFAULT_STATUS_ITEMS: FlowStatusItem[] = [
+  { label: "Home", value: "Ativa" },
+  { label: "Rotas base", value: "Prontas" },
+  { label: "Mapa hexagonal", value: "Proximo" },
+];
 
 export function FlowScreen({
   backLabel = "Voltar ao inicio",
@@ -18,6 +30,7 @@ export function FlowScreen({
   detail,
   eyebrow,
   highlights,
+  statusItems = DEFAULT_STATUS_ITEMS,
   title,
 }: FlowScreenProps) {
   return (
@@ -52,18 +65,12 @@ export function FlowScreen({
           <p className="route-aside__description">{detail}</p>
 
           <div className="route-list">
-            <div className="route-list__item">
-              <span>Home</span>
-              <span className="pill">Ativa</span>
-            </div>
-            <div className="route-list__item">
-              <span>Rotas base</span>
-              <span className="pill">Prontas</span>
-            </div>
-            <div className="route-list__item">
-              <span>Mapa hexagonal</span>
-              <span className="pill">Proximo</span>
-            </div>
+            {statusItems.map((statusItem) => (
+              <div className="route-list__item" key={`${statusItem.label}-${statusItem.value}`}>
+                <span>{statusItem.label}</span>
+                <span className="pill">{statusItem.value}</span>
+              </div>
+            ))}
           </div>
         </aside>
       </main>

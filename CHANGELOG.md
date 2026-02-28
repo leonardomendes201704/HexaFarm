@@ -18,6 +18,71 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-004 do mapa hexagonal isometrico
+
+### Resumo
+
+Foi implementado o primeiro prototipo do mapa hexagonal isometrico fake 3D no fluxo de `Novo Jogo`, incluindo fronteiras validas e uma acao simples de expansao de tiles.
+
+### Entregas realizadas
+
+- criacao do `EPICO-003` e do backlog completo do `PBI-004`
+- definicao de um modulo puro para coordenadas e regras basicas do grid hexagonal
+- criacao do componente visual do tabuleiro hexagonal
+- renderizacao do prototipo dentro da tela de `Novo Jogo`
+- adicao da acao `Usar Carta: Abrir Clareira`
+- adicao de fronteiras clicaveis para expansao
+- atualizacao do save minimo ao adicionar novos tiles
+- conclusao do `PBI-004` e do `EPICO-003`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-003_FUNDACAO_DO_MAPA_HEXAGONAL_ISOMETRICO.md`
+- `BACKLOGS/PBIS/PBI-004_PROTOTIPO_DO_MAPA_HEXAGONAL_ISOMETRICO/DONE-PBI-004_PROTOTIPO_DO_MAPA_HEXAGONAL_ISOMETRICO.md`
+- `BACKLOGS/PBIS/PBI-004_PROTOTIPO_DO_MAPA_HEXAGONAL_ISOMETRICO/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-004_PROTOTIPO_DO_MAPA_HEXAGONAL_ISOMETRICO/TASKS/DONE-*`
+- `src/lib/hexGrid.ts`
+- `src/lib/save.ts`
+- `src/components/FlowScreen.tsx`
+- `src/components/HexMapPrototype.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-003 - Fundacao do Mapa Hexagonal Isometrico`
+- `PBI-004 - Prototipo do Mapa Hexagonal Isometrico`
+- `HISTORIA-001 - Estruturar o Modelo Inicial do Grid Hexagonal`
+- `HISTORIA-002 - Renderizar o Mapa Hexagonal Fake 3D no Fluxo de Novo Jogo`
+- `HISTORIA-003 - Permitir Expansao Simples de Tiles e Refletir no Save`
+
+### Tasks executadas
+
+- `TASK-001 - Definir Tipos e Coordenadas do Grid`
+- `TASK-002 - Calcular Fronteiras Validas de Expansao`
+- `TASK-003 - Renderizar Tabuleiro Hexagonal na Tela de Novo Jogo`
+- `TASK-004 - Estilizar Leitura Isometrica Fake 3D`
+- `TASK-005 - Adicionar Acao de Expansao Simples`
+- `TASK-006 - Atualizar Metadados do Save apos Expansao`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da estrutura do backlog e da tela de `Novo Jogo`
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- o fluxo `Novo Jogo` agora exibe um tabuleiro hexagonal visivel
+- um novo tile pode ser adicionado em fronteiras validas
+- o save reflete o aumento de tiles colocados
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-004` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-003 de save local minimo
 
 ### Resumo

@@ -1,3 +1,5 @@
+import type { PrototypeTileType } from "./hexGrid";
+
 const SAVE_KEY = "hexafarm.save";
 const LEGACY_SAVE_KEY = "hexafarm.save.stub";
 const CURRENT_SAVE_VERSION = 2;
@@ -210,6 +212,50 @@ export function continueSavedRun() {
     lastActionLabel: "Run retomada pela tela de continuar",
     lastOpenedAt: new Date().toISOString(),
     sessionCount: currentSave.sessionCount + 1,
+  };
+
+  writeSaveSnapshot(updatedSave);
+
+  return updatedSave;
+}
+
+function getExpansionRewards(tileType: Exclude<PrototypeTileType, "home">) {
+  switch (tileType) {
+    case "field":
+      return { coins: 2, energy: 0, seeds: 1, waifuAffinity: 0 };
+    case "garden":
+      return { coins: 3, energy: 0, seeds: 0, waifuAffinity: 1 };
+    case "pond":
+      return { coins: 1, energy: 1, seeds: 0, waifuAffinity: 0 };
+    case "wild":
+      return { coins: 1, energy: 0, seeds: 1, waifuAffinity: 1 };
+    default:
+      return { coins: 0, energy: 0, seeds: 0, waifuAffinity: 0 };
+  }
+}
+
+export function registerPrototypeExpansion(tileType: Exclude<PrototypeTileType, "home">) {
+  const currentSave = readSaveSnapshot();
+
+  if (!currentSave) {
+    return createNewSave();
+  }
+
+  const rewards = getExpansionRewards(tileType);
+  const updatedSave: SaveSnapshot = {
+    ...currentSave,
+    activeRun: {
+      ...currentSave.activeRun,
+      resources: {
+        coins: currentSave.activeRun.resources.coins + rewards.coins,
+        energy: currentSave.activeRun.resources.energy + rewards.energy,
+        seeds: currentSave.activeRun.resources.seeds + rewards.seeds,
+      },
+      tilesPlaced: currentSave.activeRun.tilesPlaced + 1,
+      waifuAffinity: currentSave.activeRun.waifuAffinity + rewards.waifuAffinity,
+    },
+    lastActionLabel: `Tile ${tileType} adicionado ao prototipo`,
+    lastOpenedAt: new Date().toISOString(),
   };
 
   writeSaveSnapshot(updatedSave);
