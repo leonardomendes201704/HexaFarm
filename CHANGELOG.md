@@ -18,6 +18,55 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-032 de remocao do overlay do video da home
+
+### Resumo
+
+A camada de overlay que escurecia o video de fundo da home foi removida para expor a arte com mais brilho e fidelidade.
+
+### Entregas realizadas
+
+- criacao do backlog completo do `PBI-032`, vinculado ao `EPICO-025`
+- remocao da regra CSS do pseudo-elemento `.screen-shell__background::after`
+- preservacao do video em `cover` e da estrutura da home
+- conclusao do `PBI-032`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-032_REMOVER_OVERLAY_DO_VIDEO_DA_HOME/DONE-PBI-032_REMOVER_OVERLAY_DO_VIDEO_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-032_REMOVER_OVERLAY_DO_VIDEO_DA_HOME/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-032_REMOVER_OVERLAY_DO_VIDEO_DA_HOME/TASKS/DONE-*`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-025 - Video de Background da Home`
+- `PBI-032 - Remover Overlay do Video da Home`
+- `HISTORIA-001 - Eliminar a Camada Escura Sobre o Video da Home`
+
+### Tasks executadas
+
+- `TASK-001 - Remover o Pseudo-Elemento de Overlay do Background`
+- `TASK-002 - Preservar o Video em Cover sem Alterar a Estrutura`
+- `TASK-003 - Manter a Home Operacional sem a Camada Escura`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da home sem a camada escura sobre o video
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- o video ficou mais exposto e luminoso
+- a estrutura da home permaneceu funcional
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-032` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-031 de reforco do stroke grosso do titulo HexaFarm
 
 ### Resumo

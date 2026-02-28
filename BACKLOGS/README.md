@@ -116,6 +116,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-029`: ocultar status e rodape tecnico da home
 - `PBI-030`: aplicar filtro visual no video da home
 - `PBI-031`: reforcar stroke grosso do titulo HexaFarm
+- `PBI-032`: remover overlay do video da home
 
 ## Convencao de Nomes
 
