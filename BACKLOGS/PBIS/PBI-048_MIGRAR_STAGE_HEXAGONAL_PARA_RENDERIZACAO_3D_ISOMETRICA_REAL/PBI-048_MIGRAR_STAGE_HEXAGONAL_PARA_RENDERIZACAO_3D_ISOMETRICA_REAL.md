@@ -6,7 +6,7 @@ PBI
 
 ## Status
 
-Planejado
+Em andamento
 
 ## Epic Vinculado
 

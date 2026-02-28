@@ -18,6 +18,44 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - TASK-001 do PBI-048 concluida
+
+### Resumo
+
+Foi integrada a stack 3D oficial que sera usada na migracao do stage para renderizacao 3D isometrica real.
+
+### Entregas realizadas
+
+- adicao das dependencias `three`, `@react-three/fiber` e `@react-three/drei`
+- atualizacao do `PBI-048` para `Em andamento`
+- conclusao documental da `TASK-001` com prefixo `DONE-`
+
+### Arquivos principais criados ou alterados
+
+- `package.json`
+- `package-lock.json`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL.md`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/TASKS/DONE-TASK-001_ESCOLHER_E_INTEGRAR_A_STACK_3D.md`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-048 - Migrar Stage Hexagonal para Renderizacao 3D Isometrica Real`
+- `TASK-001 - Escolher e Integrar a Stack 3D`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- o build deve continuar concluindo com sucesso
+- o projeto passa a estar apto a receber o canvas 3D nas proximas tasks
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta task
+
 ## 2026-02-28 - Planejamento do PBI-048 para migracao do stage para 3D isometrico real
 
 ### Resumo
