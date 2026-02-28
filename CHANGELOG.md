@@ -18,6 +18,46 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-053 concluido
+
+### Resumo
+
+Foi adicionado um atalho de teclado para ocultar e reexibir os highlights de selecao, hover e alvo no stage 3D.
+
+### Entregas realizadas
+
+- criacao de um estado local para controlar a visibilidade dos highlights
+- adicao do atalho `L` na tela da run
+- propagacao do toggle para o `Stage3DCanvas`
+- remocao condicional do `highlightColor` em tiles e slots
+- atualizacao do modal de ajuda com a nova tecla
+
+### Arquivos principais criados ou alterados
+
+- `src/components/Stage3DCanvas.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-053_ADICIONAR_ATALHO_PARA_OCULTAR_HIGHLIGHTS_3D/*`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-053 - Adicionar Atalho para Ocultar Highlights 3D`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- o atalho `L` oculta e reexibe os highlights em tempo real
+- o stage continua interativo
+- slabs, tampa e crops permanecem independentes desse toggle
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - PBI-052 concluido
 
 ### Resumo

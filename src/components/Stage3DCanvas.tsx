@@ -29,6 +29,7 @@ type Stage3DCanvasProps = {
   onPlaceTile: (slot: HexCoord) => void;
   onSelectTile: (tileId: string) => void;
   selectedTileId: string | null;
+  showHighlights?: boolean;
   showSurfaceAccents?: boolean;
   showTopPlateau?: boolean;
   tiles: HexTile[];
@@ -229,6 +230,7 @@ type Stage3DSceneProps = {
   selectedTileId: string | null;
   setHoveredSlotKey: (slotKey: string | null) => void;
   setHoveredTileId: (tileId: string | null) => void;
+  showHighlights: boolean;
   showSurfaceAccents: boolean;
   showTopPlateau: boolean;
   useReducedDetail: boolean;
@@ -249,6 +251,7 @@ function Stage3DScene({
   selectedTileId,
   setHoveredSlotKey,
   setHoveredTileId,
+  showHighlights,
   showSurfaceAccents,
   showTopPlateau,
   useReducedDetail,
@@ -272,12 +275,13 @@ function Stage3DScene({
       {frontierSlots.map((slot) => {
         const [x, y, z] = projectAxialToWorld(slot, -0.08);
         const slotKey = `${slot.q}:${slot.r}`;
-        const highlightColor =
+        const rawHighlightColor =
           expansionArmed && !interactionLocked
             ? hoveredSlotKey === slotKey
               ? "#fff6ca"
               : "#ffe0a6"
             : undefined;
+        const highlightColor = showHighlights ? rawHighlightColor : undefined;
 
         return (
           <HexPrismMesh3D
@@ -320,7 +324,7 @@ function Stage3DScene({
         const [x, y, z] = projectAxialToWorld(tile, 0);
         const tileColors = TILE_COLOR_BY_TYPE[tile.tileType];
         const isCropTarget = cropArmed && cropTargetTileIdSet.has(tile.id);
-        const highlightColor =
+        const rawHighlightColor =
           selectedTileId === tile.id
             ? "#ffe2b5"
             : isCropTarget
@@ -328,6 +332,7 @@ function Stage3DScene({
               : hoveredTileId === tile.id
                 ? "#d6f1ff"
                 : undefined;
+        const highlightColor = showHighlights ? rawHighlightColor : undefined;
 
         return (
           <HexPrismMesh3D
@@ -388,6 +393,7 @@ export function Stage3DCanvas({
   onPlaceTile,
   onSelectTile,
   selectedTileId,
+  showHighlights = true,
   showSurfaceAccents = true,
   showTopPlateau = true,
   tiles,
@@ -470,6 +476,7 @@ export function Stage3DCanvas({
           onPlaceTile={onPlaceTile}
           onSelectTile={onSelectTile}
           selectedTileId={selectedTileId}
+          showHighlights={showHighlights}
           setHoveredSlotKey={setHoveredSlotKey}
           setHoveredTileId={setHoveredTileId}
           showSurfaceAccents={showSurfaceAccents}

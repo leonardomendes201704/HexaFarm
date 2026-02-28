@@ -118,6 +118,7 @@ export function NewGameScreen() {
   const [armedCardId, setArmedCardId] = useState<string | null>(null);
   const [activeModal, setActiveModal] = useState<HudModalId>(null);
   const [isResolvingDay, setIsResolvingDay] = useState(false);
+  const [showHighlights, setShowHighlights] = useState(true);
   const [showSurfaceAccents, setShowSurfaceAccents] = useState(true);
   const [showTopPlateau, setShowTopPlateau] = useState(true);
   const [yieldBursts, setYieldBursts] = useState<Array<{ tileId: string; yieldValue: number }>>([]);
@@ -216,6 +217,10 @@ export function NewGameScreen() {
 
       if (pressedKey === "h") {
         setActiveModal((currentModal) => (currentModal === "help" ? null : "help"));
+      }
+
+      if (pressedKey === "l") {
+        setShowHighlights((currentValue) => !currentValue);
       }
 
       if (pressedKey === "s") {
@@ -524,6 +529,7 @@ export function NewGameScreen() {
             onPlaceTile={handlePlaceTile}
             onSelectTile={setSelectedTileId}
             selectedTileId={selectedTileId}
+            showHighlights={showHighlights}
             showSurfaceAccents={showSurfaceAccents}
             showTopPlateau={showTopPlateau}
             tiles={tiles}
@@ -765,6 +771,10 @@ export function NewGameScreen() {
               <div className="game-modal__tip">
                 <span className="game-modal__tip-key">E</span>
                 <p className="game-modal__tip-text">Fecha o dia, sobe moedinhas por tile e, no dia 7, resolve o aluguel.</p>
+              </div>
+              <div className="game-modal__tip">
+                <span className="game-modal__tip-key">L</span>
+                <p className="game-modal__tip-text">Oculta ou mostra os highlights de selecao, hover e alvo sobre tiles e slots.</p>
               </div>
               <div className="game-modal__tip">
                 <span className="game-modal__tip-key">S</span>
