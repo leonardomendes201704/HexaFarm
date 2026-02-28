@@ -920,7 +920,7 @@ button:disabled {
 .expansion-card {
   --card-shell-border: rgba(196, 154, 92, 0.86);
   --card-shell-glow: rgba(180, 136, 72, 0.22);
-  --card-art-border: rgba(238, 211, 168, 0.92);
+  --card-art-border: rgba(186, 136, 74, 0.98);
   position: relative;
   width: min(18vw, 188px);
   min-width: 124px;
@@ -979,11 +979,11 @@ button:disabled {
   border-radius: 18px;
   min-height: 150px;
   padding: 16px;
-  border: 3px solid var(--card-art-border);
+  border: 4px solid var(--card-art-border);
   background: linear-gradient(180deg, rgba(255, 220, 191, 0.45), rgba(255, 244, 224, 0.92));
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.24),
-    0 10px 18px rgba(82, 53, 31, 0.08);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+    0 10px 18px rgba(82, 53, 31, 0.1);
 }
 
 .expansion-card__art-image {
@@ -1084,31 +1084,31 @@ button:disabled {
 .expansion-card--field {
   --card-shell-border: rgba(117, 170, 88, 0.94);
   --card-shell-glow: rgba(106, 162, 79, 0.2);
-  --card-art-border: rgba(201, 234, 174, 0.96);
+  --card-art-border: rgba(105, 160, 72, 0.98);
 }
 
 .expansion-card--garden {
   --card-shell-border: rgba(225, 146, 125, 0.94);
   --card-shell-glow: rgba(222, 145, 122, 0.2);
-  --card-art-border: rgba(255, 214, 196, 0.96);
+  --card-art-border: rgba(214, 126, 102, 0.98);
 }
 
 .expansion-card--pond {
   --card-shell-border: rgba(106, 165, 212, 0.96);
   --card-shell-glow: rgba(91, 155, 211, 0.2);
-  --card-art-border: rgba(205, 233, 252, 0.96);
+  --card-art-border: rgba(84, 143, 198, 0.98);
 }
 
 .expansion-card--wild {
   --card-shell-border: rgba(138, 156, 96, 0.94);
   --card-shell-glow: rgba(128, 148, 88, 0.2);
-  --card-art-border: rgba(217, 228, 187, 0.96);
+  --card-art-border: rgba(118, 136, 77, 0.98);
 }
 
 .expansion-card--crop {
   --card-shell-border: rgba(228, 171, 78, 0.96);
   --card-shell-glow: rgba(214, 152, 55, 0.22);
-  --card-art-border: rgba(255, 230, 179, 0.98);
+  --card-art-border: rgba(210, 148, 42, 1);
 }
 
 .expansion-card__spark {
@@ -2148,7 +2148,7 @@ button:disabled {
 .collection-card {
   --card-shell-border: rgba(196, 154, 92, 0.84);
   --card-shell-glow: rgba(180, 136, 72, 0.16);
-  --card-art-border: rgba(238, 211, 168, 0.9);
+  --card-art-border: rgba(186, 136, 74, 0.96);
   position: relative;
   display: grid;
   gap: 12px;
@@ -2179,13 +2179,13 @@ button:disabled {
   overflow: hidden;
   border-radius: 18px;
   min-height: 110px;
-  border: 3px solid var(--card-art-border);
+  border: 4px solid var(--card-art-border);
   background:
     radial-gradient(circle at 50% 16%, rgba(255, 248, 200, 0.88), transparent 22%),
     linear-gradient(180deg, rgba(255, 214, 232, 0.82), rgba(255, 244, 214, 0.92));
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.24),
-    0 8px 16px rgba(82, 53, 31, 0.06);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 8px 16px rgba(82, 53, 31, 0.08);
 }
 
 .collection-card__art--field {
@@ -2215,31 +2215,31 @@ button:disabled {
 .collection-card--field {
   --card-shell-border: rgba(117, 170, 88, 0.92);
   --card-shell-glow: rgba(106, 162, 79, 0.14);
-  --card-art-border: rgba(201, 234, 174, 0.95);
+  --card-art-border: rgba(105, 160, 72, 0.96);
 }
 
 .collection-card--garden {
   --card-shell-border: rgba(225, 146, 125, 0.92);
   --card-shell-glow: rgba(222, 145, 122, 0.14);
-  --card-art-border: rgba(255, 214, 196, 0.95);
+  --card-art-border: rgba(214, 126, 102, 0.96);
 }
 
 .collection-card--pond {
   --card-shell-border: rgba(106, 165, 212, 0.94);
   --card-shell-glow: rgba(91, 155, 211, 0.14);
-  --card-art-border: rgba(205, 233, 252, 0.95);
+  --card-art-border: rgba(84, 143, 198, 0.96);
 }
 
 .collection-card--wild {
   --card-shell-border: rgba(138, 156, 96, 0.92);
   --card-shell-glow: rgba(128, 148, 88, 0.14);
-  --card-art-border: rgba(217, 228, 187, 0.95);
+  --card-art-border: rgba(118, 136, 77, 0.96);
 }
 
 .collection-card--crop {
   --card-shell-border: rgba(228, 171, 78, 0.94);
   --card-shell-glow: rgba(214, 152, 55, 0.16);
-  --card-art-border: rgba(255, 230, 179, 0.96);
+  --card-art-border: rgba(210, 148, 42, 0.98);
 }
 
 .collection-card__art-image {

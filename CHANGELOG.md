@@ -18,6 +18,42 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-057 concluido
+
+### Resumo
+
+As bordas da area de arte das cartas foram reforcadas para ficarem mais grossas e mais contrastantes.
+
+### Entregas realizadas
+
+- aumento da espessura da borda da arte de `3px` para `4px`
+- escurecimento e saturacao das cores da borda interna por tipo
+- reducao do brilho interno para destacar melhor o contorno da arte
+
+### Arquivos principais criados ou alterados
+
+- `src/styles.css`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-057_REFORCAR_BORDAS_DAS_ARTES_DAS_CARTAS/*`
+
+### Vinculos de backlog
+
+- `EPICO-032 - Integracao de Artes Reais nas Cartas`
+- `PBI-057 - Reforcar Bordas das Artes das Cartas`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- a area de arte das cartas fica mais delimitada
+- o contorno da ilustracao ganha mais contraste e presenca visual
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - PBI-056 concluido
 
 ### Resumo
