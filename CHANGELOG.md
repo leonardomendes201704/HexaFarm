@@ -18,6 +18,56 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-031 de reforco do stroke grosso do titulo HexaFarm
+
+### Resumo
+
+O tratamento do titulo principal da home foi reforcado para exibir um contorno realmente grosso e perceptivel, combinando `text-stroke` mais espesso com camadas de `text-shadow`.
+
+### Entregas realizadas
+
+- criacao do backlog completo do `PBI-031`, vinculado ao `EPICO-027`
+- aumento da espessura do `-webkit-text-stroke` do titulo
+- aplicacao de multiplas camadas de `text-shadow` para simular uma borda grossa
+- preservacao de uma sombra de profundidade leve
+- conclusao do `PBI-031`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-031_REFORCAR_STROKE_GROSSO_DO_TITULO_HEXAFARM/DONE-PBI-031_REFORCAR_STROKE_GROSSO_DO_TITULO_HEXAFARM.md`
+- `BACKLOGS/PBIS/PBI-031_REFORCAR_STROKE_GROSSO_DO_TITULO_HEXAFARM/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-031_REFORCAR_STROKE_GROSSO_DO_TITULO_HEXAFARM/TASKS/DONE-*`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-027 - Refinamento Tipografico da Home`
+- `PBI-031 - Reforcar Stroke Grosso do Titulo HexaFarm`
+- `HISTORIA-001 - Intensificar o Contorno Pastel do Titulo Principal`
+
+### Tasks executadas
+
+- `TASK-001 - Aumentar a Espessura do Text Stroke`
+- `TASK-002 - Simular Borda Grossa com Camadas de Text Shadow`
+- `TASK-003 - Preservar a Leveza do Brilho do Titulo`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual do titulo da home com contorno mais forte
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- o contorno do titulo ficou bem mais evidente
+- o titulo se aproximou mais do mock esperado
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-031` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-030 de filtro visual no video da home
 
 ### Resumo
