@@ -93,6 +93,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `EPICO-033`: estruturacao data-driven do catalogo de cartas
 - `EPICO-034`: persistencia global do BGM da jornada
 - `EPICO-035`: sistema de cultivo em solos ferteis
+- `EPICO-036`: refinamento do hud superior e ocupacao total do stage
 - `PBI-001`: tela inicial do jogo HexaFarm
 - `PBI-002`: estrutura base de navegacao entre telas
 - `PBI-003`: sistema minimo de save local
@@ -137,6 +138,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-042`: centralizar catalogo de cartas em json
 - `PBI-043`: tornar o bgm global e continuo entre telas
 - `PBI-044`: implementar cartas de cultivo e combo com lote fertil
+- `PBI-045`: adicionar calendario semanal no hud e expandir stage fullscreen
 
 ## Convencao de Nomes
 

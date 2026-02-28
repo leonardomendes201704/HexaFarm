@@ -18,6 +18,50 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-045 de calendario semanal no HUD e stage fullscreen
+
+### Resumo
+
+O topo da run agora usa um calendario semanal centralizado, e o stage passou a ocupar a viewport inteira por tras do HUD e da mao.
+
+### Entregas realizadas
+
+- criacao do backlog do `PBI-045`, vinculado ao `EPICO-036`
+- remocao da badge `Dia` do topo da run
+- adicao da linha semanal `Dom | Seg | Ter | Qua | Qui | Sex | Sab`
+- destaque visual do dia atual da run com contorno
+- reposicionamento do HUD como overlay superior
+- expansao do stage para preencher toda a tela, sem margens
+- ajuste de responsividade do topo e da sobreposicao do stage
+- conclusao do `PBI-045`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-036_REFINAMENTO_DO_HUD_SUPERIOR_E_OCUPACAO_TOTAL_DO_STAGE.md`
+- `BACKLOGS/PBIS/PBI-045_ADICIONAR_CALENDARIO_SEMANAL_NO_HUD_E_EXPANDIR_STAGE_FULLSCREEN/DONE-PBI-045_ADICIONAR_CALENDARIO_SEMANAL_NO_HUD_E_EXPANDIR_STAGE_FULLSCREEN.md`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+
+### Vinculos de backlog
+
+- `EPICO-036 - Refinamento do HUD Superior e Ocupacao Total do Stage`
+- `PBI-045 - Adicionar Calendario Semanal no HUD e Expandir Stage Fullscreen`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- build deve concluir com sucesso
+- o calendario semanal deve aparecer no topo e o dia atual deve ficar contornado
+- o stage deve preencher a viewport por tras da interface
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - Implementacao do PBI-044 de cultivo e combo com Lote Fertil
 
 ### Resumo

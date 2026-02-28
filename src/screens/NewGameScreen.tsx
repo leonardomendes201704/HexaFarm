@@ -45,6 +45,7 @@ import {
 
 type HudModalId = "help" | "menu" | "status" | null;
 const DAY_RESOLUTION_DURATION_MS = 980;
+const WEEK_DAY_LABELS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"] as const;
 
 function getCardMetaLine(card: ReturnType<typeof getCardLibrary>[number]) {
   if (card.cardKind === "crop") {
@@ -135,6 +136,10 @@ export function NewGameScreen() {
   const canStartRun = selectedDeckCount === DECK_SIZE;
   const shopOffers = getShopOffers(savedRun.meta.completedRuns);
   const dailyCoinYieldLabel = getRunDailyCoinYieldLabel(savedRun.activeRun);
+  const currentWeekDayIndex = Math.min(
+    Math.max(savedRun.activeRun.day - 1, 0),
+    WEEK_DAY_LABELS.length - 1,
+  );
   const playableCardInstanceIds = useMemo(() => {
     if (!canRunGameplay || isResolvingDay) {
       return [] as string[];
@@ -456,8 +461,19 @@ export function NewGameScreen() {
           </button>
         </div>
 
+        <div aria-label="Calendario da run" className="gameplay-weekline" role="list">
+          {WEEK_DAY_LABELS.map((weekDayLabel, index) => (
+            <span
+              className={`gameplay-weekline__day ${index === currentWeekDayIndex ? "is-current" : ""}`}
+              key={weekDayLabel}
+              role="listitem"
+            >
+              {weekDayLabel}
+            </span>
+          ))}
+        </div>
+
         <div className="gameplay-hud__cluster gameplay-hud__cluster--right">
-          <span className="hud-pill">Dia {savedRun.activeRun.day}</span>
           <span className="hud-pill">Aluguel {savedRun.activeRun.rentDue}</span>
           <span className="hud-pill">Moedas {savedRun.activeRun.resources.coins}</span>
           <span className="hud-pill">Energia {availableEnergy}</span>
