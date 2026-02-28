@@ -1547,19 +1547,22 @@ button:disabled {
   position: absolute;
   inset: 0;
   z-index: 1;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: default;
+}
+
+.stage-3d-canvas.is-panning {
+  cursor: grabbing;
+}
+
+.stage-3d-canvas.is-locked {
+  cursor: default;
 }
 
 .stage-3d-canvas canvas {
   display: block;
   width: 100% !important;
   height: 100% !important;
-}
-
-.gameplay-stage__map {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
 }
 
 .gameplay-stage__status {

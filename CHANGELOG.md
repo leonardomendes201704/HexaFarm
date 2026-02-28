@@ -308,6 +308,44 @@ O stage 3D passou a representar os cultivos plantados com props 3D leves.
 
 - esta entrada deve ser fechada com commit e push apos a validacao final desta task
 
+## 2026-02-28 - TASK-009 do PBI-048 concluida
+
+### Resumo
+
+O stage 3D passou a comandar diretamente a selecao, o hover e o clique do mapa.
+
+### Entregas realizadas
+
+- ligacao dos callbacks de expansao, plantio e selecao na malha 3D
+- uso de eventos de raycasting do `react-three-fiber` para tiles e slots
+- remocao da camada 2D do mapa como superficie principal do stage
+
+### Arquivos principais criados ou alterados
+
+- `src/components/HexPrismMesh3D.tsx`
+- `src/components/Stage3DCanvas.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/TASKS/DONE-TASK-009_REIMPLEMENTAR_SELECAO_E_HOVER_COM_RAYCASTING.md`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-048 - Migrar Stage Hexagonal para Renderizacao 3D Isometrica Real`
+- `TASK-009 - Reimplementar Selecao e Hover com Raycasting`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- a interacao principal do mapa passa a acontecer na propria camada 3D
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta task
+
 ## 2026-02-28 - Planejamento do PBI-048 para migracao do stage para 3D isometrico real
 
 ### Resumo

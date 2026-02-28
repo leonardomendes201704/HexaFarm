@@ -1,5 +1,6 @@
 import { OrthographicCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react";
 import { HexPrismMesh3D } from "./HexPrismMesh3D";
 import type { HexCoord, HexTile, PrototypeTileType } from "../lib/hexGrid";
 import { projectAxialToWorld } from "../lib/hexGrid3d";
@@ -9,7 +10,15 @@ const STAGE_3D_CAMERA_LOOK_AT: [number, number, number] = [0, -0.5, 0];
 const STAGE_3D_CAMERA_ZOOM = 92;
 
 type Stage3DCanvasProps = {
+  cropArmed: boolean;
+  cropTargetTileIds: string[];
+  expansionArmed: boolean;
   frontierSlots: HexCoord[];
+  interactionLocked?: boolean;
+  onPlantCrop: (tileId: string) => void;
+  onPlaceTile: (slot: HexCoord) => void;
+  onSelectTile: (tileId: string) => void;
+  selectedTileId: string | null;
   tiles: HexTile[];
 };
 
@@ -138,7 +147,40 @@ function CropProp3D({ cropName }: { cropName: string | null }) {
   }
 }
 
-function Stage3DBackdrop({ frontierSlots, tiles }: Stage3DCanvasProps) {
+type Stage3DSceneProps = {
+  cropArmed: boolean;
+  cropTargetTileIds: string[];
+  expansionArmed: boolean;
+  frontierSlots: HexCoord[];
+  hoveredSlotKey: string | null;
+  hoveredTileId: string | null;
+  interactionLocked: boolean;
+  onPlantCrop: (tileId: string) => void;
+  onPlaceTile: (slot: HexCoord) => void;
+  onSelectTile: (tileId: string) => void;
+  selectedTileId: string | null;
+  setHoveredSlotKey: (slotKey: string | null) => void;
+  setHoveredTileId: (tileId: string | null) => void;
+  tiles: HexTile[];
+};
+
+function Stage3DScene({
+  cropArmed,
+  cropTargetTileIds,
+  expansionArmed,
+  frontierSlots,
+  hoveredSlotKey,
+  hoveredTileId,
+  interactionLocked,
+  onPlantCrop,
+  onPlaceTile,
+  onSelectTile,
+  selectedTileId,
+  setHoveredSlotKey,
+  setHoveredTileId,
+  tiles,
+}: Stage3DSceneProps) {
+  const cropTargetTileIdSet = new Set(cropTargetTileIds);
   const worldCoords = [...tiles, ...frontierSlots];
   const planeSize = Math.max(22, worldCoords.length * 1.8);
 
@@ -155,13 +197,43 @@ function Stage3DBackdrop({ frontierSlots, tiles }: Stage3DCanvasProps) {
 
       {frontierSlots.map((slot) => {
         const [x, y, z] = projectAxialToWorld(slot, -0.08);
+        const slotKey = `${slot.q}:${slot.r}`;
+        const highlightColor =
+          expansionArmed && !interactionLocked
+            ? hoveredSlotKey === slotKey
+              ? "#fff6ca"
+              : "#ffe0a6"
+            : undefined;
 
         return (
           <HexPrismMesh3D
             bodyColor="#e9d6b0"
             height={0.22}
             key={`slot-3d-${slot.q}-${slot.r}`}
+            highlightColor={highlightColor}
             opacity={0.34}
+            onClick={(event) => {
+              event.stopPropagation();
+
+              if (!expansionArmed || interactionLocked) {
+                return;
+              }
+
+              onPlaceTile(slot);
+            }}
+            onPointerOut={(event) => {
+              event.stopPropagation();
+              setHoveredSlotKey(null);
+            }}
+            onPointerOver={(event) => {
+              event.stopPropagation();
+
+              if (!expansionArmed || interactionLocked) {
+                return;
+              }
+
+              setHoveredSlotKey(slotKey);
+            }}
             position={[x, y, z]}
             radius={0.92}
             topColor="#fff4db"
@@ -172,12 +244,49 @@ function Stage3DBackdrop({ frontierSlots, tiles }: Stage3DCanvasProps) {
       {tiles.map((tile) => {
         const [x, y, z] = projectAxialToWorld(tile, 0);
         const tileColors = TILE_COLOR_BY_TYPE[tile.tileType];
+        const isCropTarget = cropArmed && cropTargetTileIdSet.has(tile.id);
+        const highlightColor =
+          selectedTileId === tile.id
+            ? "#ffe2b5"
+            : isCropTarget
+              ? "#fff0a1"
+              : hoveredTileId === tile.id
+                ? "#d6f1ff"
+                : undefined;
 
         return (
           <HexPrismMesh3D
             bodyColor={tileColors.body}
             height={tile.tileType === "home" ? 0.82 : 0.72}
+            highlightColor={highlightColor}
             key={`tile-3d-${tile.id}`}
+            onClick={(event) => {
+              event.stopPropagation();
+
+              if (interactionLocked) {
+                return;
+              }
+
+              if (isCropTarget) {
+                onPlantCrop(tile.id);
+                return;
+              }
+
+              onSelectTile(tile.id);
+            }}
+            onPointerOut={(event) => {
+              event.stopPropagation();
+              setHoveredTileId(null);
+            }}
+            onPointerOver={(event) => {
+              event.stopPropagation();
+
+              if (interactionLocked) {
+                return;
+              }
+
+              setHoveredTileId(tile.id);
+            }}
             position={[x, y, z]}
             radius={1}
             topColor={tileColors.top}
@@ -191,9 +300,57 @@ function Stage3DBackdrop({ frontierSlots, tiles }: Stage3DCanvasProps) {
   );
 }
 
-export function Stage3DCanvas({ frontierSlots, tiles }: Stage3DCanvasProps) {
+export function Stage3DCanvas({
+  cropArmed,
+  cropTargetTileIds,
+  expansionArmed,
+  frontierSlots,
+  interactionLocked = false,
+  onPlantCrop,
+  onPlaceTile,
+  onSelectTile,
+  selectedTileId,
+  tiles,
+}: Stage3DCanvasProps) {
+  const dragOriginRef = useRef<{ x: number; y: number } | null>(null);
+  const [hoveredSlotKey, setHoveredSlotKey] = useState<string | null>(null);
+  const [hoveredTileId, setHoveredTileId] = useState<string | null>(null);
+  const [isPanning, setIsPanning] = useState(false);
+
+  useEffect(() => {
+    const handleMouseUp = () => {
+      if (!dragOriginRef.current) {
+        return;
+      }
+
+      dragOriginRef.current = null;
+      setIsPanning(false);
+    };
+
+    window.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);
+
+  const handlePanStart = (event: ReactMouseEvent<HTMLDivElement>) => {
+    if (interactionLocked || event.button !== 2) {
+      return;
+    }
+
+    event.preventDefault();
+    dragOriginRef.current = { x: event.clientX, y: event.clientY };
+    setIsPanning(true);
+  };
+
   return (
-    <div aria-hidden="true" className="stage-3d-canvas">
+    <div
+      className={`stage-3d-canvas ${isPanning ? "is-panning" : ""} ${interactionLocked ? "is-locked" : ""}`}
+      onContextMenu={(event) => event.preventDefault()}
+      onMouseDown={handlePanStart}
+      title="Mapa 3D do stage."
+    >
       <Canvas
         dpr={[1, 1.5]}
         frameloop="demand"
@@ -210,7 +367,22 @@ export function Stage3DCanvas({ frontierSlots, tiles }: Stage3DCanvasProps) {
           position={STAGE_3D_CAMERA_POSITION}
           zoom={STAGE_3D_CAMERA_ZOOM}
         />
-        <Stage3DBackdrop frontierSlots={frontierSlots} tiles={tiles} />
+        <Stage3DScene
+          cropArmed={cropArmed}
+          frontierSlots={frontierSlots}
+          cropTargetTileIds={cropTargetTileIds}
+          expansionArmed={expansionArmed}
+          hoveredSlotKey={hoveredSlotKey}
+          hoveredTileId={hoveredTileId}
+          interactionLocked={interactionLocked}
+          onPlantCrop={onPlantCrop}
+          onPlaceTile={onPlaceTile}
+          onSelectTile={onSelectTile}
+          selectedTileId={selectedTileId}
+          setHoveredSlotKey={setHoveredSlotKey}
+          setHoveredTileId={setHoveredTileId}
+          tiles={tiles}
+        />
       </Canvas>
     </div>
   );

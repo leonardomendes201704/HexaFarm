@@ -3,7 +3,6 @@ import { Link, Navigate } from "react-router-dom";
 import { CollectionCard } from "../components/CollectionCard";
 import { ExpansionHand } from "../components/ExpansionHand";
 import { GameModal } from "../components/GameModal";
-import { HexMapPrototype, type TileYieldBurst } from "../components/HexMapPrototype";
 import { SaveSummaryCard } from "../components/SaveSummaryCard";
 import { Stage3DCanvas } from "../components/Stage3DCanvas";
 import {
@@ -119,7 +118,7 @@ export function NewGameScreen() {
   const [armedCardId, setArmedCardId] = useState<string | null>(null);
   const [activeModal, setActiveModal] = useState<HudModalId>(null);
   const [isResolvingDay, setIsResolvingDay] = useState(false);
-  const [yieldBursts, setYieldBursts] = useState<TileYieldBurst[]>([]);
+  const [yieldBursts, setYieldBursts] = useState<Array<{ tileId: string; yieldValue: number }>>([]);
   const dayResolutionTimeoutRef = useRef<number | null>(null);
 
   const collectionCards = useMemo(() => getCardLibrary(), []);
@@ -491,8 +490,6 @@ export function NewGameScreen() {
       </header>
 
       <div className="gameplay-stage">
-        <Stage3DCanvas frontierSlots={frontierSlots} tiles={tiles} />
-
         <div className="gameplay-stage__status">
           {armedCard ? (
             <div className="status-orb status-orb--active">
@@ -506,21 +503,18 @@ export function NewGameScreen() {
           </div>
         </div>
 
-        <div className="gameplay-stage__map">
-          <HexMapPrototype
-            cropArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "crop"}
-            cropTargetTileIds={cropTargetTileIds}
-            expansionArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "tile"}
-            frontierSlots={frontierSlots}
-            interactionLocked={isResolvingDay}
-            onPlantCrop={handlePlantCrop}
-            onPlaceTile={handlePlaceTile}
-            onSelectTile={setSelectedTileId}
-            selectedTileId={selectedTileId}
-            tiles={tiles}
-            yieldBursts={yieldBursts}
-          />
-        </div>
+        <Stage3DCanvas
+          cropArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "crop"}
+          cropTargetTileIds={cropTargetTileIds}
+          expansionArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "tile"}
+          frontierSlots={frontierSlots}
+          interactionLocked={isResolvingDay}
+          onPlantCrop={handlePlantCrop}
+          onPlaceTile={handlePlaceTile}
+          onSelectTile={setSelectedTileId}
+          selectedTileId={selectedTileId}
+          tiles={tiles}
+        />
       </div>
 
       {canRunGameplay ? (

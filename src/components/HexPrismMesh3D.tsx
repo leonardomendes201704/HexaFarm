@@ -1,9 +1,14 @@
 import type { ReactNode } from "react";
+import type { ThreeEvent } from "@react-three/fiber";
 
 type HexPrismMesh3DProps = {
   bodyColor: string;
   children?: ReactNode;
   height?: number;
+  highlightColor?: string;
+  onClick?: (event: ThreeEvent<MouseEvent>) => void;
+  onPointerOut?: (event: ThreeEvent<PointerEvent>) => void;
+  onPointerOver?: (event: ThreeEvent<PointerEvent>) => void;
   opacity?: number;
   position: [number, number, number];
   radius?: number;
@@ -17,6 +22,10 @@ export function HexPrismMesh3D({
   bodyColor,
   children,
   height = DEFAULT_HEX_HEIGHT,
+  highlightColor,
+  onClick,
+  onPointerOut,
+  onPointerOver,
   opacity = 1,
   position,
   radius = DEFAULT_HEX_RADIUS,
@@ -27,7 +36,12 @@ export function HexPrismMesh3D({
   const plateauHeight = Math.max(height * 0.32, 0.14);
 
   return (
-    <group position={[x, y, z]}>
+    <group
+      onClick={onClick}
+      onPointerOut={onPointerOut}
+      onPointerOver={onPointerOver}
+      position={[x, y, z]}
+    >
       <mesh position={[0, height / 2, 0]} rotation={hexRotation}>
         <cylinderGeometry args={[radius, radius, height, 6]} />
         <meshStandardMaterial
@@ -49,6 +63,20 @@ export function HexPrismMesh3D({
           transparent={opacity < 1}
         />
       </mesh>
+
+      {highlightColor ? (
+        <mesh position={[0, height + 0.03, 0]} rotation={hexRotation}>
+          <cylinderGeometry args={[radius * 1.06, radius * 1.06, 0.08, 6]} />
+          <meshStandardMaterial
+            color={highlightColor}
+            emissive={highlightColor}
+            emissiveIntensity={0.3}
+            opacity={0.7}
+            roughness={0.3}
+            transparent
+          />
+        </mesh>
+      ) : null}
 
       {children}
     </group>
