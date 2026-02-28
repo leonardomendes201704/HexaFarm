@@ -56,6 +56,44 @@ Foi integrada a stack 3D oficial que sera usada na migracao do stage para render
 
 - esta entrada deve ser fechada com commit e push apos a validacao final desta task
 
+## 2026-02-28 - TASK-002 do PBI-048 concluida
+
+### Resumo
+
+Foi criado o canvas 3D base dentro do stage, ainda sem assumir as interacoes do mapa.
+
+### Entregas realizadas
+
+- criacao do componente `Stage3DCanvas`
+- insercao do canvas 3D por tras do `HexMapPrototype`
+- organizacao das camadas do stage para manter HUD, modais e mao intactos
+
+### Arquivos principais criados ou alterados
+
+- `src/components/Stage3DCanvas.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `BACKLOGS/PBIS/PBI-048_MIGRAR_STAGE_HEXAGONAL_PARA_RENDERIZACAO_3D_ISOMETRICA_REAL/TASKS/DONE-TASK-002_CRIAR_CANVAS_3D_DENTRO_DO_STAGE.md`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-048 - Migrar Stage Hexagonal para Renderizacao 3D Isometrica Real`
+- `TASK-002 - Criar Canvas 3D Dentro do Stage`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- o stage deve continuar funcional
+- a viewport de jogo passa a conter um canvas 3D real montado por tras da camada atual do mapa
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta task
+
 ## 2026-02-28 - Planejamento do PBI-048 para migracao do stage para 3D isometrico real
 
 ### Resumo

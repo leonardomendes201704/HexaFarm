@@ -1543,6 +1543,25 @@ button:disabled {
   padding: 0;
 }
 
+.stage-3d-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.stage-3d-canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.gameplay-stage__map {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
 .gameplay-stage__status {
   position: absolute;
   inset: 88px 0 auto;

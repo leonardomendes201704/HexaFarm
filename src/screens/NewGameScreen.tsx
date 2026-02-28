@@ -5,6 +5,7 @@ import { ExpansionHand } from "../components/ExpansionHand";
 import { GameModal } from "../components/GameModal";
 import { HexMapPrototype, type TileYieldBurst } from "../components/HexMapPrototype";
 import { SaveSummaryCard } from "../components/SaveSummaryCard";
+import { Stage3DCanvas } from "../components/Stage3DCanvas";
 import {
   applyCropToTile,
   createExpandedTile,
@@ -490,6 +491,8 @@ export function NewGameScreen() {
       </header>
 
       <div className="gameplay-stage">
+        <Stage3DCanvas />
+
         <div className="gameplay-stage__status">
           {armedCard ? (
             <div className="status-orb status-orb--active">
@@ -503,19 +506,21 @@ export function NewGameScreen() {
           </div>
         </div>
 
-        <HexMapPrototype
-          cropArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "crop"}
-          cropTargetTileIds={cropTargetTileIds}
-          expansionArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "tile"}
-          frontierSlots={frontierSlots}
-          interactionLocked={isResolvingDay}
-          onPlantCrop={handlePlantCrop}
-          onPlaceTile={handlePlaceTile}
-          onSelectTile={setSelectedTileId}
-          selectedTileId={selectedTileId}
-          tiles={tiles}
-          yieldBursts={yieldBursts}
-        />
+        <div className="gameplay-stage__map">
+          <HexMapPrototype
+            cropArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "crop"}
+            cropTargetTileIds={cropTargetTileIds}
+            expansionArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "tile"}
+            frontierSlots={frontierSlots}
+            interactionLocked={isResolvingDay}
+            onPlantCrop={handlePlantCrop}
+            onPlaceTile={handlePlaceTile}
+            onSelectTile={setSelectedTileId}
+            selectedTileId={selectedTileId}
+            tiles={tiles}
+            yieldBursts={yieldBursts}
+          />
+        </div>
       </div>
 
       {canRunGameplay ? (

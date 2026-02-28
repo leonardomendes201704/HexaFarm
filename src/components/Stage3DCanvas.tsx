@@ -1,0 +1,35 @@
+import { Canvas } from "@react-three/fiber";
+
+function Stage3DBackdrop() {
+  return (
+    <>
+      <ambientLight intensity={1.35} />
+      <directionalLight color="#fff3cf" intensity={1.8} position={[6, 8, 5]} />
+      <directionalLight color="#ffd8ef" intensity={0.7} position={[-5, 4, -4]} />
+
+      <mesh position={[0, -1.45, -0.6]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[22, 22]} />
+        <meshStandardMaterial color="#f5dfb8" opacity={0.2} transparent />
+      </mesh>
+
+      <mesh position={[0, -0.45, 0.15]} rotation={[0, Math.PI / 6, 0]}>
+        <cylinderGeometry args={[0.95, 1.25, 0.85, 6]} />
+        <meshStandardMaterial color="#f3b183" roughness={0.45} />
+      </mesh>
+    </>
+  );
+}
+
+export function Stage3DCanvas() {
+  return (
+    <div aria-hidden="true" className="stage-3d-canvas">
+      <Canvas
+        dpr={[1, 1.5]}
+        frameloop="demand"
+        gl={{ alpha: true, antialias: true }}
+      >
+        <Stage3DBackdrop />
+      </Canvas>
+    </div>
+  );
+}
