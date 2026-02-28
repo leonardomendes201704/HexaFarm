@@ -411,17 +411,22 @@ export function NewGameScreen() {
       ) : null}
 
       {phase === "deckbuilding" ? (
-        <GameModal dismissible={false} onClose={() => undefined} size="wide" shortcut="Deck" title="Montar Baralho da Run">
-          <div className="builder-panel">
+        <GameModal
+          bodyClassName="game-modal__body--deckbuilder"
+          dismissible={false}
+          onClose={() => undefined}
+          panelClassName="game-modal--fixed-body"
+          showShortcut={false}
+          size="wide"
+          shortcut="Deck"
+          title="Montar Baralho da Run"
+        >
+          <div className="builder-panel builder-panel--deck">
             <div className="builder-panel__summary">
               <div className="builder-panel__hero">
                 <span className="builder-chip">Escolha {DECK_SIZE} cartas</span>
                 <span className="builder-chip">Possuidas {savedRun.meta.ownedCards.reduce((total, card) => total + card.quantity, 0)}</span>
-                <span className="builder-chip">Aluguel alvo {savedRun.meta.nextRentCost}</span>
               </div>
-              <p className="builder-panel__text">
-                Monte o deck inicial da run selecionando exatamente {DECK_SIZE} cartas da sua colecao.
-              </p>
             </div>
 
             <div className="collection-grid">

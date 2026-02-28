@@ -18,6 +18,62 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-034 de limpeza e fixacao da modal de montagem de baralho
+
+### Resumo
+
+A modal `Montar Baralho da Run` foi limpa de textos redundantes e reorganizada para manter topo e rodape fixos, com scroll apenas na grade de cartas.
+
+### Entregas realizadas
+
+- criacao do `EPICO-029` e do backlog completo do `PBI-034`
+- remocao do texto `Atalho Deck` somente nessa modal
+- remocao do chip `Aluguel alvo`
+- remocao do texto instrutivo `Monte o deck inicial da run...`
+- criacao de uma variacao de `GameModal` com corpo fixo
+- configuracao da modal de deckbuilding para scroll apenas na grade de cartas
+- conclusao do `PBI-034` e do `EPICO-029`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-029_REFINAMENTO_DA_MODAL_DE_MONTAGEM_DE_BARALHO.md`
+- `BACKLOGS/PBIS/PBI-034_LIMPAR_E_FIXAR_A_MODAL_DE_MONTAGEM_DE_BARALHO_DA_RUN/DONE-PBI-034_LIMPAR_E_FIXAR_A_MODAL_DE_MONTAGEM_DE_BARALHO_DA_RUN.md`
+- `BACKLOGS/PBIS/PBI-034_LIMPAR_E_FIXAR_A_MODAL_DE_MONTAGEM_DE_BARALHO_DA_RUN/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-034_LIMPAR_E_FIXAR_A_MODAL_DE_MONTAGEM_DE_BARALHO_DA_RUN/TASKS/DONE-*`
+- `src/components/GameModal.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-029 - Refinamento da Modal de Montagem de Baralho`
+- `PBI-034 - Limpar e Fixar a Modal de Montagem de Baralho da Run`
+- `HISTORIA-001 - Enxugar e Estruturar a Modal de Deckbuilding`
+
+### Tasks executadas
+
+- `TASK-001 - Remover Textos Redundantes da Modal de Deckbuilding`
+- `TASK-002 - Ocultar o Shortcut no Header da Modal de Deckbuilding`
+- `TASK-003 - Fixar Topo e Rodape com Scroll Apenas na Grade`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da modal de deckbuilding com grade rolavel e acoes fixas
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- a modal ficou mais limpa
+- somente a grade central rola
+- topo e footer permanecem visiveis
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-034` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-033 de remocao do filtro do video e sombra branca nos textos da home
 
 ### Resumo
