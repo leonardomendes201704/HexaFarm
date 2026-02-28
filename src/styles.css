@@ -1555,7 +1555,7 @@ button:disabled {
   z-index: 12;
   display: grid;
   place-items: center;
-  padding: 24px;
+  padding: 12px 24px;
   background: rgba(54, 34, 34, 0.26);
   backdrop-filter: blur(18px);
 }
@@ -1805,7 +1805,7 @@ button:disabled {
   }
 
   .game-modal-backdrop {
-    padding: 16px;
+    padding: 10px 14px;
   }
 
   .game-modal {
@@ -1833,7 +1833,7 @@ button:disabled {
 }
 
 .game-modal--deckbuilder-panel {
-  max-height: min(88vh, 860px);
+  max-height: min(94vh, 920px);
 }
 
 .game-hand__layout {

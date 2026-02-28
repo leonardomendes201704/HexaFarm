@@ -125,6 +125,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-034`: limpar e fixar a modal de montagem de baralho da run
 - `PBI-035`: adicionar tooltip estilizado com explicacao nas cartas
 - `PBI-036`: refinar altura da modal deckbuilding e camada dos tooltips
+- `PBI-037`: reduzir margens verticais das modais
 
 ## Convencao de Nomes
 

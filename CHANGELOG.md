@@ -18,6 +18,56 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-037 de reducao das margens verticais das modais
+
+### Resumo
+
+As modais passaram a usar menos margem superior e inferior, liberando mais espaco util na viewport e ampliando o aproveitamento vertical da modal de deckbuilding.
+
+### Entregas realizadas
+
+- criacao do backlog completo do `PBI-037`, vinculado ao `EPICO-031`
+- reducao do padding vertical do `game-modal-backdrop` em desktop
+- reducao do padding vertical do `game-modal-backdrop` no breakpoint mobile
+- aumento do teto de altura da modal de deckbuilding
+- conclusao do `PBI-037`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-037_REDUZIR_MARGENS_VERTICAIS_DAS_MODAIS/DONE-PBI-037_REDUZIR_MARGENS_VERTICAIS_DAS_MODAIS.md`
+- `BACKLOGS/PBIS/PBI-037_REDUZIR_MARGENS_VERTICAIS_DAS_MODAIS/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-037_REDUZIR_MARGENS_VERTICAIS_DAS_MODAIS/TASKS/DONE-*`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-031 - Refinamento de Camadas e Espaco Util da Interface`
+- `PBI-037 - Reduzir Margens Verticais das Modais`
+- `HISTORIA-001 - Apertar o Espaco Externo das Modais`
+
+### Tasks executadas
+
+- `TASK-001 - Reduzir o Padding Vertical do Backdrop das Modais`
+- `TASK-002 - Aumentar o Teto de Altura da Modal de Deckbuilding`
+- `TASK-003 - Ajustar o Padding Vertical no Mobile`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da ocupacao vertical das modais
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- as modais ficaram com menos espaco vazio acima e abaixo
+- a modal de deckbuilding aproveita melhor a altura da tela
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-037` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-036 de refinamento da modal de deckbuilding e camada dos tooltips
 
 ### Resumo
