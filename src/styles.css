@@ -66,7 +66,6 @@ button:disabled {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: brightness(1.18) saturate(1.22) contrast(1.06);
 }
 
 .screen-shell__blur {
@@ -141,6 +140,9 @@ button:disabled {
 .hero-panel .eyebrow,
 .menu-panel .eyebrow {
   color: #a66a34;
+  text-shadow:
+    0 0 12px rgba(255, 255, 255, 0.9),
+    0 0 24px rgba(255, 255, 255, 0.52);
 }
 
 .hero-panel__copy {
@@ -184,6 +186,9 @@ button:disabled {
   margin: 0;
   color: rgba(91, 60, 33, 0.88);
   font-size: clamp(1rem, 1.3vw, 1.25rem);
+  text-shadow:
+    0 0 14px rgba(255, 255, 255, 0.88),
+    0 0 28px rgba(255, 255, 255, 0.46);
 }
 
 .hero-panel__highlights {

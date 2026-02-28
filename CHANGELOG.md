@@ -18,6 +18,57 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-033 de remocao do filtro do video e sombra branca nos textos da home
+
+### Resumo
+
+O video da home voltou a ser exibido sem filtro CSS, e os textos principais receberam uma sombra branca esfumacada para manter a leitura sem escurecer a cena.
+
+### Entregas realizadas
+
+- criacao do `EPICO-028` e do backlog completo do `PBI-033`
+- remocao do `filter` aplicado ao video da home
+- aplicacao de `text-shadow` branco nos `eyebrows` da home
+- aplicacao de `text-shadow` branco na descricao principal da home
+- conclusao do `PBI-033` e do `EPICO-028`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-028_LEITURA_E_EXPOSICAO_VISUAL_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-033_REMOVER_FILTRO_DO_VIDEO_E_APLICAR_SOMBRA_BRANCA_NOS_TEXTOS_DA_HOME/DONE-PBI-033_REMOVER_FILTRO_DO_VIDEO_E_APLICAR_SOMBRA_BRANCA_NOS_TEXTOS_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-033_REMOVER_FILTRO_DO_VIDEO_E_APLICAR_SOMBRA_BRANCA_NOS_TEXTOS_DA_HOME/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-033_REMOVER_FILTRO_DO_VIDEO_E_APLICAR_SOMBRA_BRANCA_NOS_TEXTOS_DA_HOME/TASKS/DONE-*`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-028 - Leitura e Exposicao Visual da Home`
+- `PBI-033 - Remover Filtro do Video e Aplicar Sombra Branca nos Textos da Home`
+- `HISTORIA-001 - Reequilibrar o Fundo e a Leitura dos Textos da Home`
+
+### Tasks executadas
+
+- `TASK-001 - Remover o Filtro CSS do Video da Home`
+- `TASK-002 - Aplicar Sombra Branca nos Eyebrows da Home`
+- `TASK-003 - Aplicar Sombra Branca na Descricao Principal da Home`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da home com video sem filtro e textos com halo branco
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- o video ficou sem tratamento de cor artificial
+- os textos principais ganharam leitura melhor sem adicionar overlay
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-033` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-032 de remocao do overlay do video da home
 
 ### Resumo
