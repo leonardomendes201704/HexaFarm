@@ -77,6 +77,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `EPICO-017`: refinamento dos paineis da home
 - `EPICO-018`: ajuste fino de translucidez na home
 - `EPICO-019`: minimizar a presenca dos cards da home
+- `EPICO-020`: abrir mais espaco para a arte da home
 - `PBI-001`: tela inicial do jogo HexaFarm
 - `PBI-002`: estrutura base de navegacao entre telas
 - `PBI-003`: sistema minimo de save local
@@ -97,6 +98,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-018`: tornar os cards da home brancos translucidos
 - `PBI-019`: aumentar a translucidez dos cards da home
 - `PBI-020`: deixar os cards da home quase transparentes
+- `PBI-021`: remover ilustracao interna e reduzir largura dos cards da home
 
 ## Convencao de Nomes
 

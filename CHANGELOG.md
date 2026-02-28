@@ -18,6 +18,60 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-021 de remocao da ilustracao interna e reducao da largura dos cards da home
+
+### Resumo
+
+Foi removida a ilustração interna do card esquerdo da home e a largura total dos cards foi reduzida para expor mais da arte de fundo.
+
+### Entregas realizadas
+
+- criacao do `EPICO-020` e do backlog completo do `PBI-021`
+- remocao da cena ilustrada interna do card esquerdo
+- remocao do CSS associado a essa cena
+- reducao da largura maxima do layout da home
+- estreitamento da coluna direita e do espacamento entre os cards
+- ajuste do card hero para funcionar apenas com texto
+- conclusao do `PBI-021` e do `EPICO-020`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-020_ABRIR_MAIS_ESPACO_PARA_A_ARTE_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-021_REMOVER_ILUSTRACAO_INTERNA_E_REDUZIR_LARGURA_DOS_CARDS_DA_HOME/DONE-PBI-021_REMOVER_ILUSTRACAO_INTERNA_E_REDUZIR_LARGURA_DOS_CARDS_DA_HOME.md`
+- `BACKLOGS/PBIS/PBI-021_REMOVER_ILUSTRACAO_INTERNA_E_REDUZIR_LARGURA_DOS_CARDS_DA_HOME/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-021_REMOVER_ILUSTRACAO_INTERNA_E_REDUZIR_LARGURA_DOS_CARDS_DA_HOME/TASKS/DONE-*`
+- `src/components/TitleScreen.tsx`
+- `src/styles.css`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-020 - Abrir Mais Espaco para a Arte da Home`
+- `PBI-021 - Remover Ilustracao Interna e Reduzir Largura dos Cards da Home`
+- `HISTORIA-001 - Reduzir a Interferencia dos Cards sobre o Background`
+
+### Tasks executadas
+
+- `TASK-001 - Remover Ilustracao Interna do Card Esquerdo`
+- `TASK-002 - Reduzir a Largura Total do Layout da Home`
+- `TASK-003 - Ajustar o Card Hero para Funcionar sem Cena Interna`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual da home com mais background visivel nas laterais
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- a ilustração interna do card esquerdo nao aparece mais
+- os cards ocupam menos largura e a arte de fundo respira mais
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-021` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-020 de cards da home quase transparentes
 
 ### Resumo

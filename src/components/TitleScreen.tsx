@@ -44,20 +44,6 @@ export function TitleScreen({
               <span>Browser-first</span>
             </div>
           </div>
-
-          <div className="hero-panel__scene" aria-hidden="true">
-            <div className="hex-scene">
-              <div className="hex-tile hex-tile--pond" />
-              <div className="hex-tile hex-tile--farm" />
-              <div className="hex-tile hex-tile--garden" />
-              <div className="hex-sprout hex-sprout--left" />
-              <div className="hex-sprout hex-sprout--right" />
-              <div className="cottage">
-                <span className="cottage__roof" />
-                <span className="cottage__body" />
-              </div>
-            </div>
-          </div>
         </section>
 
         <section className="menu-panel" aria-label="Menu principal">
