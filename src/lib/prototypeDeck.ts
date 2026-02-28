@@ -3,13 +3,17 @@ import type { ExpansionTileType } from "./hexGrid";
 export const DECK_SIZE = 24;
 export const HAND_SIZE = 4;
 
-export type ExpansionCard = {
+export type CardDefinition = {
   description: string;
   energyCost: number;
   id: string;
   name: string;
   purchaseCost: number;
   tileType: ExpansionTileType;
+};
+
+export type ExpansionCard = CardDefinition & {
+  instanceId: string;
 };
 
 export type OwnedCardStack = {
@@ -23,7 +27,7 @@ export type PrototypeDeckState = {
   hand: ExpansionCard[];
 };
 
-const CARD_LIBRARY: ExpansionCard[] = [
+const CARD_LIBRARY: CardDefinition[] = [
   {
     description: "Cria um campo basico para expandir sua producao inicial.",
     energyCost: 1,
@@ -205,6 +209,13 @@ export function getCardLibrary() {
   return [...CARD_LIBRARY];
 }
 
+function createCardInstance(cardDefinition: CardDefinition, index: number): ExpansionCard {
+  return {
+    ...cardDefinition,
+    instanceId: `${cardDefinition.id}::${index}`,
+  };
+}
+
 export function createStarterOwnedCollection() {
   return STARTER_COLLECTION.map((cardStack) => ({ ...cardStack }));
 }
@@ -288,7 +299,8 @@ export function sanitizeDeckSelection(deckCardIds: string[], ownedCards: OwnedCa
 export function createDeckStateFromSelection(deckCardIds: string[]) {
   const cards = deckCardIds
     .map((cardId) => getCardDefinition(cardId))
-    .filter((card): card is ExpansionCard => card !== null);
+    .filter((card): card is CardDefinition => card !== null)
+    .map((cardDefinition, index) => createCardInstance(cardDefinition, index));
 
   return drawToHand({
     discardPile: [],
@@ -297,8 +309,8 @@ export function createDeckStateFromSelection(deckCardIds: string[]) {
   });
 }
 
-export function playExpansionCard(deckState: PrototypeDeckState, cardId: string) {
-  const playedCard = deckState.hand.find((card) => card.id === cardId);
+export function playExpansionCard(deckState: PrototypeDeckState, instanceId: string) {
+  const playedCard = deckState.hand.find((card) => card.instanceId === instanceId);
 
   if (!playedCard) {
     return {
@@ -307,7 +319,7 @@ export function playExpansionCard(deckState: PrototypeDeckState, cardId: string)
     };
   }
 
-  const remainingHand = deckState.hand.filter((card) => card.id !== cardId);
+  const remainingHand = deckState.hand.filter((card) => card.instanceId !== instanceId);
   const afterDiscard: PrototypeDeckState = {
     discardPile: [...deckState.discardPile, playedCard],
     drawPile: [...deckState.drawPile],

@@ -52,12 +52,12 @@ export function ExpansionHand({
             return (
               <button
                 className={`expansion-card expansion-card--${card.tileType} ${
-                  armedCardId === card.id ? "is-selected" : ""
+                  armedCardId === card.instanceId ? "is-selected" : ""
                 } ${!canAffordCard ? "is-muted" : ""}`}
                 aria-label={`${card.name}. ${card.description}`}
                 disabled={!canPlayCard}
-                key={card.id}
-                onClick={() => onSelectCard(card.id)}
+                key={card.instanceId}
+                onClick={() => onSelectCard(card.instanceId)}
                 style={
                   {
                     "--card-rotation": `${rotation}deg`,

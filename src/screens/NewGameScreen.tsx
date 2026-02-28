@@ -67,7 +67,7 @@ export function NewGameScreen() {
   const collectionCards = useMemo(() => getCardLibrary(), []);
   const frontierSlots = getFrontierSlots(tiles);
   const selectedTile = tiles.find((tile) => tile.id === selectedTileId) ?? tiles[0] ?? null;
-  const armedCard = deckState.hand.find((card) => card.id === armedCardId) ?? null;
+  const armedCard = deckState.hand.find((card) => card.instanceId === armedCardId) ?? null;
 
   if (!savedRun) {
     return <Navigate replace to="/" />;
@@ -177,7 +177,7 @@ export function NewGameScreen() {
       return;
     }
 
-    const selectedCard = deckState.hand.find((card) => card.id === cardId);
+    const selectedCard = deckState.hand.find((card) => card.instanceId === cardId);
 
     if (!selectedCard || selectedCard.energyCost > availableEnergy) {
       return;
@@ -193,7 +193,7 @@ export function NewGameScreen() {
 
     const createdTile = createExpandedTile(tiles, slot, armedCard.tileType);
     const updatedSave = registerPrototypeExpansion(createdTile.tileType, armedCard.energyCost);
-    const { nextState } = playExpansionCard(deckState, armedCard.id);
+    const { nextState } = playExpansionCard(deckState, armedCard.instanceId);
 
     setTiles((currentTiles) => [...currentTiles, createdTile]);
     setSelectedTileId(createdTile.id);

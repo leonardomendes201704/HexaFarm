@@ -65,6 +65,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `EPICO-005`: refinamento da tela de jogo e HUD
 - `EPICO-006`: ciclo minimo de turno e energia
 - `EPICO-007`: deckbuilding persistente e economia da run
+- `EPICO-008`: estabilizacao do loop de cartas
 - `PBI-001`: tela inicial do jogo HexaFarm
 - `PBI-002`: estrutura base de navegacao entre telas
 - `PBI-003`: sistema minimo de save local
@@ -73,6 +74,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-006`: tela de jogo fullscreen com HUD modal
 - `PBI-007`: energia e ciclo minimo de dia
 - `PBI-008`: deck da run, loja e aluguel progressivo
+- `PBI-009`: corrigir identidade das cartas em mao
 
 ## Convencao de Nomes
 

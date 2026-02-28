@@ -18,6 +18,63 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-009 de correcao da identidade das cartas em mao
+
+### Resumo
+
+Foi corrigida a identidade das copias de carta durante a run, eliminando chaves duplicadas no React e ajustando a jogada para operar sobre instancias unicas, nao sobre o ID do catalogo.
+
+### Entregas realizadas
+
+- criacao do `EPICO-008` e do backlog completo do `PBI-009`
+- separacao entre ID do catalogo e ID da instancia da carta em jogo
+- criacao de `instanceId` unico para cada copia de carta do deck da run
+- ajuste da selecao da carta armada para usar a instancia correta
+- ajuste da jogada e do descarte para remover apenas a copia clicada
+- eliminacao dos `duplicate key warnings` na renderizacao da mao
+- conclusao do `PBI-009` e do `EPICO-008`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-008_ESTABILIZACAO_DO_LOOP_DE_CARTAS.md`
+- `BACKLOGS/PBIS/PBI-009_CORRIGIR_IDENTIDADE_DAS_CARTAS_EM_MAO/DONE-PBI-009_CORRIGIR_IDENTIDADE_DAS_CARTAS_EM_MAO.md`
+- `BACKLOGS/PBIS/PBI-009_CORRIGIR_IDENTIDADE_DAS_CARTAS_EM_MAO/HISTORIAS/DONE-*`
+- `BACKLOGS/PBIS/PBI-009_CORRIGIR_IDENTIDADE_DAS_CARTAS_EM_MAO/TASKS/DONE-*`
+- `src/lib/prototypeDeck.ts`
+- `src/components/ExpansionHand.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-008 - Estabilizacao do Loop de Cartas`
+- `PBI-009 - Corrigir Identidade das Cartas em Mao`
+- `HISTORIA-001 - Criar Instancia Unica para Cada Copia de Carta`
+- `HISTORIA-002 - Ajustar Renderizacao e Interacao da Mao`
+
+### Tasks executadas
+
+- `TASK-001 - Separar ID de Catalogo e ID de Instancia`
+- `TASK-002 - Ajustar Jogada e Descarte para Usar Instancia`
+- `TASK-003 - Corrigir Keys da Mao`
+- `TASK-004 - Ajustar Selecao da Carta Armada`
+
+### Validacao executada
+
+- `npm run build`
+- verificacao manual do fluxo de selecao e jogada com cartas repetidas
+
+### Resultado da validacao
+
+- build concluido com sucesso
+- a mao nao deve mais emitir warnings de `duplicate key`
+- cartas repetidas podem coexistir e ser jogadas sem remover copias irmas
+
+### Commit e push
+
+- esta entrada corresponde a entrega do `PBI-009` e deve ser fechada com commit e push apos a atualizacao do changelog
+
 ## 2026-02-28 - Implementacao do PBI-008 de deck da run, loja e aluguel progressivo
 
 ### Resumo
