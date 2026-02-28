@@ -186,17 +186,24 @@ export function NewGameScreen() {
     const particleCount = Math.max(14, Math.min(40, Math.abs(coinResolutionDelta) * 4));
 
     return Array.from({ length: particleCount }, (_, index) => {
-      const angle = (Math.PI * 2 * index) / particleCount;
+      const baseAngle = (Math.PI * 2 * index) / particleCount;
+      const angleJitter = ((((index * 13) % 17) - 8) / 8) * 0.16;
+      const angle = baseAngle + angleJitter;
+      const diagonalBias = Math.abs(Math.sin(angle * 2));
       const distance =
-        spreadRadius * 0.26 +
+        spreadRadius * 0.18 +
+        diagonalBias * spreadRadius * 0.24 +
         (index % 5) * 36 +
-        ((index * 17) % Math.max(120, Math.round(spreadRadius * 0.12)));
+        ((index * 17) % Math.max(120, Math.round(spreadRadius * 0.12))) +
+        (index % 6 === 0 ? spreadRadius * 0.12 : 0);
+      const axisStretchX = 0.82 + ((index * 5) % 7) * 0.08;
+      const axisStretchY = 0.76 + ((index * 3) % 7) * 0.09;
       const size = 24 + (index % 4) * 5;
 
       return {
         id: `coin-particle-${index}`,
-        offsetX: Math.cos(angle) * distance,
-        offsetY: Math.sin(angle) * distance,
+        offsetX: Math.cos(angle) * distance * axisStretchX,
+        offsetY: Math.sin(angle) * distance * axisStretchY,
         rotation: (index * 37) % 360,
         scale: 0.94 + ((index % 5) * 0.1),
         size,

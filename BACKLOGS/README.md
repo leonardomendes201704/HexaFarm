@@ -162,6 +162,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-065`: animar explosao e contador de moedas no fim do dia
 - `PBI-066`: ampliar e destacar a explosao global de moedas
 - `PBI-067`: reforcar brilho das moedas e sincronizar burst com a contagem
+- `PBI-068`: tornar o burst de moedas mais organico e diagonal
 
 ## Convencao de Nomes
 

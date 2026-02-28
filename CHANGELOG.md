@@ -18,6 +18,45 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-068 concluido
+
+### Resumo
+
+O burst global de moedas ficou menos circular e mais organico, com jitter angular, alongamento eliptico e algumas particulas viajando mais longe nas diagonais.
+
+### Entregas realizadas
+
+- adicao de jitter angular nas particulas do burst
+- variacao de alongamento em `x` e `y` para quebrar a simetria radial
+- impulso extra em diagonais e em algumas particulas-chave para alcances mais longos
+
+### Arquivos principais criados ou alterados
+
+- `src/screens/NewGameScreen.tsx`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-068_TORNAR_O_BURST_DE_MOEDAS_MAIS_ORGANICO_E_DIAGONAL/*`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `EPICO-005 - Refinamento da Tela de Jogo e HUD`
+- `PBI-068 - Tornar o Burst de Moedas Mais Organico e Diagonal`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- algumas moedas atravessam mais longe nas diagonais
+- o burst deixa de parecer um circulo muito regular
+
+### Commit e push
+
+- registrados no encerramento desta entrega
+
+---
+
 ## 2026-02-28 - PBI-067 concluido
 
 ### Resumo
