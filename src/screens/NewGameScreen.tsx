@@ -118,6 +118,7 @@ export function NewGameScreen() {
   const [armedCardId, setArmedCardId] = useState<string | null>(null);
   const [activeModal, setActiveModal] = useState<HudModalId>(null);
   const [isResolvingDay, setIsResolvingDay] = useState(false);
+  const [showSurfaceAccents, setShowSurfaceAccents] = useState(true);
   const [yieldBursts, setYieldBursts] = useState<Array<{ tileId: string; yieldValue: number }>>([]);
   const dayResolutionTimeoutRef = useRef<number | null>(null);
 
@@ -214,6 +215,10 @@ export function NewGameScreen() {
 
       if (pressedKey === "h") {
         setActiveModal((currentModal) => (currentModal === "help" ? null : "help"));
+      }
+
+      if (pressedKey === "s") {
+        setShowSurfaceAccents((currentValue) => !currentValue);
       }
 
       if (pressedKey === "e") {
@@ -514,6 +519,7 @@ export function NewGameScreen() {
             onPlaceTile={handlePlaceTile}
             onSelectTile={setSelectedTileId}
             selectedTileId={selectedTileId}
+            showSurfaceAccents={showSurfaceAccents}
             tiles={tiles}
           />
         </div>
@@ -753,6 +759,10 @@ export function NewGameScreen() {
               <div className="game-modal__tip">
                 <span className="game-modal__tip-key">E</span>
                 <p className="game-modal__tip-text">Fecha o dia, sobe moedinhas por tile e, no dia 7, resolve o aluguel.</p>
+              </div>
+              <div className="game-modal__tip">
+                <span className="game-modal__tip-key">S</span>
+                <p className="game-modal__tip-text">Oculta ou mostra os slabs do terreno para depuracao visual do stage 3D.</p>
               </div>
               <div className="game-modal__tip">
                 <span className="game-modal__tip-key">M</span>

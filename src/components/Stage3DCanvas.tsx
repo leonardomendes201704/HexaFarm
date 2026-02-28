@@ -29,6 +29,7 @@ type Stage3DCanvasProps = {
   onPlaceTile: (slot: HexCoord) => void;
   onSelectTile: (tileId: string) => void;
   selectedTileId: string | null;
+  showSurfaceAccents?: boolean;
   tiles: HexTile[];
 };
 
@@ -227,6 +228,7 @@ type Stage3DSceneProps = {
   selectedTileId: string | null;
   setHoveredSlotKey: (slotKey: string | null) => void;
   setHoveredTileId: (tileId: string | null) => void;
+  showSurfaceAccents: boolean;
   useReducedDetail: boolean;
   tiles: HexTile[];
 };
@@ -245,6 +247,7 @@ function Stage3DScene({
   selectedTileId,
   setHoveredSlotKey,
   setHoveredTileId,
+  showSurfaceAccents,
   useReducedDetail,
   tiles,
 }: Stage3DSceneProps) {
@@ -359,7 +362,9 @@ function Stage3DScene({
             radius={1}
             topColor={tileColors.top}
           >
-            {!useReducedDetail ? <TileSurfaceAccent tileType={tile.tileType} /> : null}
+            {showSurfaceAccents && !useReducedDetail ? (
+              <TileSurfaceAccent tileType={tile.tileType} />
+            ) : null}
             {!useReducedDetail ? <CropProp3D cropName={tile.plantedCropName} /> : null}
           </HexPrismMesh3D>
         );
@@ -378,6 +383,7 @@ export function Stage3DCanvas({
   onPlaceTile,
   onSelectTile,
   selectedTileId,
+  showSurfaceAccents = true,
   tiles,
 }: Stage3DCanvasProps) {
   const dragOriginRef = useRef<{ x: number; y: number } | null>(null);
@@ -460,6 +466,7 @@ export function Stage3DCanvas({
           selectedTileId={selectedTileId}
           setHoveredSlotKey={setHoveredSlotKey}
           setHoveredTileId={setHoveredTileId}
+          showSurfaceAccents={showSurfaceAccents}
           useReducedDetail={useReducedDetail}
           tiles={tiles}
         />

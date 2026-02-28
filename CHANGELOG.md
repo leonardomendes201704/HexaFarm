@@ -18,6 +18,46 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-051 concluido
+
+### Resumo
+
+Foi adicionado um atalho de teclado para ocultar e reexibir os slabs superficiais do stage 3D durante a run.
+
+### Entregas realizadas
+
+- criacao de um estado local para controlar a visibilidade dos slabs
+- adicao do atalho `S` na tela da run
+- propagacao do toggle para o `Stage3DCanvas`
+- aplicacao do controle somente aos `TileSurfaceAccent`, preservando crops
+- atualizacao do modal de ajuda com a nova tecla
+
+### Arquivos principais criados ou alterados
+
+- `src/components/Stage3DCanvas.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-051_ADICIONAR_ATALHO_PARA_OCULTAR_SLABS_3D/*`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-051 - Adicionar Atalho para Ocultar Slabs 3D`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- o atalho `S` oculta e reexibe os slabs do terreno em tempo real
+- os crops continuam visiveis
+- a interacao do stage 3D permanece intacta
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - PBI-050 concluido
 
 ### Resumo
