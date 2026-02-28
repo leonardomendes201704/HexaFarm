@@ -90,6 +90,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `EPICO-030`: feedback informativo das cartas
 - `EPICO-031`: refinamento de camadas e espaco util da interface
 - `EPICO-032`: integracao de artes reais nas cartas
+- `EPICO-033`: estruturacao data-driven do catalogo de cartas
 - `PBI-001`: tela inicial do jogo HexaFarm
 - `PBI-002`: estrutura base de navegacao entre telas
 - `PBI-003`: sistema minimo de save local
@@ -131,6 +132,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-039`: refinar cores do tooltip das cartas
 - `PBI-040`: aplicar arte real na carta Abrir Clareira
 - `PBI-041`: aplicar artes nas cartas iniciais e componentizar cartas da grade
+- `PBI-042`: centralizar catalogo de cartas em json
 
 ## Convencao de Nomes
 

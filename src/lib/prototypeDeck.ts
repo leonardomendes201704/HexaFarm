@@ -1,7 +1,11 @@
 import cardAbrirClareiraArt from "../assets/cards/card-abrir-clareira.png";
 import cardCanalRasoArt from "../assets/cards/card-canal-raso.png";
+import cardCanteiroFofoArt from "../assets/cards/card-canteiro-fofo.png";
 import cardJardimMacioArt from "../assets/cards/card-jardim-macio.png";
+import cardLagoEspelhadoArt from "../assets/cards/card-lago-espelhado.png";
+import cardLoteFertilArt from "../assets/cards/card-lote-fertil.png";
 import cardTrilhaSelvagemArt from "../assets/cards/card-trilha-selvagem.png";
+import cardLibraryCatalog from "../data/card-library.json";
 import type { ExpansionTileType } from "./hexGrid";
 
 export const DECK_SIZE = 24;
@@ -16,6 +20,10 @@ export type CardDefinition = {
   name: string;
   purchaseCost: number;
   tileType: ExpansionTileType;
+};
+
+type CardCatalogEntry = Omit<CardDefinition, "artAssetPath"> & {
+  imageAssetName: string | null;
 };
 
 export type ExpansionCard = CardDefinition & {
@@ -33,118 +41,26 @@ export type PrototypeDeckState = {
   hand: ExpansionCard[];
 };
 
-const CARD_LIBRARY: CardDefinition[] = [
-  {
-    artAssetPath: cardAbrirClareiraArt,
-    coinYield: 2,
-    description:
-      "Abre um campo simples e confiavel. Excelente para comecar a run com renda estavel sem gastar muita energia.",
-    energyCost: 1,
-    id: "card-field-01",
-    name: "Abrir Clareira",
-    purchaseCost: 5,
-    tileType: "field",
-  },
-  {
-    artAssetPath: cardJardimMacioArt,
-    coinYield: 1,
-    description:
-      "Cria um jardim acolhedor e barato. Serve para expandir com seguranca e manter lucro positivo desde cedo.",
-    energyCost: 1,
-    id: "card-garden-01",
-    name: "Jardim Macio",
-    purchaseCost: 5,
-    tileType: "garden",
-  },
-  {
-    artAssetPath: cardCanalRasoArt,
-    coinYield: -1,
-    description:
-      "Abre um lago raso na borda. Ele custa manutencao diaria, mas prepara espaco para uma malha de agua e futuras sinergias.",
-    energyCost: 2,
-    id: "card-pond-01",
-    name: "Canal Raso",
-    purchaseCost: 7,
-    tileType: "pond",
-  },
-  {
-    artAssetPath: cardTrilhaSelvagemArt,
-    coinYield: 1,
-    description:
-      "Expande a fronteira com um bosque leve. Boa carta de preenchimento para crescer o mapa sem travar sua energia.",
-    energyCost: 1,
-    id: "card-wild-01",
-    name: "Trilha Selvagem",
-    purchaseCost: 6,
-    tileType: "wild",
-  },
-  {
-    artAssetPath: null,
-    coinYield: 3,
-    description:
-      "Abre um lote de campo mais rentavel. Custa mais energia, mas acelera a corrida por moedas e ajuda no aluguel.",
-    energyCost: 2,
-    id: "card-field-02",
-    name: "Lote Fertil",
-    purchaseCost: 8,
-    tileType: "field",
-  },
-  {
-    artAssetPath: null,
-    coinYield: 2,
-    description:
-      "Transforma a borda em um canteiro mais lucrativo. Uma melhora natural para runs que querem valor constante.",
-    energyCost: 1,
-    id: "card-garden-02",
-    name: "Canteiro Fofo",
-    purchaseCost: 7,
-    tileType: "garden",
-  },
-  {
-    artAssetPath: null,
-    coinYield: 1,
-    description:
-      "Cria um lago mais amplo e refinado. E mais caro de jogar, mas ja se paga melhor que os lagos iniciais.",
-    energyCost: 2,
-    id: "card-pond-02",
-    name: "Lago Espelhado",
-    purchaseCost: 10,
-    tileType: "pond",
-  },
-  {
-    artAssetPath: null,
-    coinYield: 2,
-    description:
-      "Ergue um bosque valioso na borda. Brilha em runs mais longas, quando expandir sem perder rendimento faz diferenca.",
-    energyCost: 2,
-    id: "card-wild-02",
-    name: "Bosque Dourado",
-    purchaseCost: 10,
-    tileType: "wild",
-  },
-  {
-    artAssetPath: null,
-    coinYield: 1,
-    description:
-      "Adiciona um campo enxuto e barato. Ideal para fechar o deck com cartas leves e manter a curva de energia suave.",
-    energyCost: 1,
-    id: "card-field-03",
-    name: "Terra Solta",
-    purchaseCost: 9,
-    tileType: "field",
-  },
-  {
-    artAssetPath: null,
-    coinYield: 4,
-    description:
-      "Planta um jardim premium de alto retorno. Uma carta de valor para quem quer explodir renda no meio e fim da run.",
-    energyCost: 2,
-    id: "card-garden-03",
-    name: "Pomar Cute",
-    purchaseCost: 11,
-    tileType: "garden",
-  },
-];
+const CARD_ART_ASSET_MAP: Record<string, string> = {
+  "card-abrir-clareira.png": cardAbrirClareiraArt,
+  "card-canal-raso.png": cardCanalRasoArt,
+  "card-canteiro-fofo.png": cardCanteiroFofoArt,
+  "card-jardim-macio.png": cardJardimMacioArt,
+  "card-lago-espelhado.png": cardLagoEspelhadoArt,
+  "card-lote-fertil.png": cardLoteFertilArt,
+  "card-trilha-selvagem.png": cardTrilhaSelvagemArt,
+};
+
+const CARD_LIBRARY_SOURCE = cardLibraryCatalog as CardCatalogEntry[];
+
+const CARD_LIBRARY: CardDefinition[] = CARD_LIBRARY_SOURCE.map((cardEntry) => {
+  const { imageAssetName, ...cardData } = cardEntry;
+
+  return {
+    ...cardData,
+    artAssetPath: imageAssetName ? CARD_ART_ASSET_MAP[imageAssetName] ?? null : null,
+  };
+});
 
 const STARTER_COLLECTION: OwnedCardStack[] = [
   { cardId: "card-field-01", quantity: 6 },

@@ -1,0 +1,102 @@
+[
+  {
+    "id": "card-field-01",
+    "name": "Abrir Clareira",
+    "tileType": "field",
+    "energyCost": 1,
+    "coinYield": 2,
+    "purchaseCost": 5,
+    "imageAssetName": "card-abrir-clareira.png",
+    "description": "Abre um campo simples e confiavel. Excelente para comecar a run com renda estavel sem gastar muita energia."
+  },
+  {
+    "id": "card-garden-01",
+    "name": "Jardim Macio",
+    "tileType": "garden",
+    "energyCost": 1,
+    "coinYield": 1,
+    "purchaseCost": 5,
+    "imageAssetName": "card-jardim-macio.png",
+    "description": "Cria um jardim acolhedor e barato. Serve para expandir com seguranca e manter lucro positivo desde cedo."
+  },
+  {
+    "id": "card-pond-01",
+    "name": "Canal Raso",
+    "tileType": "pond",
+    "energyCost": 2,
+    "coinYield": -1,
+    "purchaseCost": 7,
+    "imageAssetName": "card-canal-raso.png",
+    "description": "Abre um lago raso na borda. Ele custa manutencao diaria, mas prepara espaco para uma malha de agua e futuras sinergias."
+  },
+  {
+    "id": "card-wild-01",
+    "name": "Trilha Selvagem",
+    "tileType": "wild",
+    "energyCost": 1,
+    "coinYield": 1,
+    "purchaseCost": 6,
+    "imageAssetName": "card-trilha-selvagem.png",
+    "description": "Expande a fronteira com um bosque leve. Boa carta de preenchimento para crescer o mapa sem travar sua energia."
+  },
+  {
+    "id": "card-field-02",
+    "name": "Lote Fertil",
+    "tileType": "field",
+    "energyCost": 2,
+    "coinYield": 3,
+    "purchaseCost": 8,
+    "imageAssetName": "card-lote-fertil.png",
+    "description": "Abre um lote de campo mais rentavel. Custa mais energia, mas acelera a corrida por moedas e ajuda no aluguel."
+  },
+  {
+    "id": "card-garden-02",
+    "name": "Canteiro Fofo",
+    "tileType": "garden",
+    "energyCost": 1,
+    "coinYield": 2,
+    "purchaseCost": 7,
+    "imageAssetName": "card-canteiro-fofo.png",
+    "description": "Transforma a borda em um canteiro mais lucrativo. Uma melhora natural para runs que querem valor constante."
+  },
+  {
+    "id": "card-pond-02",
+    "name": "Lago Espelhado",
+    "tileType": "pond",
+    "energyCost": 2,
+    "coinYield": 1,
+    "purchaseCost": 10,
+    "imageAssetName": "card-lago-espelhado.png",
+    "description": "Cria um lago mais amplo e refinado. E mais caro de jogar, mas ja se paga melhor que os lagos iniciais."
+  },
+  {
+    "id": "card-wild-02",
+    "name": "Bosque Dourado",
+    "tileType": "wild",
+    "energyCost": 2,
+    "coinYield": 2,
+    "purchaseCost": 10,
+    "imageAssetName": null,
+    "description": "Ergue um bosque valioso na borda. Brilha em runs mais longas, quando expandir sem perder rendimento faz diferenca."
+  },
+  {
+    "id": "card-field-03",
+    "name": "Terra Solta",
+    "tileType": "field",
+    "energyCost": 1,
+    "coinYield": 1,
+    "purchaseCost": 9,
+    "imageAssetName": null,
+    "description": "Adiciona um campo enxuto e barato. Ideal para fechar o deck com cartas leves e manter a curva de energia suave."
+  },
+  {
+    "id": "card-garden-03",
+    "name": "Pomar Cute",
+    "tileType": "garden",
+    "energyCost": 2,
+    "coinYield": 4,
+    "purchaseCost": 11,
+    "imageAssetName": null,
+    "description": "Planta um jardim premium de alto retorno. Uma carta de valor para quem quer explodir renda no meio e fim da run."
+  }
+]

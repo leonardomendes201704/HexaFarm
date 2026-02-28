@@ -18,6 +18,51 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - Implementacao do PBI-042 de centralizacao do catalogo de cartas em JSON
+
+### Resumo
+
+O catalogo das cartas foi movido para um arquivo `json`, deixando atributos e nomes de arquivos de imagem centralizados em um formato declarativo.
+
+### Entregas realizadas
+
+- criacao do backlog do `PBI-042`, vinculado ao `EPICO-033`
+- criacao do arquivo `src/data/card-library.json` com todas as cartas
+- migracao do catalogo inline de `prototypeDeck.ts` para leitura a partir do `json`
+- criacao de um mapa de assets para resolver os arquivos de imagem do catalogo
+- ativacao automatica das artes `Lote Fertil`, `Canteiro Fofo` e `Lago Espelhado`, cujos arquivos ja estavam presentes em `src/assets/cards/`
+- conclusao do `PBI-042`
+
+### Arquivos principais criados ou alterados
+
+- `BACKLOGS/README.md`
+- `BACKLOGS/EPICOS/EPICO-033_ESTRUTURACAO_DATA_DRIVEN_DO_CATALOGO_DE_CARTAS.md`
+- `BACKLOGS/PBIS/PBI-042_CENTRALIZAR_CATALOGO_DE_CARTAS_EM_JSON/DONE-PBI-042_CENTRALIZAR_CATALOGO_DE_CARTAS_EM_JSON.md`
+- `src/data/card-library.json`
+- `src/lib/prototypeDeck.ts`
+- `src/assets/cards/card-canteiro-fofo.png`
+- `src/assets/cards/card-lago-espelhado.png`
+- `src/assets/cards/card-lote-fertil.png`
+
+### Vinculos de backlog
+
+- `EPICO-033 - Estruturacao Data-Driven do Catalogo de Cartas`
+- `PBI-042 - Centralizar Catalogo de Cartas em JSON`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- build deve concluir com sucesso
+- a biblioteca de cartas deve continuar funcional, agora lendo do `json`
+- cartas com assets mapeados devem continuar mostrando a arte
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - Implementacao do PBI-041 de artes iniciais e componentizacao das cartas da grade
 
 ### Resumo
