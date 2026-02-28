@@ -119,6 +119,7 @@ export function NewGameScreen() {
   const [activeModal, setActiveModal] = useState<HudModalId>(null);
   const [isResolvingDay, setIsResolvingDay] = useState(false);
   const [showSurfaceAccents, setShowSurfaceAccents] = useState(true);
+  const [showTopPlateau, setShowTopPlateau] = useState(true);
   const [yieldBursts, setYieldBursts] = useState<Array<{ tileId: string; yieldValue: number }>>([]);
   const dayResolutionTimeoutRef = useRef<number | null>(null);
 
@@ -219,6 +220,10 @@ export function NewGameScreen() {
 
       if (pressedKey === "s") {
         setShowSurfaceAccents((currentValue) => !currentValue);
+      }
+
+      if (pressedKey === "t") {
+        setShowTopPlateau((currentValue) => !currentValue);
       }
 
       if (pressedKey === "e") {
@@ -520,6 +525,7 @@ export function NewGameScreen() {
             onSelectTile={setSelectedTileId}
             selectedTileId={selectedTileId}
             showSurfaceAccents={showSurfaceAccents}
+            showTopPlateau={showTopPlateau}
             tiles={tiles}
           />
         </div>
@@ -763,6 +769,10 @@ export function NewGameScreen() {
               <div className="game-modal__tip">
                 <span className="game-modal__tip-key">S</span>
                 <p className="game-modal__tip-text">Oculta ou mostra os slabs do terreno para depuracao visual do stage 3D.</p>
+              </div>
+              <div className="game-modal__tip">
+                <span className="game-modal__tip-key">T</span>
+                <p className="game-modal__tip-text">Oculta ou mostra a tampa superior clara dos tiles, mantendo so as laterais do prisma.</p>
               </div>
               <div className="game-modal__tip">
                 <span className="game-modal__tip-key">M</span>

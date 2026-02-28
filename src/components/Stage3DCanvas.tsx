@@ -30,6 +30,7 @@ type Stage3DCanvasProps = {
   onSelectTile: (tileId: string) => void;
   selectedTileId: string | null;
   showSurfaceAccents?: boolean;
+  showTopPlateau?: boolean;
   tiles: HexTile[];
 };
 
@@ -229,6 +230,7 @@ type Stage3DSceneProps = {
   setHoveredSlotKey: (slotKey: string | null) => void;
   setHoveredTileId: (tileId: string | null) => void;
   showSurfaceAccents: boolean;
+  showTopPlateau: boolean;
   useReducedDetail: boolean;
   tiles: HexTile[];
 };
@@ -248,6 +250,7 @@ function Stage3DScene({
   setHoveredSlotKey,
   setHoveredTileId,
   showSurfaceAccents,
+  showTopPlateau,
   useReducedDetail,
   tiles,
 }: Stage3DSceneProps) {
@@ -307,6 +310,7 @@ function Stage3DScene({
             }}
             position={[x, y, z]}
             radius={0.92}
+            showTopPlateau={showTopPlateau}
             topColor="#fff4db"
           />
         );
@@ -360,6 +364,7 @@ function Stage3DScene({
             }}
             position={[x, y, z]}
             radius={1}
+            showTopPlateau={showTopPlateau}
             topColor={tileColors.top}
           >
             {showSurfaceAccents && !useReducedDetail ? (
@@ -384,6 +389,7 @@ export function Stage3DCanvas({
   onSelectTile,
   selectedTileId,
   showSurfaceAccents = true,
+  showTopPlateau = true,
   tiles,
 }: Stage3DCanvasProps) {
   const dragOriginRef = useRef<{ x: number; y: number } | null>(null);
@@ -467,6 +473,7 @@ export function Stage3DCanvas({
           setHoveredSlotKey={setHoveredSlotKey}
           setHoveredTileId={setHoveredTileId}
           showSurfaceAccents={showSurfaceAccents}
+          showTopPlateau={showTopPlateau}
           useReducedDetail={useReducedDetail}
           tiles={tiles}
         />

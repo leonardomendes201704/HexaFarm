@@ -18,6 +18,47 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-052 concluido
+
+### Resumo
+
+Foi adicionado um atalho de teclado para ocultar e reexibir a tampa superior clara dos tiles e slots 3D.
+
+### Entregas realizadas
+
+- criacao de um estado local para controlar a visibilidade do topo claro dos prismas
+- adicao do atalho `T` na tela da run
+- propagacao do toggle para o `Stage3DCanvas`
+- condicionalizacao da malha superior no `HexPrismMesh3D`
+- atualizacao do modal de ajuda com a nova tecla
+
+### Arquivos principais criados ou alterados
+
+- `src/components/HexPrismMesh3D.tsx`
+- `src/components/Stage3DCanvas.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `BACKLOGS/README.md`
+- `BACKLOGS/PBIS/PBI-052_ADICIONAR_ATALHO_PARA_OCULTAR_TOPO_DOS_TILES_3D/*`
+
+### Vinculos de backlog
+
+- `EPICO-037 - Renderizacao 3D Isometrica Real do Stage`
+- `PBI-052 - Adicionar Atalho para Ocultar Topo dos Tiles 3D`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- o atalho `T` oculta e reexibe a tampa superior dos prismas em tempo real
+- as laterais continuam visiveis
+- slabs, crops e interacao do stage 3D permanecem intactos
+
+### Commit e push
+
+- esta entrada deve ser fechada com commit e push apos a validacao final desta entrega
+
 ## 2026-02-28 - PBI-051 concluido
 
 ### Resumo

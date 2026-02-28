@@ -12,6 +12,7 @@ type HexPrismMesh3DProps = {
   opacity?: number;
   position: [number, number, number];
   radius?: number;
+  showTopPlateau?: boolean;
   topColor?: string;
 };
 
@@ -29,6 +30,7 @@ export function HexPrismMesh3D({
   opacity = 1,
   position,
   radius = DEFAULT_HEX_RADIUS,
+  showTopPlateau = true,
   topColor,
 }: HexPrismMesh3DProps) {
   const [x, y, z] = position;
@@ -55,16 +57,18 @@ export function HexPrismMesh3D({
         />
       </mesh>
 
-      <mesh position={[0, height - plateauHeight / 2, 0]} rotation={hexRotation}>
-        <cylinderGeometry args={[radius * 0.9, radius * 0.9, plateauHeight, 6]} />
-        <meshStandardMaterial
-          color={topColor ?? bodyColor}
-          metalness={0.02}
-          opacity={opacity}
-          roughness={0.54}
-          transparent={opacity < 1}
-        />
-      </mesh>
+      {showTopPlateau ? (
+        <mesh position={[0, height - plateauHeight / 2, 0]} rotation={hexRotation}>
+          <cylinderGeometry args={[radius * 0.9, radius * 0.9, plateauHeight, 6]} />
+          <meshStandardMaterial
+            color={topColor ?? bodyColor}
+            metalness={0.02}
+            opacity={opacity}
+            roughness={0.54}
+            transparent={opacity < 1}
+          />
+        </mesh>
+      ) : null}
 
       {highlightColor ? (
         <mesh

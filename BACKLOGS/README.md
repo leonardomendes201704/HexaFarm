@@ -146,6 +146,7 @@ Se a task nao tiver efeito visual direto, a validacao deve descrever o comportam
 - `PBI-049`: ajustar espessura dos tiles 3d
 - `PBI-050`: corrigir z-fighting das meshes superficiais 3d
 - `PBI-051`: adicionar atalho para ocultar slabs 3d
+- `PBI-052`: adicionar atalho para ocultar topo dos tiles 3d
 
 ## Convencao de Nomes
 
