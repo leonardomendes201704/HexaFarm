@@ -64,7 +64,15 @@ const HAND_DISCARD_ANIMATION_BASE_DURATION_MS = 640;
 const HAND_DISCARD_ANIMATION_DURATION_MS = Math.round(
   HAND_DISCARD_ANIMATION_BASE_DURATION_MS / HAND_DISCARD_ANIMATION_SPEED,
 );
-const HAND_DRAW_ANIMATION_DURATION_MS = 420;
+const HAND_DRAW_ANIMATION_SPEED = 2;
+const HAND_DRAW_ANIMATION_BASE_DURATION_MS = 420;
+const HAND_DRAW_ANIMATION_BASE_SETTLE_DELAY_MS = 70;
+const HAND_DRAW_ANIMATION_DURATION_MS = Math.round(
+  HAND_DRAW_ANIMATION_BASE_DURATION_MS / HAND_DRAW_ANIMATION_SPEED,
+);
+const HAND_DRAW_ANIMATION_SETTLE_DELAY_MS = Math.round(
+  HAND_DRAW_ANIMATION_BASE_SETTLE_DELAY_MS / HAND_DRAW_ANIMATION_SPEED,
+);
 const PLAYED_CARD_FLIGHT_DURATION_MS = 460;
 const PLAYED_CARD_DRAW_DELAY_MS = 60;
 const WEEK_DAY_LABELS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"] as const;
@@ -555,7 +563,7 @@ export function NewGameScreen() {
           handDrawTimeoutRef.current = window.setTimeout(() => {
             handDrawTimeoutRef.current = null;
             finishHandDrawAnimation(nextHandCount);
-          }, 70);
+          }, HAND_DRAW_ANIMATION_SETTLE_DELAY_MS);
 
           return;
         }
@@ -590,7 +598,7 @@ export function NewGameScreen() {
       handDrawTimeoutRef.current = window.setTimeout(() => {
         handDrawTimeoutRef.current = null;
         finishHandDrawAnimation(finalVisibleCount, false);
-      }, 70);
+      }, HAND_DRAW_ANIMATION_SETTLE_DELAY_MS);
     }, HAND_DRAW_ANIMATION_DURATION_MS);
   };
 

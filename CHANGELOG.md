@@ -18,6 +18,43 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-070 concluido
+
+### Resumo
+
+A animacao de compra da mao foi acelerada para ficar 2x mais rapida, tanto no voo da carta saindo da pilha quanto no pequeno settle ao final de cada entrada.
+
+### Entregas realizadas
+
+- criacao de variaveis explicitas para velocidade da animacao de compra
+- reducao da duracao base do voo das cartas da pilha de compra pela metade
+- reducao do settle final entre revelacoes para manter a percepcao de velocidade
+
+### Arquivos principais criados ou alterados
+
+- `src/screens/NewGameScreen.tsx`
+- `BACKLOGS/PBIS/PBI-070_ACELERAR_ANIMACAO_DE_COMPRA_DA_MAO/*`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `PBI-070 - Acelerar Animacao de Compra da Mao`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- as cartas saem da pilha de compra visivelmente mais rapido
+- a sequencia de entrada da mao fica mais agil
+
+### Commit e push
+
+- registrados no encerramento desta entrega
+
+---
+
 ## 2026-02-28 - PBI-069 concluido
 
 ### Resumo
