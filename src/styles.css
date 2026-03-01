@@ -991,6 +991,28 @@ button:disabled {
   }
 }
 
+@keyframes hand-play-card-flight {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(-4deg);
+  }
+
+  20% {
+    opacity: 1;
+    transform: translate(-50%, calc(-50% - 8px)) scale(1.02) rotate(-2deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(
+        calc(-50% + var(--play-translate-x, 0px)),
+        calc(-50% + var(--play-translate-y, 0px))
+      )
+      scale(0.42)
+      rotate(9deg);
+  }
+}
+
 .expansion-card {
   --card-shell-border: rgba(196, 154, 92, 0.86);
   --card-shell-fill-top: rgba(255, 248, 236, 0.97);
@@ -1045,6 +1067,32 @@ button:disabled {
   pointer-events: none;
   animation: hand-draw-card-flight var(--hand-draw-duration, 420ms)
     cubic-bezier(0.18, 0.82, 0.2, 1) forwards;
+}
+
+.played-card-flight-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+}
+
+.expansion-card--play-proxy {
+  position: absolute;
+  left: var(--play-start-x, 50vw);
+  top: var(--play-start-y, 50vh);
+  z-index: 1;
+  width: var(--play-card-width, min(18vw, 188px));
+  min-width: 0;
+  pointer-events: none;
+  animation: hand-play-card-flight var(--hand-play-duration, 460ms)
+    cubic-bezier(0.22, 0.82, 0.2, 1) forwards;
+}
+
+.expansion-card--play-proxy .expansion-card__frame {
+  box-shadow:
+    0 22px 34px rgba(7, 13, 19, 0.24),
+    0 0 0 3px rgba(255, 234, 196, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.94);
 }
 
 .expansion-card.is-muted {

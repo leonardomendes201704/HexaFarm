@@ -1,10 +1,7 @@
 import type { CSSProperties } from "react";
 import { CardTooltip } from "./CardTooltip";
-import {
-  getCardEyebrowLabel,
-  getCoinYieldLabel,
-  type ExpansionCard,
-} from "../lib/prototypeDeck";
+import { ExpansionCardVisual } from "./ExpansionCardVisual";
+import { type ExpansionCard } from "../lib/prototypeDeck";
 
 type ExpansionHandProps = {
   activeDrawCardIndex: number | null;
@@ -18,6 +15,7 @@ type ExpansionHandProps = {
   hand: ExpansionCard[];
   isDrawing: boolean;
   isDiscarding: boolean;
+  pendingDrawCardIndex: number | null;
   onSelectCard: (cardId: string) => void;
   playableCardInstanceIds: string[];
 };
@@ -34,6 +32,7 @@ export function ExpansionHand({
   hand,
   isDrawing,
   isDiscarding,
+  pendingDrawCardIndex,
   onSelectCard,
   playableCardInstanceIds,
 }: ExpansionHandProps) {
@@ -51,48 +50,6 @@ export function ExpansionHand({
     activeDrawCardIndex !== null && activeDrawCardIndex >= 0 && activeDrawCardIndex < hand.length
       ? hand[activeDrawCardIndex]
       : null;
-
-  const renderCardFrame = (card: ExpansionCard) => (
-    <span className="expansion-card__frame">
-      <span className={`expansion-card__art expansion-card__art--${card.tileType}`}>
-        {card.artAssetPath ? (
-          <img
-            alt=""
-            aria-hidden="true"
-            className="expansion-card__art-image"
-            src={card.artAssetPath}
-          />
-        ) : null}
-        <span className="expansion-card__cost">{card.energyCost}</span>
-        <span
-          className={`expansion-card__yield ${
-            card.coinYield < 0 ? "is-negative" : "is-positive"
-          }`}
-        >
-          {getCoinYieldLabel(card.coinYield)}
-        </span>
-        {!card.artAssetPath ? (
-          <>
-            <span className="expansion-card__spark expansion-card__spark--left" />
-            <span className="expansion-card__spark expansion-card__spark--right" />
-            <span className={`expansion-card__icon expansion-card__icon--${card.tileType}`}>
-              <span className="expansion-card__icon-core" />
-            </span>
-          </>
-        ) : null}
-      </span>
-
-      <span className="expansion-card__footer">
-        <span className="expansion-card__eyebrow">{getCardEyebrowLabel(card)}</span>
-        <strong className="expansion-card__title">{card.name}</strong>
-        <span className="expansion-card__yield-text">
-          {card.cardKind === "crop"
-            ? `Bonus ${getCoinYieldLabel(card.coinYield)}`
-            : `Rendimento ${getCoinYieldLabel(card.coinYield)}`}
-        </span>
-      </span>
-    </span>
-  );
 
   return (
     <section
@@ -125,6 +82,7 @@ export function ExpansionHand({
             const canPlayCard = playableCardIdSet.has(card.instanceId) && canAffordCard;
             const discardCollapseX = Math.round(-offsetFromCenter * collapseStep);
             const isHiddenInDraw = isDrawing && index >= drawnHandCardCount;
+            const isPendingDrawCard = pendingDrawCardIndex === index;
 
             return (
               <button
@@ -133,9 +91,10 @@ export function ExpansionHand({
                 } ${
                   armedCardId === card.instanceId ? "is-selected" : ""
                 } ${!canAffordCard ? "is-muted" : ""} ${isDiscarding ? "is-discarding" : ""} ${
-                  isHiddenInDraw ? "is-hidden-in-draw" : ""
+                  isHiddenInDraw || isPendingDrawCard ? "is-hidden-in-draw" : ""
                 }`}
                 aria-label={`${card.name}. ${card.description}`}
+                data-card-instance-id={card.instanceId}
                 disabled={!canPlayCard || isDiscarding || isDrawing}
                 key={card.instanceId}
                 onClick={() => onSelectCard(card.instanceId)}
@@ -149,7 +108,7 @@ export function ExpansionHand({
                 }
                 type="button"
               >
-                {renderCardFrame(card)}
+                <ExpansionCardVisual card={card} />
                 <CardTooltip card={card} />
               </button>
             );
@@ -173,7 +132,7 @@ export function ExpansionHand({
               } as CSSProperties
             }
           >
-            {renderCardFrame(activeDrawCard)}
+            <ExpansionCardVisual card={activeDrawCard} />
           </div>
         ) : null}
 

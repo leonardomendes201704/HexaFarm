@@ -19,14 +19,19 @@ const STAGE_3D_TILE_TOP_Y = STAGE_3D_TILE_HEIGHT_STANDARD;
 const STAGE_3D_HOME_TOP_Y = STAGE_3D_TILE_HEIGHT_HOME;
 const STAGE_3D_SURFACE_CLEARANCE = 0.02;
 
+export type StageInteractionScreenPosition = {
+  x: number;
+  y: number;
+};
+
 type Stage3DCanvasProps = {
   cropArmed: boolean;
   cropTargetTileIds: string[];
   expansionArmed: boolean;
   frontierSlots: HexCoord[];
   interactionLocked?: boolean;
-  onPlantCrop: (tileId: string) => void;
-  onPlaceTile: (slot: HexCoord) => void;
+  onPlantCrop: (tileId: string, screenPosition: StageInteractionScreenPosition) => void;
+  onPlaceTile: (slot: HexCoord, screenPosition: StageInteractionScreenPosition) => void;
   onSelectTile: (tileId: string) => void;
   selectedTileId: string | null;
   showHighlights?: boolean;
@@ -224,8 +229,8 @@ type Stage3DSceneProps = {
   hoveredSlotKey: string | null;
   hoveredTileId: string | null;
   interactionLocked: boolean;
-  onPlantCrop: (tileId: string) => void;
-  onPlaceTile: (slot: HexCoord) => void;
+  onPlantCrop: (tileId: string, screenPosition: StageInteractionScreenPosition) => void;
+  onPlaceTile: (slot: HexCoord, screenPosition: StageInteractionScreenPosition) => void;
   onSelectTile: (tileId: string) => void;
   selectedTileId: string | null;
   setHoveredSlotKey: (slotKey: string | null) => void;
@@ -297,7 +302,10 @@ function Stage3DScene({
                 return;
               }
 
-              onPlaceTile(slot);
+              onPlaceTile(slot, {
+                x: event.nativeEvent.clientX,
+                y: event.nativeEvent.clientY,
+              });
             }}
             onPointerOut={(event) => {
               event.stopPropagation();
@@ -348,7 +356,10 @@ function Stage3DScene({
               }
 
               if (isCropTarget) {
-                onPlantCrop(tile.id);
+                onPlantCrop(tile.id, {
+                  x: event.nativeEvent.clientX,
+                  y: event.nativeEvent.clientY,
+                });
                 return;
               }
 

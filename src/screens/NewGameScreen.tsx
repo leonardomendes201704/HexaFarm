@@ -1,10 +1,14 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { CollectionCard } from "../components/CollectionCard";
+import { ExpansionCardVisual } from "../components/ExpansionCardVisual";
 import { ExpansionHand } from "../components/ExpansionHand";
 import { GameModal } from "../components/GameModal";
 import { SaveSummaryCard } from "../components/SaveSummaryCard";
-import { Stage3DCanvas } from "../components/Stage3DCanvas";
+import {
+  Stage3DCanvas,
+  type StageInteractionScreenPosition,
+} from "../components/Stage3DCanvas";
 import {
   applyCropToTile,
   createExpandedTile,
@@ -28,6 +32,7 @@ import {
   getShopOffers,
   playExpansionCard,
   removeCardFromDeckSelection,
+  type ExpansionCard,
   type PrototypeDeckState,
 } from "../lib/prototypeDeck";
 import {
@@ -46,6 +51,11 @@ import {
 } from "../lib/save";
 
 type HudModalId = "help" | "menu" | "status" | null;
+type ScreenPoint = {
+  x: number;
+  y: number;
+};
+
 const COIN_COUNTER_COUNT_DURATION_MS = 980;
 const COIN_COUNTER_FLY_DURATION_MS = 520;
 const DAY_RESOLUTION_DURATION_MS = COIN_COUNTER_COUNT_DURATION_MS + COIN_COUNTER_FLY_DURATION_MS;
@@ -55,11 +65,20 @@ const HAND_DISCARD_ANIMATION_DURATION_MS = Math.round(
   HAND_DISCARD_ANIMATION_BASE_DURATION_MS / HAND_DISCARD_ANIMATION_SPEED,
 );
 const HAND_DRAW_ANIMATION_DURATION_MS = 420;
+const PLAYED_CARD_FLIGHT_DURATION_MS = 460;
+const PLAYED_CARD_DRAW_DELAY_MS = 60;
 const WEEK_DAY_LABELS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"] as const;
 
 type CoinCounterFlyOffset = {
   x: number;
   y: number;
+};
+
+type PlayedCardFlightState = {
+  card: ExpansionCard;
+  origin: ScreenPoint;
+  target: ScreenPoint;
+  width: number;
 };
 
 function getCardMetaLine(card: ReturnType<typeof getCardLibrary>[number]) {
@@ -133,6 +152,9 @@ export function NewGameScreen() {
   const [armedCardId, setArmedCardId] = useState<string | null>(null);
   const [activeModal, setActiveModal] = useState<HudModalId>(null);
   const [activeDrawCardIndex, setActiveDrawCardIndex] = useState<number | null>(null);
+  const [activePlayedCardFlight, setActivePlayedCardFlight] = useState<PlayedCardFlightState | null>(
+    null,
+  );
   const [coinCounterDisplayValue, setCoinCounterDisplayValue] = useState(0);
   const [coinCounterFlyOffset, setCoinCounterFlyOffset] = useState<CoinCounterFlyOffset>({
     x: 0,
@@ -144,6 +166,7 @@ export function NewGameScreen() {
   const [isDrawingHand, setIsDrawingHand] = useState(false);
   const [isDiscardingHand, setIsDiscardingHand] = useState(false);
   const [isResolvingDay, setIsResolvingDay] = useState(false);
+  const [pendingDrawCardIndex, setPendingDrawCardIndex] = useState<number | null>(null);
   const [showHighlights, setShowHighlights] = useState(true);
   const [showSurfaceAccents, setShowSurfaceAccents] = useState(true);
   const [showTopPlateau, setShowTopPlateau] = useState(true);
@@ -152,6 +175,7 @@ export function NewGameScreen() {
   const dayResolutionTimeoutRef = useRef<number | null>(null);
   const handDrawTimeoutRef = useRef<number | null>(null);
   const handDiscardTimeoutRef = useRef<number | null>(null);
+  const playCardFlightTimeoutRef = useRef<number | null>(null);
 
   const collectionCards = useMemo(() => getCardLibrary(), []);
   const ownedCollectionCards = useMemo(
@@ -170,6 +194,9 @@ export function NewGameScreen() {
 
   const phase = savedRun.activeRun.phase;
   const canRunGameplay = phase === "running";
+  const isPlayingCardAnimation = activePlayedCardFlight !== null;
+  const isGameplayInteractionLocked =
+    isResolvingDay || isDiscardingHand || isDrawingHand || isPlayingCardAnimation;
   const availableEnergy = canRunGameplay ? savedRun.activeRun.resources.energy : 0;
   const selectedDeckCount = deckSelection.length;
   const canStartRun = selectedDeckCount === DECK_SIZE;
@@ -215,7 +242,7 @@ export function NewGameScreen() {
     WEEK_DAY_LABELS.length - 1,
   );
   const playableCardInstanceIds = useMemo(() => {
-    if (!canRunGameplay || isResolvingDay) {
+    if (!canRunGameplay || isGameplayInteractionLocked) {
       return [] as string[];
     }
 
@@ -224,7 +251,7 @@ export function NewGameScreen() {
         (card) => availableEnergy >= card.energyCost && hasPlayableTarget(card, frontierSlots, tiles),
       )
       .map((card) => card.instanceId);
-  }, [availableEnergy, canRunGameplay, deckState.hand, frontierSlots, isResolvingDay, tiles]);
+  }, [availableEnergy, canRunGameplay, deckState.hand, frontierSlots, isGameplayInteractionLocked, tiles]);
   const playableCardInstanceIdSet = useMemo(
     () => new Set(playableCardInstanceIds),
     [playableCardInstanceIds],
@@ -246,17 +273,56 @@ export function NewGameScreen() {
     setSelectedTileId(nextBoardState.selectedTileId);
   };
 
+  const clearPlayCardFlightAnimation = () => {
+    if (playCardFlightTimeoutRef.current !== null) {
+      window.clearTimeout(playCardFlightTimeoutRef.current);
+      playCardFlightTimeoutRef.current = null;
+    }
+
+    setActivePlayedCardFlight(null);
+  };
+
+  const getHandCardViewportFrame = (cardInstanceId: string) => {
+    const cardElement = document.querySelector<HTMLElement>(
+      `[data-card-instance-id="${cardInstanceId}"]`,
+    );
+
+    if (cardElement) {
+      const cardBounds = cardElement.getBoundingClientRect();
+
+      return {
+        width: cardBounds.width,
+        x: cardBounds.left + cardBounds.width / 2,
+        y: cardBounds.top + cardBounds.height / 2,
+      };
+    }
+
+    const viewportWidth = window.innerWidth;
+    const fallbackWidth =
+      viewportWidth <= 720
+        ? Math.max(viewportWidth * 0.42, 150)
+        : Math.min(viewportWidth * 0.18, 188);
+
+    return {
+      width: fallbackWidth,
+      x: viewportWidth / 2,
+      y: window.innerHeight - Math.max(fallbackWidth * 0.64, 128),
+    };
+  };
+
   const syncRunFromSave = (nextSave: SaveSnapshot) => {
     setSavedRun(nextSave);
     setDeckSelection(nextSave.activeRun.deckCardIds);
     setDeckState(createDeckStateFromSelection(nextSave.activeRun.deckCardIds));
     setActiveDrawCardIndex(null);
+    clearPlayCardFlightAnimation();
     setArmedCardId(null);
     setCoinCounterDisplayValue(0);
     setCoinResolutionDelta(null);
     setDrawnHandCardCount(HAND_SIZE);
     setIsCoinCounterFlying(false);
     setIsDrawingHand(false);
+    setPendingDrawCardIndex(null);
     applyBoardState(nextSave.activeRun.placedTiles);
   };
 
@@ -308,7 +374,7 @@ export function NewGameScreen() {
         setShowTopPlateau((currentValue) => !currentValue);
       }
 
-      if (pressedKey === "e") {
+      if (pressedKey === "e" && !isGameplayInteractionLocked) {
         handleEndDay();
       }
     };
@@ -318,7 +384,7 @@ export function NewGameScreen() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [phase, savedRun, deckState, isDiscardingHand, isResolvingDay]);
+  }, [phase, savedRun, deckState, isDiscardingHand, isGameplayInteractionLocked, isResolvingDay]);
 
   const handleAddDeckCard = (cardId: string) => {
     if (phase !== "deckbuilding") {
@@ -350,7 +416,7 @@ export function NewGameScreen() {
   };
 
   const handleSelectCard = (cardId: string) => {
-    if (!canRunGameplay || isResolvingDay) {
+    if (!canRunGameplay || isGameplayInteractionLocked) {
       return;
     }
 
@@ -363,10 +429,10 @@ export function NewGameScreen() {
     setArmedCardId((currentCardId) => (currentCardId === cardId ? null : cardId));
   };
 
-  const handlePlaceTile = (slot: HexCoord) => {
+  const handlePlaceTile = (slot: HexCoord, targetScreenPosition: StageInteractionScreenPosition) => {
     if (
       !canRunGameplay ||
-      isResolvingDay ||
+      isGameplayInteractionLocked ||
       !armedCard ||
       armedCard.cardKind !== "tile" ||
       armedCard.energyCost > availableEnergy
@@ -389,19 +455,25 @@ export function NewGameScreen() {
       tileType: createdTile.tileType,
     };
     const updatedSave = registerPrototypeExpansion(placedTile, armedCard.energyCost);
-    const { nextState } = playExpansionCard(deckState, armedCard.instanceId);
+    const { nextState, playedCard } = playExpansionCard(deckState, armedCard.instanceId);
 
     setTiles((currentTiles) => [...currentTiles, createdTile]);
     setSelectedTileId(createdTile.id);
+    setSavedRun(updatedSave);
+
+    if (playedCard) {
+      queuePlayedCardAnimation(playedCard, nextState, targetScreenPosition);
+      return;
+    }
+
     setDeckState(nextState);
     setArmedCardId(null);
-    setSavedRun(updatedSave);
   };
 
-  const handlePlantCrop = (tileId: string) => {
+  const handlePlantCrop = (tileId: string, targetScreenPosition: StageInteractionScreenPosition) => {
     if (
       !canRunGameplay ||
-      isResolvingDay ||
+      isGameplayInteractionLocked ||
       !armedCard ||
       armedCard.cardKind !== "crop" ||
       armedCard.energyCost > availableEnergy
@@ -423,22 +495,32 @@ export function NewGameScreen() {
       armedCard.coinYield,
       armedCard.energyCost,
     );
-    const { nextState } = playExpansionCard(deckState, armedCard.instanceId);
+    const { nextState, playedCard } = playExpansionCard(deckState, armedCard.instanceId);
 
     setTiles((currentTiles) =>
       currentTiles.map((tile) => (tile.id === tileId ? plantedTile : tile)),
     );
     setSelectedTileId(tileId);
+    setSavedRun(updatedSave);
+
+    if (playedCard) {
+      queuePlayedCardAnimation(playedCard, nextState, targetScreenPosition);
+      return;
+    }
+
     setDeckState(nextState);
     setArmedCardId(null);
-    setSavedRun(updatedSave);
   };
 
-  const finishHandDrawAnimation = () => {
+  const finishHandDrawAnimation = (finalVisibleCount: number, unlockDayResolution = true) => {
     setActiveDrawCardIndex(null);
-    setDrawnHandCardCount(HAND_SIZE);
+    setPendingDrawCardIndex(null);
+    setDrawnHandCardCount(finalVisibleCount);
     setIsDrawingHand(false);
-    setIsResolvingDay(false);
+
+    if (unlockDayResolution) {
+      setIsResolvingDay(false);
+    }
   };
 
   const clearCoinResolutionAnimation = () => {
@@ -454,8 +536,10 @@ export function NewGameScreen() {
       handDrawTimeoutRef.current = null;
     }
 
+    setPendingDrawCardIndex(null);
+
     if (nextHandCount <= 0) {
-      finishHandDrawAnimation();
+      finishHandDrawAnimation(0);
       return;
     }
 
@@ -470,7 +554,7 @@ export function NewGameScreen() {
         if (index + 1 >= nextHandCount) {
           handDrawTimeoutRef.current = window.setTimeout(() => {
             handDrawTimeoutRef.current = null;
-            finishHandDrawAnimation();
+            finishHandDrawAnimation(nextHandCount);
           }, 70);
 
           return;
@@ -481,6 +565,68 @@ export function NewGameScreen() {
     };
 
     animateNextDraw(0);
+  };
+
+  const startSingleCardDrawAnimation = (drawCardIndex: number, visibleCardCount: number) => {
+    if (handDrawTimeoutRef.current !== null) {
+      window.clearTimeout(handDrawTimeoutRef.current);
+      handDrawTimeoutRef.current = null;
+    }
+
+    if (drawCardIndex < 0) {
+      finishHandDrawAnimation(visibleCardCount, false);
+      return;
+    }
+
+    setPendingDrawCardIndex(null);
+    setDrawnHandCardCount(visibleCardCount);
+    setIsDrawingHand(true);
+    setActiveDrawCardIndex(drawCardIndex);
+
+    handDrawTimeoutRef.current = window.setTimeout(() => {
+      const finalVisibleCount = visibleCardCount + 1;
+
+      setDrawnHandCardCount(finalVisibleCount);
+      handDrawTimeoutRef.current = window.setTimeout(() => {
+        handDrawTimeoutRef.current = null;
+        finishHandDrawAnimation(finalVisibleCount, false);
+      }, 70);
+    }, HAND_DRAW_ANIMATION_DURATION_MS);
+  };
+
+  const queuePlayedCardAnimation = (
+    playedCard: ExpansionCard,
+    nextDeckState: PrototypeDeckState,
+    targetScreenPosition: StageInteractionScreenPosition,
+  ) => {
+    clearPlayCardFlightAnimation();
+
+    const playedCardFrame = getHandCardViewportFrame(playedCard.instanceId);
+    const replacementCardDrawIndex =
+      nextDeckState.hand.length > deckState.hand.length - 1 ? nextDeckState.hand.length - 1 : null;
+    const visibleCardsBeforeDraw =
+      replacementCardDrawIndex !== null ? nextDeckState.hand.length - 1 : nextDeckState.hand.length;
+
+    setDeckState(nextDeckState);
+    setActiveDrawCardIndex(null);
+    setArmedCardId(null);
+    setDrawnHandCardCount(visibleCardsBeforeDraw);
+    setPendingDrawCardIndex(replacementCardDrawIndex);
+    setIsDrawingHand(false);
+    setActivePlayedCardFlight({
+      card: playedCard,
+      origin: { x: playedCardFrame.x, y: playedCardFrame.y },
+      target: targetScreenPosition,
+      width: playedCardFrame.width,
+    });
+
+    playCardFlightTimeoutRef.current = window.setTimeout(() => {
+      clearPlayCardFlightAnimation();
+
+      if (replacementCardDrawIndex !== null) {
+        startSingleCardDrawAnimation(replacementCardDrawIndex, visibleCardsBeforeDraw);
+      }
+    }, PLAYED_CARD_FLIGHT_DURATION_MS + PLAYED_CARD_DRAW_DELAY_MS);
   };
 
   const finalizeEndDay = (shouldRefillHand: boolean) => {
@@ -496,12 +642,14 @@ export function NewGameScreen() {
     setActiveDrawCardIndex(null);
     setActiveModal(null);
     setArmedCardId(null);
+    clearPlayCardFlightAnimation();
     setCoinCounterDisplayValue(0);
     setCoinResolutionDelta(null);
     setDrawnHandCardCount(shouldRefillHand ? 0 : HAND_SIZE);
     setIsCoinCounterFlying(false);
     setIsDiscardingHand(false);
     setSavedRun(updatedSave);
+    setPendingDrawCardIndex(null);
 
     if (dayResolutionTimeoutRef.current !== null) {
       window.clearTimeout(dayResolutionTimeoutRef.current);
@@ -569,7 +717,7 @@ export function NewGameScreen() {
   };
 
   const handleEndDay = () => {
-    if (!canRunGameplay || isResolvingDay || isDiscardingHand) {
+    if (!canRunGameplay || isGameplayInteractionLocked) {
       return;
     }
 
@@ -641,6 +789,10 @@ export function NewGameScreen() {
       if (handDiscardTimeoutRef.current !== null) {
         window.clearTimeout(handDiscardTimeoutRef.current);
       }
+
+      if (playCardFlightTimeoutRef.current !== null) {
+        window.clearTimeout(playCardFlightTimeoutRef.current);
+      }
     };
   }, []);
 
@@ -654,7 +806,7 @@ export function NewGameScreen() {
         <div className="gameplay-hud__cluster">
           <button
             className="hud-button"
-            disabled={!canRunGameplay || isResolvingDay}
+            disabled={!canRunGameplay || isGameplayInteractionLocked}
             onClick={() => setActiveModal((currentModal) => (currentModal === "menu" ? null : "menu"))}
             type="button"
           >
@@ -664,7 +816,7 @@ export function NewGameScreen() {
 
           <button
             className="hud-button"
-            disabled={!canRunGameplay || isResolvingDay}
+            disabled={!canRunGameplay || isGameplayInteractionLocked}
             onClick={() =>
               setActiveModal((currentModal) => (currentModal === "status" ? null : "status"))
             }
@@ -676,7 +828,7 @@ export function NewGameScreen() {
 
           <button
             className="hud-button"
-            disabled={!canRunGameplay || isResolvingDay}
+            disabled={!canRunGameplay || isGameplayInteractionLocked}
             onClick={() => setActiveModal((currentModal) => (currentModal === "help" ? null : "help"))}
             type="button"
           >
@@ -705,7 +857,7 @@ export function NewGameScreen() {
           <span className="hud-pill">Energia {availableEnergy}</span>
           <button
             className="hud-button hud-button--action"
-            disabled={!canRunGameplay || isResolvingDay}
+            disabled={!canRunGameplay || isGameplayInteractionLocked}
             onClick={handleEndDay}
             type="button"
           >
@@ -763,6 +915,30 @@ export function NewGameScreen() {
         </div>
       ) : null}
 
+      {activePlayedCardFlight ? (
+        <div aria-hidden="true" className="played-card-flight-overlay">
+          <div
+            className={`expansion-card expansion-card--${activePlayedCardFlight.card.tileType} ${
+              activePlayedCardFlight.card.cardKind === "crop"
+                ? "expansion-card--crop"
+                : "expansion-card--tile"
+            } expansion-card--play-proxy`}
+            style={
+              {
+                "--hand-play-duration": `${PLAYED_CARD_FLIGHT_DURATION_MS}ms`,
+                "--play-card-width": `${activePlayedCardFlight.width}px`,
+                "--play-start-x": `${activePlayedCardFlight.origin.x}px`,
+                "--play-start-y": `${activePlayedCardFlight.origin.y}px`,
+                "--play-translate-x": `${activePlayedCardFlight.target.x - activePlayedCardFlight.origin.x}px`,
+                "--play-translate-y": `${activePlayedCardFlight.target.y - activePlayedCardFlight.origin.y}px`,
+              } as CSSProperties
+            }
+          >
+            <ExpansionCardVisual card={activePlayedCardFlight.card} />
+          </div>
+        </div>
+      ) : null}
+
       <div className="gameplay-stage">
         <div className="gameplay-stage__status">
           {armedCard ? (
@@ -779,11 +955,11 @@ export function NewGameScreen() {
 
         <div className="gameplay-stage__canvas-shell">
           <Stage3DCanvas
-            cropArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "crop"}
+            cropArmed={canRunGameplay && !isGameplayInteractionLocked && armedCard?.cardKind === "crop"}
             cropTargetTileIds={cropTargetTileIds}
-            expansionArmed={canRunGameplay && !isResolvingDay && armedCard?.cardKind === "tile"}
+            expansionArmed={canRunGameplay && !isGameplayInteractionLocked && armedCard?.cardKind === "tile"}
             frontierSlots={frontierSlots}
-            interactionLocked={isResolvingDay}
+            interactionLocked={isGameplayInteractionLocked}
             onPlantCrop={handlePlantCrop}
             onPlaceTile={handlePlaceTile}
             onSelectTile={setSelectedTileId}
@@ -809,6 +985,7 @@ export function NewGameScreen() {
           hand={deckState.hand}
           isDrawing={isDrawingHand}
           isDiscarding={isDiscardingHand}
+          pendingDrawCardIndex={pendingDrawCardIndex}
           onSelectCard={handleSelectCard}
           playableCardInstanceIds={playableCardInstanceIds}
         />

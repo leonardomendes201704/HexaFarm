@@ -18,6 +18,49 @@ Se a entrega nao tiver item de backlog associado, isso deve ser declarado.
 
 ---
 
+## 2026-02-28 - PBI-069 concluido
+
+### Resumo
+
+Jogar uma carta na run agora gera duas animacoes encadeadas: a carta usada sai visualmente da mao e voa ate o tile clicado, e a carta de reposicao entra depois, vindo da pilha de compra.
+
+### Entregas realizadas
+
+- captura da posicao de clique no stage 3D para servir de alvo da animacao de play
+- criacao de um proxy visual da carta jogada voando da mao ate o tile
+- ocultacao temporaria da carta de reposicao ate o inicio da animacao de compra
+- reutilizacao da animacao da pilha de compra para a reposicao imediata apos um play normal
+- extracao do visual da carta da mao para um componente reutilizavel
+
+### Arquivos principais criados ou alterados
+
+- `src/components/ExpansionCardVisual.tsx`
+- `src/components/ExpansionHand.tsx`
+- `src/components/Stage3DCanvas.tsx`
+- `src/screens/NewGameScreen.tsx`
+- `src/styles.css`
+- `BACKLOGS/PBIS/PBI-069_ANIMAR_CARTA_JOGADA_ATE_O_TILE_E_REPOSICAO_DA_MAO/*`
+- `CHANGELOG.md`
+
+### Vinculos de backlog
+
+- `PBI-069 - Animar Carta Jogada Ate o Tile e Reposicao da Mao`
+
+### Validacao executada
+
+- `npm run build`
+
+### Resultado da validacao
+
+- a carta jogada sai da mao e viaja ate o tile clicado
+- a carta de reposicao entra depois, animada a partir da pilha de compra
+
+### Commit e push
+
+- registrados no encerramento desta entrega
+
+---
+
 ## 2026-02-28 - PBI-068 concluido
 
 ### Resumo
